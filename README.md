@@ -61,6 +61,30 @@ The skills here are the **portable** version of that knowledge. Most of the spec
 | [intervals-icu-api](intervals-icu-api/) | Reading or writing Intervals.icu data; training and fitness analysis on it |
 | [mcp-server-tools](mcp-server-tools/) | Writing or adding a tool to an MCP server; designing its tool surface |
 
+### Reuse across repositories
+
+| Skill | Use when |
+|---|---|
+| [skill-exchange](skill-exchange/) | Seeded into every other repo: check this catalogue before writing a new skill, vendor what fits, send general improvements back |
+
+`skill-exchange` is the meta-skill. Seed it into any repository and it pulls from
+here and contributes back, so a lesson learned in one repo reaches the others.
+
+```bash
+mkdir -p .claude/skills/skill-exchange/scripts
+curl -fsSL https://raw.githubusercontent.com/MaximumTrainer/agent-skills/main/skill-exchange/SKILL.md   -o .claude/skills/skill-exchange/SKILL.md
+curl -fsSL https://raw.githubusercontent.com/MaximumTrainer/agent-skills/main/skill-exchange/scripts/skills.py   -o .claude/skills/skill-exchange/scripts/skills.py
+
+python3 .claude/skills/skill-exchange/scripts/skills.py list
+python3 .claude/skills/skill-exchange/scripts/skills.py pull outside-in-tdd
+python3 .claude/skills/skill-exchange/scripts/skills.py status
+```
+
+[`catalogue.json`](catalogue.json) is what seeded repos read. It is **generated**
+from the SKILL.md files by `tools/build_catalogue.py`, and CI fails if it drifts
+— the same derived-with-a-drift-check pattern [docs-drift-guard](docs-drift-guard/)
+describes. Never edit it by hand; rebuild it after changing any skill.
+
 ## Using a skill
 
 ```bash

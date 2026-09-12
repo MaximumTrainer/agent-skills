@@ -1,0 +1,263 @@
+{
+  "source": "MaximumTrainer/agent-skills",
+  "schema": 1,
+  "skills": [
+    {
+      "name": "api-quirk-fixtures",
+      "directory": "api-quirk-fixtures",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Turn a real third-party API behaviour into a fixture trait, a failing test, a fix and a documented row, so the wrong assumption can never quietly return. Use when live data disagrees with the code's assumptions, when a schema rejects a real payload, when adding any handling for how an upstream API actually behaves, when a bug is traced to a field that was null or ordered unexpectedly, and when writing or reviewing fixtures for an external integration. Covers why fixtures that share the code's assumptions cannot fail, and the quirk catalogue worth checking first.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "ci-failure-triage",
+      "directory": "ci-failure-triage",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Find out why a remote build is red, reproduce the real failure locally, and land the fix. Use when asked \"is the build broken\", \"check remote main is green\", \"fix main\", \"why did CI fail\", or before starting new work on a repository whose default branch may be red. Covers locating the failing run and job, extracting the actual error out of a long log, telling an infrastructure failure apart from a code failure, and the flaky-versus-real decision.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "connect-iq-monkeyc",
+      "directory": "connect-iq-monkeyc",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Write, test and ship Garmin Connect IQ apps in Monkey C, including FIT developer fields, BLE scanning, and the API-level restrictions that silently break things. Use when working on a Connect IQ watch app, data field or widget, when writing Monkey C, when recording custom data into a Garmin activity via FitContributor, when handling BLE advertisements on a watch, or when a developer field vanishes from the recorded file. Covers the testability design rules, monkeydo unit tests, and the ecosystem traps that each cost hours.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "container-integration-tests",
+      "directory": "container-integration-tests",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Test an adapter against a real database, cloud emulator or external service using Testcontainers, with honest readiness checks and a start guard that fails when the container should have started and did not. Use when asked to test a repository or adapter against a real instance, add an emulator or integration test, replace mocks with the real thing, or when an adapter has only ever run against a mock. Covers image choice, why log-line wait strategies break, seeding through the production parser, cross-provider fixtures, and the Windows Docker pipe.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "deliberate-decisions",
+      "directory": "deliberate-decisions",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Keep and consult a register of choices that look like bugs and are not, plus dormant code that must not be extended, so an agent or a new contributor does not \"fix\" them in passing. Use before fixing something odd-looking, when a design appears wrong or inefficient, when tempted to simplify code that has a comment saying not to, when closing work that diverged from its spec, and when asked why the code does something surprising. Check the register before fixing; add to it when you make a non-obvious choice.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "docs-drift-guard",
+      "directory": "docs-drift-guard",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Keep documentation, generated websites and hand-maintained HTML twins truthful about the code, and add a check that fails the build when they drift. Use when changing anything under docs/, when a code change needs a documentation update, when asked why a website is stale or how it is published, when a README describes a removed feature, and when adding a new document to a generated site. Covers generate-from-source versus hand-maintained twins, what must never go into a generated page, and verifying a docs claim against the source rather than trusting the prose.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "engineering-white-paper",
+      "directory": "engineering-white-paper",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Write a practitioner white paper explaining an engineering practice — what it is, when to use it, its benefits, its drawbacks and mitigations, and how to adopt it — in the house structure used across this collection's practice papers. Use when asked to write a white paper, explain or document an engineering practice, produce a facilitation guide or kata brief, make the case for a way of working, or turn hard-won project experience into something reusable by other teams. Covers the section skeleton, the honesty requirements, and the difference between a white paper and a skill.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "gap-issue",
+      "directory": "gap-issue",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Record what a piece of work deliberately left unverified or unbuilt, as a precise GitHub issue, so the gap is tracked rather than forgotten. Use when closing work with an acceptance criterion unmet, when something is wired but untested, when hardware or a live account was unavailable, when asked to \"create issues for anything incomplete\" or \"what's left\", and when reconciling a backlog against what has actually shipped. The alternative to a gap issue is a silent false green.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "hexagonal-architecture",
+      "directory": "hexagonal-architecture",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Structure an application as ports and adapters so business rules never depend on frameworks, databases, HTTP or vendor SDKs, and can be tested without them. Use when adding a feature, endpoint, repository, integration or masking/transform strategy to a layered codebase; when asked where a class belongs, how to wire dependencies, or to review whether the dependency rule holds; and when a domain class is importing Spring, JPA, Axios, Qt or an SDK type. Covers the layer rules, the order to add a feature in, DI at the composition root, and how to enforce the rule mechanically.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "intervals-icu-api",
+      "directory": "intervals-icu-api",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Integrate with the Intervals.icu API correctly — authentication, the endpoints, the response quirks that have each caused a real bug, and the rules for writing to an athlete's activity reversibly. Use when reading or writing Intervals.icu data, building training or fitness analysis on it, debugging \"why does my dashboard show the wrong value\", adding a wellness/activity/streams/laps call, or writing fixtures for it. Also covers the derived training metrics (CTL/ATL/TSB) and where their thresholds belong.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "kotlin-idioms",
+      "directory": "kotlin-idioms",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Write idiomatic Kotlin for a Spring Boot / JPA service — immutability by default, nullability handled at the type level with no `!!`, expression-oriented domain code, and the ktlint/detekt/JSR-305 toolchain that enforces it. Use when writing or reviewing Kotlin, when a `!!` or a needless `var` appears in a diff, when deciding between a nullable type and `Optional` at a port boundary, when data classes meet JPA entities, or when ktlint/detekt fails and the cause is a version coupling rather than the code. Covers the project conventions shared across the Kotlin services here and the gotchas that cost build time.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "live-api-probe",
+      "directory": "live-api-probe",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Run real code against a real third-party account to find out what the API actually does, then delete the harness — with strict credential and PII hygiene. Use to confirm a domain or sync change behaves on real data, to diagnose \"why does my dashboard show X\", to discover an API behaviour the fixtures do not reproduce, or to ground a specification before writing it. Covers scratch-harness conventions, credential handling that never persists a secret, rate limiting, and what may and may not be written down afterwards.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "mcp-server-tools",
+      "directory": "mcp-server-tools",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Design and build MCP (Model Context Protocol) server tools that an LLM can actually use well — tool granularity, schemas that prevent wrong calls, structured errors the model can recover from, and returning what the model can read rather than what is easy to serialise. Use when writing or adding a tool to an MCP server, designing the tool surface for one, debugging a model that misuses a tool, deciding between stdio and HTTP transport, or sandboxing model-authored code execution.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "minimal-docker",
+      "directory": "minimal-docker",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Build small, secure, production-ready Docker images using multi-stage builds, minimal base images (scratch, distroless, Chainguard, Alpine, slim), non-root users, and tight layer caching. Use this skill whenever the user asks to write, containerize, dockerize, optimize, slim down, shrink, harden, or review a Dockerfile or container image, including requests like \"make my image smaller\", \"why is my Docker image 1GB\", \"containerize this app\", \"write a Dockerfile for my Go/Rust/Python/Node/Java/.NET service\", or \"use distroless/scratch\". Also use it when a task will produce a Dockerfile as a side effect (deploying to Kubernetes, Cloud Run, Fly, ECS, etc.), even if the user never says \"minimal\".",
+      "files": [
+        "SKILL.md",
+        "README.md",
+        "references/base-images.md",
+        "references/languages.md",
+        "scripts/inspect_image.sh",
+        "scripts/lint_dockerfile.py",
+        "assets/dockerignore.template"
+      ]
+    },
+    {
+      "name": "outside-in-tdd",
+      "directory": "outside-in-tdd",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Drive a change test-first from the outside in — acceptance test red, then contract/API red, then unit red, then the green implementation — with one commit per step so the history proves the sequence. Use whenever implementing a feature, fixing a bug, or starting work on an issue number in a repository that expects TDD, and whenever asked to \"do issue N\", \"implement X test-first\", \"red-green-refactor\", or \"work through the backlog\". Also use when reviewing whether a change was actually driven by tests.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "qt6-cross-platform",
+      "directory": "qt6-cross-platform",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Build, debug and package a Qt6 C++ desktop application across Linux, Windows, macOS and WebAssembly, including the Qt5-to-Qt6 signal changes that silently break auto-connected slots, AppImage bundling of libraries Qt dlopens at runtime, and the WASM single-thread constraints. Use when working on a Qt or QtWidgets application, migrating from Qt5, packaging a desktop release, debugging a slot that never fires or a TLS failure that only happens on another machine, or targeting Qt for WebAssembly.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "r3f-best-practices",
+      "directory": "r3f-best-practices",
+      "version": "1.1.0",
+      "license": "MIT",
+      "description": "React Three Fiber (R3F) and Poimandres ecosystem best practices. Use when writing, reviewing, or optimizing R3F code. Triggers on tasks involving @react-three/fiber, @react-three/drei, zustand, @react-three/postprocessing, @react-three/rapier, or leva.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "screenshot-verify",
+      "directory": "screenshot-verify",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Capture what an application actually renders, and verify the capture is truthful before drawing conclusions from it. Use whenever a change touches the UI, when asked to run or screenshot an app, before claiming a visual change works, and when regenerating screenshots for documentation. Covers the capture flags that silently produce wrong images — virtual time blanking animated charts, captureBeyondViewport crushing responsive layouts — checking the DOM before reporting a rendering bug, headless capture for desktop apps, and credential hygiene for authenticated captures.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "single-source-constants",
+      "directory": "single-source-constants",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Find thresholds, bands and limits duplicated between domain logic, UI copy, tests and documentation, and collapse them to one definition everything else derives from. Use when a displayed value contradicts what the app does, when adding a threshold or configuration value, when a user asks \"why does it say X when it does Y\", when a README restates a number the code owns, and when reviewing a change that hard-codes a boundary. Two user-visible bugs in these projects were caused by exactly this and both looked like calculation bugs.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "skill-exchange",
+      "directory": "skill-exchange",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Check the shared skills catalogue before writing any skill, workflow or procedure from scratch, vendor in whatever already solves the problem, and send genuinely general improvements back. Use when about to write a new skill or a repeated procedure; when asked \"is there a skill for X\", \"do we have something for this\", \"pull the shared skills\", \"update our skills\", or \"contribute this back\"; when a vendored skill has been edited locally; and when setting up skills in a repository for the first time. The catalogue lives at MaximumTrainer/agent-skills.",
+      "files": [
+        "SKILL.md",
+        "scripts/skills.py"
+      ]
+    },
+    {
+      "name": "spec-by-example-issue",
+      "directory": "spec-by-example-issue",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Turn a thin issue, idea or ticket into an implementable specification — numbered requirements, Given/When/Then acceptance criteria that are executable as written, and an outside-in test plan naming the files to create. Use when asked to elaborate, flesh out, specify or add acceptance criteria to an issue, when writing a user story, when picking the next piece of work off a backlog, or when an issue is a placeholder title with no body. Requires probing the real API and codebase first — the grounding is what makes the spec worth having.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "synthetic-test-data",
+      "directory": "synthetic-test-data",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Build test data that reproduces the shape, ordering and value ranges of real data while inventing every identity, and prove no real value leaked. Use when creating fixtures or seed data, when tempted to copy a production record or payload into a test, when masking or anonymising a dataset, when a fixture needs to look realistic, and when reviewing whether test data or a captured capture contains personal data. Covers what makes data identifying, referential integrity across a synthetic dataset, planted canary secrets, and why masking is not anonymisation.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "test-theatre-audit",
+      "directory": "test-theatre-audit",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Find tests that pass while exercising nothing — env-gated early returns, assertions inside loops over empty collections, swallowed fixture failures, container suites with no start guard, mocks asserting on themselves, snapshots of wrong output. Use when asked to audit test coverage, check whether a suite actually runs, verify tests are not silently skipping, investigate why a bug shipped past a green build, or review a suspiciously fast or suspiciously green suite. Coverage percentages do not detect any of these.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "three-best-practices",
+      "directory": "three-best-practices",
+      "version": "2.1.0",
+      "license": "MIT",
+      "description": "Three.js performance optimization and best practices guidelines. Use when writing, reviewing, or optimizing Three.js code. Triggers on tasks involving 3D scenes, WebGL/WebGPU rendering, geometries, materials, textures, lighting, shaders, or TSL.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "verify-and-ship",
+      "directory": "verify-and-ship",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Run the same checks CI runs before pushing, open the pull request, then confirm the CI run on the default branch is genuinely green. Use whenever asked to push, commit and push, open a PR, merge, ship, land, or \"verify the build is green\" after a change, and when asked whether a change would pass CI. Covers reproducing each CI job locally in cost order, the commands whose exit code lies about success, and why the run on main — not the one on the PR — is what proves the work landed.",
+      "files": [
+        "SKILL.md"
+      ]
+    }
+  ]
+}

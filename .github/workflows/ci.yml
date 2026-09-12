@@ -24,6 +24,11 @@ jobs:
       - name: Validate skill versions
         run: python3 tools/bump_skill_versions.py --check
 
+      # catalogue.json is generated from the SKILL.md files and consumed by
+      # every seeded repo; it must never drift from them.
+      - name: Validate catalogue is not stale
+        run: python3 tools/build_catalogue.py --check
+
       - name: Hook and version-bump tests
         run: python3 -m unittest discover -s tests -v
 
