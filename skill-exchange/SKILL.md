@@ -3,7 +3,7 @@ name: skill-exchange
 description: Check the shared skills catalogue before writing any skill, workflow or procedure from scratch, vendor in whatever already solves the problem, and send genuinely general improvements back. Use when about to write a new skill or a repeated procedure; when asked "is there a skill for X", "do we have something for this", "pull the shared skills", "update our skills", or "contribute this back"; when a vendored skill has been edited locally; and when setting up skills in a repository for the first time. The catalogue lives at MaximumTrainer/agent-skills.
 license: MIT
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
 ---
 
 # Skill exchange
@@ -129,6 +129,21 @@ python3 .claude/skills/skill-exchange/scripts/skills.py contribute intervals-icu
 - Open the PR against `main` and say which repo the improvement came from.
 
 After it merges, `pull` it back here so the manifest hash matches again and `status` returns to CURRENT.
+
+### The catalogue is served from a cache
+
+`raw.githubusercontent.com` responds with `Cache-Control: max-age=300`, so for up
+to five minutes after a merge the catalogue still serves the previous content.
+`list` will not show a newly added skill, and `status` will still say CURRENT
+against the old version.
+
+That is the cache, not a failed contribution. Wait and re-run rather than
+re-pushing. To confirm what actually landed, look at the repository rather than
+the raw URL:
+
+```bash
+gh api repos/MaximumTrainer/agent-skills/contents/catalogue.json --jq '.sha'
+```
 
 ## Seeding a repository
 
