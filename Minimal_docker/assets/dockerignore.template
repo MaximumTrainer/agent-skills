@@ -1,0 +1,57 @@
+# --- VCS & editor ---
+.git
+.gitignore
+.gitattributes
+.github
+.gitlab-ci.yml
+.vscode
+.idea
+*.swp
+.DS_Store
+
+# --- Docker itself ---
+Dockerfile*
+.dockerignore
+docker-compose*.yml
+compose*.yml
+
+# --- Secrets & local config (never ship these) ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+secrets/
+.aws
+.ssh
+
+# --- Dependencies & build output (rebuilt inside the image) ---
+node_modules
+.pnpm-store
+.venv
+venv
+__pycache__
+*.pyc
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.tox
+target
+# .NET build output — remove bin/ if it holds source (e.g. Node CLI scripts)
+bin/
+obj/
+dist
+build
+.next
+coverage
+.gradle
+
+# --- Docs, tests, misc (remove lines if the build needs them) ---
+*.md
+!README.md
+docs/
+tests/
+test/
+*.log
+tmp/

@@ -1,0 +1,17 @@
+# Build output
+dist/
+*.skill
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
+# Skill-creator eval workspaces
+*-workspace/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

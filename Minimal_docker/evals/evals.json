@@ -1,0 +1,71 @@
+{
+  "skill_name": "minimal-docker",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Write a Dockerfile for my Go HTTP API. It's in cmd/server, uses go 1.24, calls Stripe over HTTPS and needs to run on both amd64 and arm64 in Kubernetes.",
+      "expected_output": "Multi-stage build with BUILDPLATFORM cross-compilation, a static stripped binary on a distroless/static nonroot (or scratch plus CA certs) runtime, numeric non-root USER, exec-form ENTRYPOINT, a .dockerignore, and a buildx multi-platform command.",
+      "files": [],
+      "expectations": [
+        "The Dockerfile has at least two FROM stages and the final stage copies the binary with COPY --from",
+        "The build sets CGO_ENABLED=0",
+        "The build stage uses --platform=$BUILDPLATFORM and sets GOOS/GOARCH from TARGETOS/TARGETARCH",
+        "The final base is gcr.io/distroless/static (any suffix) or scratch",
+        "If the final base is scratch, CA certificates are copied to /etc/ssl/certs",
+        "The final stage sets a numeric non-root USER, or uses a :nonroot distroless tag",
+        "ENTRYPOINT uses exec (JSON array) form",
+        "A .dockerignore is provided",
+        "The response includes a docker buildx build command with --platform linux/amd64,linux/arm64",
+        "lint_dockerfile.py reports no errors or warnings on the produced Dockerfile"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "my fastapi app docker image is 1.3GB, here's the dockerfile:\nFROM python:3.12\nCOPY . /app\nWORKDIR /app\nRUN pip install -r requirements.txt\nCMD uvicorn main:app --host 0.0.0.0\nrequirements include psycopg2 and pandas. how do i get it smaller?",
+      "expected_output": "Diagnoses the full base image, missing .dockerignore, cache-busting COPY order, shell-form CMD and root user. Proposes a slim multi-stage venv build with libpq-dev only in the build stage and libpq5 at runtime (or psycopg binary wheels), the same Python image in both stages, a non-root user and exec-form CMD, with an estimated before/after size.",
+      "files": [],
+      "expectations": [
+        "The response identifies the full python:3.12 base image as the main cause of size",
+        "The response points out that COPY . before pip install breaks dependency caching",
+        "The response flags the shell-form CMD and running as root",
+        "The new Dockerfile uses a python:3.12-slim (or slim-bookworm) image for both build and runtime stages",
+        "Build-only packages such as libpq-dev or build-essential appear only in the build stage",
+        "The runtime stage installs libpq5 or the solution switches to psycopg2-binary / psycopg[binary]",
+        "requirements.txt is copied and installed before the rest of the source",
+        "The final stage sets a non-root USER",
+        "CMD uses exec (JSON array) form",
+        "Sizes are presented as estimates unless an image was actually built and measured"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Containerize a Next.js 15 app with pnpm as small as possible, it'll run on Cloud Run.",
+      "expected_output": "Uses output: standalone, pnpm with a frozen lockfile, a separate build stage, copies .next/standalone, .next/static and public into a distroless nodejs or node slim runtime, runs as non-root, and respects Cloud Run's PORT (default 8080).",
+      "files": [],
+      "expectations": [
+        "The response tells the user to set output: \"standalone\" in next.config",
+        "pnpm install uses --frozen-lockfile",
+        "The final stage copies .next/standalone, .next/static and public",
+        "The final base is a distroless nodejs image or a node slim/alpine image, not full node",
+        "The final stage runs as non-root",
+        "The response addresses Cloud Run's PORT environment variable or listens on 8080",
+        "CMD or ENTRYPOINT uses exec form and starts server.js"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Can you review this Dockerfile before I ship it?\nFROM rust:latest\nWORKDIR /src\nCOPY . .\nENV DATABASE_PASSWORD=hunter2\nRUN cargo build --release\nEXPOSE 3000\nCMD ./target/release/api",
+      "expected_output": "Flags the secret in ENV as the most serious problem and explains how to supply it at runtime or via BuildKit secrets, then fixes the single-stage rust:latest image, root user and shell-form CMD with a multi-stage build on distroless/cc (or musl on scratch).",
+      "files": [],
+      "expectations": [
+        "The ENV DATABASE_PASSWORD secret is called out first or as the most severe issue",
+        "The response explains that ENV values persist in image metadata and history",
+        "The response recommends supplying the password at runtime or via RUN --mount=type=secret",
+        "The response flags rust:latest as both unpinned and too large for a runtime image",
+        "The revised Dockerfile is multi-stage and the final base is distroless/cc, distroless/static or scratch",
+        "The revised Dockerfile sets a non-root USER and exec-form CMD or ENTRYPOINT",
+        "The revised Dockerfile contains no secret values"
+      ]
+    }
+  ]
+}
