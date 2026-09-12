@@ -201,7 +201,7 @@
     {
       "name": "skill-exchange",
       "directory": "skill-exchange",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "license": "MIT",
       "description": "Check the shared skills catalogue before writing any skill, workflow or procedure from scratch, vendor in whatever already solves the problem, and send genuinely general improvements back. Use when about to write a new skill or a repeated procedure; when asked \"is there a skill for X\", \"do we have something for this\", \"pull the shared skills\", \"update our skills\", or \"contribute this back\"; when a vendored skill has been edited locally; and when setting up skills in a repository for the first time. The catalogue lives at MaximumTrainer/agent-skills.",
       "files": [

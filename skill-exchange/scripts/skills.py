@@ -314,7 +314,7 @@ def cmd_contribute(args):
     print(f"  # bump metadata.version in {skill['directory']}/SKILL.md")
     print("  python3 tools/build_catalogue.py")
     print(f"  git commit -am 'feat({skill['directory']}): <what it now covers>'")
-    print(f"  gh pr create --fill")
+    print("  gh pr create --fill")
     return 0
 
 
@@ -344,6 +344,14 @@ def main(argv=None):
     p = sub.add_parser("contribute", help="prepare a change to send back")
     p.add_argument("name")
     p.set_defaults(func=cmd_contribute)
+
+    # Skill text is full of em-dashes and curly quotes; on a Windows console the
+    # default codec is cp1252 and `diff` output comes out mangled.
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, ValueError):
+            pass
 
     args = parser.parse_args(argv)
     return args.func(args)

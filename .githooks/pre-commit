@@ -55,3 +55,15 @@ if [ -n "$branch" ]; then
 else
     "$python_bin" "$tool" --staged
 fi
+
+# catalogue.json is generated from the SKILL.md files, so a version bump above
+# leaves it stale and CI's drift check fails. Regenerate and re-stage it in the
+# same commit. Only applies in the catalogue repository itself.
+catalogue_tool="$repo_root/tools/build_catalogue.py"
+if [ -f "$catalogue_tool" ]; then
+    if ! "$python_bin" "$catalogue_tool" --check >/dev/null 2>&1; then
+        "$python_bin" "$catalogue_tool"
+        git add -- "$repo_root/catalogue.json"
+        echo "skill-version: regenerated catalogue.json"
+    fi
+fi
