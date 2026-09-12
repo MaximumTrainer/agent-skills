@@ -1,0 +1,57 @@
+#!/bin/sh
+#
+# Bump the metadata.version of every skill this commit touches.
+#
+# pre-commit is used deliberately: it is the only hook whose `git add` lands in
+# the commit being created. prepare-commit-msg and commit-msg stage into the
+# *next* commit and leave a dirty index, so neither can be used for this.
+#
+# Only fires on the version branch (default: main). Configure with:
+#   git config skills.versionBranch main     # branch to version on
+#   git config skills.versionBranch ""       # every branch
+#
+# Bump level defaults to patch. Override per commit:
+#   SKILL_BUMP=minor git commit -m "feat: add a section"
+#
+# Skip with either of:
+#   SKILL_VERSION_SKIP=1 git commit ...    hook runs, no bump
+#   git commit --no-verify               hook does not run at all
+#
+# Known limitation: git does not tell pre-commit that a commit is an --amend
+# (no env var, and COMMIT_EDITMSG still holds the previous message at this
+# point), so amending a commit that already bumped will bump again. Amend with
+# SKILL_VERSION_SKIP=1 when that matters.
+
+set -e
+
+repo_root=$(git rev-parse --show-toplevel)
+tool="$repo_root/tools/bump_skill_versions.py"
+
+[ -f "$tool" ] || exit 0
+
+if [ -n "$SKILL_VERSION_SKIP" ]; then
+    echo "skill-version: SKILL_VERSION_SKIP set - no version bump"
+    exit 0
+fi
+
+# Resolve a python interpreter; do nothing rather than block a commit.
+python_bin=""
+for candidate in python3 python py; do
+    if command -v "$candidate" >/dev/null 2>&1; then
+        python_bin="$candidate"
+        break
+    fi
+done
+
+if [ -z "$python_bin" ]; then
+    echo "skill-version: no python interpreter found - skipping version bump" >&2
+    exit 0
+fi
+
+branch=$(git config --get skills.versionBranch 2>/dev/null || echo "main")
+
+if [ -n "$branch" ]; then
+    "$python_bin" "$tool" --staged --only-on-branch "$branch"
+else
+    "$python_bin" "$tool" --staged
+fi

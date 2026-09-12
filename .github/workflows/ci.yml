@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  versions:
+    name: Skill versions and hook tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Every skill must carry a valid semver metadata.version. The pre-commit
+      # hook cannot catch a skill added on a branch where it did not run, so
+      # this is the backstop.
+      - name: Validate skill versions
+        run: python3 tools/bump_skill_versions.py --check
+
+      - name: Hook and version-bump tests
+        run: python3 -m unittest discover -s tests -v
+
+  shellcheck:
+    name: Shell scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: shellcheck .githooks/pre-commit tools/install-hooks.sh

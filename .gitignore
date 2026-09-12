@@ -1,0 +1,10 @@
+.copilot-specs-cache/
+# Python
+__pycache__/
+*.py[cod]
+
+# Packaged skills
+dist/
+
+# Local scratch
+*.local
