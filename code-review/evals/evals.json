@@ -1,0 +1,41 @@
+{
+  "skill_name": "code-review",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Can you review this PR before I merge it? It adds a coupon-code discount to checkout.\n\n```python\ndef apply_coupon(order_id, coupon_code):\n    conn = get_db_connection()\n    query = \"SELECT discount_pct FROM coupons WHERE code = '\" + coupon_code + \"' AND active = 1\"\n    result = conn.execute(query).fetchone()\n    if result:\n        discount = result[0]\n        order = get_order(order_id)\n        order.total = order.total * (1 - discount / 100)\n        save_order(order)\n        return {\"success\": True, \"discount_applied\": discount}\n    return {\"success\": False}\n```\nNo new tests in this diff.",
+      "expected_output": "Review flags the string-concatenated SQL query as a blocking SQL injection finding, and flags the total absence of tests for new logic as a blocking/should-fix coverage gap. Uses severity tags.",
+      "files": [],
+      "expectations": [
+        "Identifies SQL injection risk from string-concatenating coupon_code into the query",
+        "Tags the SQL injection finding as blocking severity (\ud83d\udd34)",
+        "Flags the missing test coverage for the new apply_coupon function",
+        "Output is organized by pillar with severity tags, not just free-form prose"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "review this test file, does it actually cover the discount logic?\n\n```python\ndef test_apply_coupon(mocker):\n    mock_db = mocker.patch(\"app.get_db_connection\")\n    mock_order = mocker.patch(\"app.get_order\")\n    mock_save = mocker.patch(\"app.save_order\")\n    result = apply_coupon(123, \"SAVE10\")\n    assert mock_db.called\n    assert mock_save.called\n```",
+      "expected_output": "Review identifies that the test never asserts on the discount value or resulting order.total, so it would pass even if the discount math were wrong. Calls out over-mocking. Suggests a concrete stronger assertion.",
+      "files": [],
+      "expectations": [
+        "Points out the test never asserts on the actual discount amount or order.total",
+        "Notes the test would still pass if the discount calculation were broken",
+        "Identifies over-mocking of get_db_connection/get_order/save_order as hiding real behavior",
+        "Suggests a concrete improved assertion, not just 'add more assertions'"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Quick review of this shipping calculator, it passes all tests already:\n\n```python\ndef calc(o, r, x=1):\n    w = o['weight']\n    d = o['dist']\n    if x == 1:\n        c = w * 0.5 + d * 0.1\n    else:\n        c = w * 0.4 + d * 0.15\n    if r:\n        c = c * 0.9\n    return round(c, 2)\n```\nExisting tests cover both branches of x and r with correct expected values, and there's no external/untrusted input involved \u2014 o is built internally from validated order data upstream.",
+      "expected_output": "Review focuses on pillar 4 (naming/domain clarity, magic numbers) and does not fabricate coverage or security findings given tests are adequate and there's no untrusted input.",
+      "files": [],
+      "expectations": [
+        "Flags cryptic parameter/variable names (o, r, x, w, d, c) and suggests domain-meaningful renames",
+        "Flags the unexplained magic numbers (0.5, 0.1, 0.4, 0.15, 0.9, x==1) as needing named constants",
+        "Does NOT raise a blocking security finding given no untrusted input is present",
+        "Does NOT raise a blocking coverage finding given tests already cover both branches with real assertions"
+      ]
+    }
+  ]
+}
