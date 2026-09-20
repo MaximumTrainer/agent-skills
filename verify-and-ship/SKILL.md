@@ -1,9 +1,9 @@
 ---
 name: verify-and-ship
-description: Run the same checks CI runs before pushing, open the pull request, then confirm the CI run on the default branch is genuinely green. Use whenever asked to push, commit and push, open a PR, merge, ship, land, or "verify the build is green" after a change, and when asked whether a change would pass CI. Covers reproducing each CI job locally in cost order, the commands whose exit code lies about success, and why the run on main — not the one on the PR — is what proves the work landed.
+description: Run the same checks CI runs before pushing, open the pull request, then confirm the CI run on the default branch is genuinely green. Use whenever asked to push, commit and push, open a PR, merge, ship, land, or "verify the build is green" after a change, and when asked whether a change would pass CI. Covers reproducing each CI job locally in cost order, the commands whose exit code lies about success, why the run on main — not the one on the PR — is what proves the work landed, and deleting the merged branches safely once it has.
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Verify, then ship
@@ -137,6 +137,54 @@ gh run list --branch main --limit 1 --json conclusion,status,displayTitle,url
 Treat `"conclusion": "success"` as the only evidence of success. `status: in_progress` with no conclusion is not a pass, and `cancelled`, `skipped` and `neutral` are not passes either.
 
 Where a repository has more than one workflow on the default branch, check **each** of them. A green test workflow beside a red publish workflow is not green.
+
+## 8. Clean up, once — and only once — main is green
+
+A merged branch is evidence until the default branch has proved the merge. Until
+then it is the thing you rebuild from if the merge has to come out, so **do not
+delete anything while the default-branch run is still going**.
+
+Once it has concluded `success`:
+
+```bash
+# Remote branches: `gh pr merge --delete-branch` already removed them. Confirm,
+# rather than assuming — a protected branch or a failed delete leaves it behind.
+git ls-remote --heads origin
+
+# Local tracking refs for branches the remote no longer has
+git remote prune origin --dry-run     # read it first
+git remote prune origin
+
+# Local branches whose work is genuinely in main
+git branch --merged main | grep -v '^\*\|main'
+```
+
+`--merged main` is the whole safety property, and it is worth understanding why:
+a branch is listed only when its tip is an ancestor of `main`, so everything on
+it is already there. Delete with `-d`, never `-D`:
+
+```bash
+git branch --merged main | grep -v '^\*\|main' | xargs -r git branch -d
+```
+
+`-d` refuses a branch that is not merged. `-D` deletes it anyway, and the only
+copy of the work with it. If `-d` refuses, that refusal is information — find
+out what is on the branch before overriding it.
+
+**A squash merge breaks this.** Squashing rewrites the commits, so the branch tip
+is *not* an ancestor of `main` and `--merged` will not list it even though every
+line landed. `-d` will refuse it, correctly by its own rule and unhelpfully by
+yours. Confirm the work is in main by diffing against it, then delete
+deliberately:
+
+```bash
+git diff --stat main..<branch>       # empty means main already has it all
+git branch -D <branch>               # only after that diff is empty
+```
+
+Closing the pull requests is not a separate step: merging closes them. A PR
+still showing "open" after a merge means the merge did not happen — check
+before reporting it as landed.
 
 ## Reporting
 
