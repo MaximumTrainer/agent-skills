@@ -75,7 +75,7 @@
     {
       "name": "gap-issue",
       "directory": "gap-issue",
-      "version": "1.0.1",
+      "version": "1.0.0",
       "license": "MIT",
       "description": "Record what a piece of work deliberately left unverified or unbuilt, as a precise GitHub issue, so the gap is tracked rather than forgotten. Use when closing work with an acceptance criterion unmet, when something is wired but untested, when hardware or a live account was unavailable, when asked to \"create issues for anything incomplete\" or \"what's left\", and when reconciling a backlog against what has actually shipped. The alternative to a gap issue is a silent false green.",
       "files": [

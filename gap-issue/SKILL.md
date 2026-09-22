@@ -3,7 +3,7 @@ name: gap-issue
 description: Record what a piece of work deliberately left unverified or unbuilt, as a precise GitHub issue, so the gap is tracked rather than forgotten. Use when closing work with an acceptance criterion unmet, when something is wired but untested, when hardware or a live account was unavailable, when asked to "create issues for anything incomplete" or "what's left", and when reconciling a backlog against what has actually shipped. The alternative to a gap issue is a silent false green.
 license: MIT
 metadata:
-  version: "1.0.1"
+  version: "1.0.0"
 ---
 
 # File the gap instead of hiding it
@@ -126,4 +126,3 @@ Never: a ticked box, an unqualified "all tests pass", or a summary that omits th
 - `test-theatre-audit` — finding the gaps nobody filed, in suites that pass vacuously
 - `verify-and-ship` — the green run that licenses a close
 - `deliberate-decisions` — for a choice that is settled, as opposed to a gap that is open
-
