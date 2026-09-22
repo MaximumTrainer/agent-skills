@@ -3,7 +3,7 @@ name: verify-and-ship
 description: Run the same checks CI runs before pushing, open the pull request, then confirm the CI run on the default branch is genuinely green. Use whenever asked to push, commit and push, open a PR, merge, ship, land, or "verify the build is green" after a change, and when asked whether a change would pass CI. Covers reproducing each CI job locally in cost order, the commands whose exit code lies about success, why the run on main — not the one on the PR — is what proves the work landed, and deleting the merged branches safely once it has.
 license: MIT
 metadata:
-  version: "1.1.0"
+  version: "1.1.1"
 ---
 
 # Verify, then ship
@@ -126,9 +126,21 @@ Report the conclusion of *that* run, not the PR's. They differ more often than p
 
 If it fails, say so plainly and fix forward.
 
-### The exit code that lies
+### The exit code that tells you nothing
 
-`gh run watch` and some `gh` subcommands **exit non-zero on a run that concluded successfully**, and some exit zero while a run is still in progress. Do not infer the result from the exit status. Read the conclusion explicitly:
+**`gh run watch` exits 0 whatever the run concluded.** Reporting failure is opt-in:
+
+```
+--exit-status    Exit with non-zero status if run fails
+```
+
+So a zero exit from bare `gh run watch` is not evidence of a green build — it only means the command finished. This is the trap, and it runs the opposite way to the obvious assumption: a script that treats `gh run watch && echo ok` as a gate passes on a failed run.
+
+A *non*-zero exit from bare `watch` is also not evidence of a red build: it means `gh` itself failed — expired auth, a rate limit, a dropped connection, no TTY to prompt for a run id, or the run not existing yet for that commit. Read the error on stderr before concluding anything about the build.
+
+`gh run list` likewise exits 0 for a run still in progress, with `conclusion` empty.
+
+Do not infer the result from the exit status in either direction. Read the conclusion explicitly:
 
 ```bash
 gh run list --branch main --limit 1 --json conclusion,status,displayTitle,url

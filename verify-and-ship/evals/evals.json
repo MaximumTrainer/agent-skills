@@ -18,14 +18,16 @@
     },
     {
       "id": 2,
-      "prompt": "I ran `gh run watch` and it exited 1 but the GitHub UI shows a green tick. Is my build broken or not?",
-      "expected_output": "Explains that the gh exit code is not a reliable success signal, and shows how to read the conclusion field explicitly.",
+      "prompt": "I've got `gh run watch` in our deploy script as the gate before we promote to prod. It's been exiting 0 every time so I assumed we were green, but we just promoted a build that had failing tests. What went wrong?",
+      "expected_output": "Identifies that bare gh run watch exits 0 regardless of the run's conclusion, so it cannot gate anything, and replaces it with an explicit conclusion check or --exit-status.",
       "files": [],
       "expectations": [
-        "The response explains that the gh exit code does not reliably indicate the run conclusion",
+        "The response identifies that bare gh run watch exits 0 whatever the run concluded",
+        "The response explains that reporting failure requires the --exit-status flag",
+        "The response states the exit code cannot be used as the gate as written",
         "The response gives a command that reads the conclusion field explicitly",
         "The response states that only a conclusion of success counts as a pass",
-        "The response notes that in_progress, cancelled, skipped or neutral are not passes"
+        "The response notes that in_progress with an empty conclusion is not a pass"
       ]
     },
     {

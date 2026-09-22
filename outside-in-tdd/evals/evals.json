@@ -19,15 +19,15 @@
     },
     {
       "id": 2,
-      "prompt": "here's my PR, can you review whether it was actually done test-first? git log --oneline shows:\na1b2c3d feat: add flow name uniqueness check\ne4f5g6h test: add tests for flow uniqueness\n(that's the whole branch)",
-      "expected_output": "Identifies that the implementation commit precedes the test commit, so the history shows test-after rather than test-first, and says so plainly rather than approving.",
+      "prompt": "here's my PR, can you review whether it was actually done test-first? git log --oneline shows:\na1b2c3d test: add tests for flow uniqueness\ne4f5g6h feat: add flow name uniqueness check\n(that's the whole branch, newest first)",
+      "expected_output": "Reads the log newest-first, so the implementation commit is the older one and the tests were committed after it. Says the history shows test-after, and that ordering alone is weak evidence either way - the test must be shown to fail without the implementation.",
       "files": [],
       "expectations": [
-        "The response notices the implementation commit comes BEFORE the test commit in the history",
-        "The response states the sequence does not show red-then-green",
-        "The response does not approve the change as test-driven",
-        "The response explains that the commit history is the evidence for the sequence",
-        "The response shows what the test-first commit ordering would have looked like"
+        "The response reads git log as newest-first and identifies the feat commit as the older one",
+        "The response states the tests were committed after the implementation",
+        "The response does not approve the change as test-driven on the strength of the commit order",
+        "The response proposes checking out the test commit and running it to see whether it fails",
+        "The response notes that commit ordering alone can be manufactured by staging or rebasing"
       ]
     },
     {

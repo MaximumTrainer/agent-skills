@@ -252,7 +252,7 @@
     {
       "name": "verify-and-ship",
       "directory": "verify-and-ship",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "license": "MIT",
       "description": "Run the same checks CI runs before pushing, open the pull request, then confirm the CI run on the default branch is genuinely green. Use whenever asked to push, commit and push, open a PR, merge, ship, land, or \"verify the build is green\" after a change, and when asked whether a change would pass CI. Covers reproducing each CI job locally in cost order, the commands whose exit code lies about success, why the run on main — not the one on the PR — is what proves the work landed, and deleting the merged branches safely once it has.",
       "files": [
