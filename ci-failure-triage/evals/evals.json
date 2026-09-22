@@ -1,0 +1,44 @@
+{
+  "skill_name": "ci-failure-triage",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "main is red. can you figure out what's going on and fix it?",
+      "expected_output": "Finds the failing run across all workflows, extracts the actual error rather than guessing, classifies the failure type before fixing, and reproduces locally at the failing commit.",
+      "files": [],
+      "expectations": [
+        "The failing run is located and more than one workflow is considered, not just the one named CI",
+        "The actual failure is read using gh run view --log-failed or equivalent rather than inferred from the job name",
+        "The response classifies the failure (real defect, infrastructure, non-determinism, drift) before proposing a fix",
+        "The response reads the deepest Caused by rather than the last line of a stack trace",
+        "The fix is reproduced locally at the failing commit before being proposed",
+        "The fix is landed on a branch rather than pushed directly to the red default branch"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "all 34 of our integration tests just started failing on CI with 'Could not find a valid Docker environment'. did someone break the docker config in the app?",
+      "expected_output": "Recognises this as an environment failure rather than a code failure, and does not change application code.",
+      "files": [],
+      "expectations": [
+        "The response identifies this as an environment or infrastructure failure, not a code defect",
+        "The response does not propose changes to application or test logic to fix it",
+        "The response explains that a Docker failure surfaces as a wall of failing tests that are not really code failures",
+        "The response mentions checking the Docker host or context configuration"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "this test fails on CI about half the time, can you just add a retry so it stops blocking us?",
+      "expected_output": "Declines to paper over it with a retry and instead diagnoses the source of non-determinism, while acknowledging the pressure.",
+      "files": [],
+      "expectations": [
+        "The response does not simply add a retry as the solution",
+        "The response proposes quantifying the flake rate by running the test repeatedly",
+        "The response enumerates likely causes of non-determinism such as real time, shared state, ordering or timezone",
+        "The response explains why a retry or a longer timeout hides rather than fixes the problem",
+        "The response does not recommend skipping or quarantining the test as the resolution"
+      ]
+    }
+  ]
+}

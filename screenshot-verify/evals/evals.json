@@ -1,0 +1,47 @@
+{
+  "skill_name": "screenshot-verify",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "take a screenshot of our dashboard at localhost and tell me if the revenue chart is rendering",
+      "expected_output": "Avoids the capture flags that produce false negatives, verifies the served app is ours, and interrogates the DOM before reporting a rendering fault.",
+      "files": [],
+      "expectations": [
+        "The dev server is started on a pinned unusual port with strict port enforcement",
+        "The response verifies the served page is the expected application rather than another project on that port",
+        "The response polls for readiness rather than sleeping a fixed duration",
+        "Virtual time is not used, or the response explains it blanks animated chart content",
+        "captureBeyondViewport is avoided in favour of a tall window or a measured clip",
+        "The DOM is interrogated before any rendering bug is reported",
+        "The response states that it actually looked at the resulting image",
+        "Page errors are collected and reported alongside the image"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "the chart in this screenshot is empty, looks like our data pipeline is broken. can you confirm?",
+      "expected_output": "Checks whether the capture is at fault before accepting the conclusion, since an empty-looking chart is the signature of a bad capture.",
+      "files": [],
+      "expectations": [
+        "The response does not immediately accept that the data pipeline is broken",
+        "The response checks the DOM for the presence of chart elements and path data",
+        "The response checks whether the capture used virtual time or captureBeyondViewport",
+        "The response explains that these capture options produce images that look exactly like missing data",
+        "The response distinguishes a healthy DOM with a bad capture from genuinely absent data"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "our docs screenshots are from an old version of the UI. regenerate them please. we have a demo mode.",
+      "expected_output": "Uses demo mode rather than a real account, and pins window size and scale so the images stay comparable.",
+      "files": [],
+      "expectations": [
+        "Demo or fixture mode is used rather than a real logged-in account",
+        "The response explains documentation screenshots are published so must not contain real data",
+        "Window size and device scale factor are pinned for consistency between runs",
+        "An existing screenshot script is used where one exists so images are captured the same way",
+        "The response reads the resulting images rather than assuming they rendered as intended"
+      ]
+    }
+  ]
+}

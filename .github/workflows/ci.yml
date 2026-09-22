@@ -29,6 +29,10 @@ jobs:
       - name: Validate catalogue is not stale
         run: python3 tools/build_catalogue.py --check
 
+      # Every skill must carry evals that are specific enough to grade.
+      - name: Validate skill evals
+        run: python3 tools/check_evals.py
+
       - name: Hook and version-bump tests
         run: python3 -m unittest discover -s tests -v
 

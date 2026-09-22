@@ -1,0 +1,44 @@
+{
+  "skill_name": "single-source-constants",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "a user reported that our app says 'Tired' when the tooltip claims they should be 'Fresh'. TSB was -1.05. the scoring code looks right to me though?",
+      "expected_output": "Recognises this as a duplicated-threshold problem rather than a calculation bug, locates both definitions, and collapses them so the tooltip is generated from the same data the logic uses.",
+      "files": [],
+      "expectations": [
+        "The response treats this as a duplicated threshold rather than a scoring or calculation bug",
+        "The response searches for the threshold value in both code and prose, including docs and UI copy",
+        "The response proposes one definition in the domain that everything else derives from",
+        "The proposed band definition includes the human-readable label and range text, not just the numbers",
+        "The tooltip or UI copy is generated from the definition rather than typed separately",
+        "The response proposes a test asserting the bands are contiguous with no gap or overlap"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "adding a new 'at risk' tier to our account health score, between 'healthy' and 'churned'. thresholds are 70 and 40. where should these live?",
+      "expected_output": "Defines the tiers as data with their display text in one place, rather than adding another if-branch and another string in the UI.",
+      "files": [],
+      "expectations": [
+        "The tiers are defined as data, such as an array of band objects, rather than an if/else ladder",
+        "The response states the presentation text belongs in the same definition as the numbers",
+        "The response addresses boundary inclusivity explicitly, such as half-open intervals",
+        "The response warns against restating the numbers in documentation or UI copy",
+        "The response proposes a boundary or contiguity test"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "can you audit our repo for places where the same magic number appears in both the code and the docs? something's drifted and I can't find it",
+      "expected_output": "Runs a targeted search for numeric literals appearing in both source and prose files, and reports the intersection as drift candidates.",
+      "files": [],
+      "expectations": [
+        "The response searches prose files (markdown, HTML) as well as source files",
+        "The response identifies the intersection of numbers appearing in both code and documentation as the drift candidates",
+        "For each candidate the response asks whether the code owns the number",
+        "The response recommends the documentation point at the constant rather than restating its value"
+      ]
+    }
+  ]
+}

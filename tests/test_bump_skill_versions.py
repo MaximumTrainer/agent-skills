@@ -129,6 +129,23 @@ class TestTouchedSkills(unittest.TestCase):
     def test_ignores_non_skill_paths(self):
         self.assertEqual(bsv.touched_skills(["README.md", "tools/x.py", ".githooks/pre-commit"], self.skills), [])
 
+    def test_ignores_development_only_files_inside_a_skill(self):
+        # A version bump tells every seeded repo there is something to pull, so
+        # it must mean the vendored content changed. Evals and tests are not
+        # vendored; bumping for them shows OUTDATED everywhere for nothing.
+        self.assertEqual(bsv.touched_skills(["alpha/evals/evals.json"], self.skills), [])
+        self.assertEqual(bsv.touched_skills(["alpha/tests/test_x.py"], self.skills), [])
+        self.assertEqual(bsv.touched_skills(["alpha/CHANGELOG.md"], self.skills), [])
+
+    def test_still_bumps_for_vendored_payload(self):
+        self.assertEqual(bsv.touched_skills(["alpha/references/x.md"], self.skills), ["alpha"])
+        self.assertEqual(bsv.touched_skills(["alpha/scripts/s.py"], self.skills), ["alpha"])
+        self.assertEqual(bsv.touched_skills(["alpha/assets/t.txt"], self.skills), ["alpha"])
+        self.assertEqual(bsv.touched_skills(["alpha/README.md"], self.skills), ["alpha"])
+
+    def test_bare_skill_directory_path_does_not_bump(self):
+        self.assertEqual(bsv.touched_skills(["alpha"], self.skills), [])
+
     def test_deduplicates_and_sorts(self):
         paths = ["beta/SKILL.md", "beta/scripts/s.sh", "alpha/SKILL.md"]
         self.assertEqual(bsv.touched_skills(paths, self.skills), ["alpha", "beta"])

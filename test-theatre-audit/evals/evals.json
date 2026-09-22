@@ -1,0 +1,46 @@
+{
+  "skill_name": "test-theatre-audit",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "our integration suite is green but we just shipped a bug that it should have caught. can you audit whether those tests are actually running?",
+      "expected_output": "Hunts the specific vacuous patterns rather than reading tests at face value, and checks the skipped count and suite duration as cheap global signals.",
+      "files": [],
+      "expectations": [
+        "The response checks the skipped count and the suite duration as initial signals",
+        "The response searches for environment-gated early returns that skip silently",
+        "The response searches for assertions inside loops with no preceding non-empty check",
+        "The response searches for swallowed exceptions around fixture or container setup",
+        "The response checks whether a self-skipping suite has a guard that fails when setup should have worked",
+        "Findings are ranked by how much false confidence they buy rather than by ease of fix",
+        "The response notes that coverage percentages do not detect these patterns"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "is this test ok?\n\n[Fact]\npublic async Task ProfilesAllCollections() {\n  if (string.IsNullOrWhiteSpace(_conn)) return;\n  var results = await _profiler.ProfileAsync(_conn);\n  foreach (var r in results) { r.RowCount.Should().BeGreaterThan(0); }\n}",
+      "expected_output": "Identifies two independent vacuity bugs: the silent early return, and the loop that passes on an empty collection.",
+      "files": [],
+      "expectations": [
+        "The response identifies the early return as a silent skip that reports nothing",
+        "The response identifies that the foreach passes vacuously when results is empty",
+        "The response recommends asserting the collection is non-empty before the loop",
+        "The response recommends the skip be reported rather than silent",
+        "The response recommends a guard test that fails when the connection should have been available"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "we have a test file with 12 test methods and everything passes. anything to worry about?",
+      "expected_output": "Proposes counting assertions against test methods and checking for assertion-free tests, rather than accepting a passing suite as evidence.",
+      "files": [],
+      "expectations": [
+        "The response proposes comparing the number of assertions against the number of test methods",
+        "The response flags assertion-free tests as passing merely because nothing threw",
+        "The response considers whether mocks are being asserted against themselves rather than real behaviour",
+        "The response considers whether snapshots were bulk-accepted rather than reviewed",
+        "The response does not accept the suite passing as sufficient evidence of coverage"
+      ]
+    }
+  ]
+}

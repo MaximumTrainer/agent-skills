@@ -1,0 +1,42 @@
+{
+  "skill_name": "connect-iq-monkeyc",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "my Connect IQ data field records custom values fine during the activity but they're missing from the FIT file afterwards. any ideas?",
+      "expected_output": "Knows the three silent FitContributor failure modes and checks field lifetime scope first.",
+      "files": [],
+      "expectations": [
+        "The response checks whether the field references are held in class scope for the session's lifetime",
+        "The response explains that locally-scoped fields are garbage collected and the data vanishes",
+        "The response notes the resulting file still validates, which is why the failure is silent",
+        "The response considers the setData/addLap yield requirement as another cause",
+        "The response recommends a fake session recording calls in order rather than faking Toybox.FitContributor"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "the chip uptime counter in my watch app decodes as a negative number after the device has been running a while. it's a UINT32.",
+      "expected_output": "Identifies signed 32-bit Number overflow and gives the subtract-in-Long-then-narrow rule.",
+      "files": [],
+      "expectations": [
+        "The response identifies that a Monkey C Number is a signed 32-bit integer",
+        "The response explains that a UINT32 value does not fit and decodes negative",
+        "The response recommends subtracting the reference point while still a Long, then narrowing",
+        "The response does not suggest simply casting or taking an absolute value"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "adding BLE scanning to my watch app to pick up a broadcast-only sensor. onScanResults is getting hammered and the app runs out of memory.",
+      "expected_output": "Knows Connect IQ has no scan filter, so every advertisement arrives and the rejection path must be allocation-free.",
+      "files": [],
+      "expectations": [
+        "The response explains that Connect IQ has no scan filter so every advertisement in range arrives",
+        "The response recommends keeping the rejection path cheap and allocation-free",
+        "The response warns against allocating per advertisement, including string concatenation",
+        "The response notes a broadcast-only device accepts no connection so connection limits do not apply"
+      ]
+    }
+  ]
+}

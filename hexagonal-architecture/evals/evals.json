@@ -1,0 +1,45 @@
+{
+  "skill_name": "hexagonal-architecture",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Adding an 'archive a project' feature to our Spring Boot service. Where does everything go? We're ports-and-adapters. I was going to start with the JPA entity.",
+      "expected_output": "Redirects from entity-first to port-first, gives the ordered sequence starting with the outbound port and an in-memory implementation, and keeps the domain free of JPA and Spring types.",
+      "files": [],
+      "expectations": [
+        "The response advises against starting with the JPA entity",
+        "The outbound port interface is defined before the adapter that implements it",
+        "An in-memory implementation of the port is created in the test tree before the real adapter",
+        "The failing unit test for the service comes before the service implementation",
+        "The controller is said to depend on the inbound port interface, not the concrete service class",
+        "The response states the domain must not import Spring, JPA or other framework types"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "quick review - is this ok?\n\n@RestController\nclass ProjectController(private val projects: ProjectService) {\n  @GetMapping(\"/projects/{id}\")\n  fun get(@PathVariable id: UUID): ProjectDto {\n    val p = projects.repo.findById(id).orElseThrow()\n    return ProjectDto(p.id, p.name, if (p.archivedAt != null) \"ARCHIVED\" else \"ACTIVE\")\n  }\n}",
+      "expected_output": "Flags three distinct violations: the controller depends on the concrete service, it reaches through the service to the repository, and it contains domain logic deriving the status.",
+      "files": [],
+      "expectations": [
+        "The response flags that the controller names the concrete ProjectService rather than an inbound port interface",
+        "The response flags the controller reaching through the service into the repository",
+        "The response flags the status derivation as domain logic that does not belong in a controller",
+        "The response recommends the controller depend on an interface",
+        "The response suggests the status derivation move into the domain"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Our domain tests need a database container to run and take 4 minutes. Everyone's stopped running them locally. How do we fix this?",
+      "expected_output": "Diagnoses the slowness as a dependency-rule violation - the domain depends on persistence - and recommends a fast domain suite against in-memory port implementations, keeping container tests for the adapters only.",
+      "files": [],
+      "expectations": [
+        "The response identifies domain logic depending on a database as the root cause",
+        "The response recommends in-memory implementations of the outbound ports for domain and use-case tests",
+        "The response keeps container-backed tests for the adapters rather than removing them entirely",
+        "The response does not simply suggest making the containers faster or mocking the database driver",
+        "The response mentions that the clock or other ambient dependencies should be injected"
+      ]
+    }
+  ]
+}

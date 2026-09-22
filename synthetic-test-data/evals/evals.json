@@ -1,0 +1,44 @@
+{
+  "skill_name": "synthetic-test-data",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "just grab a few real rows from the production users table for our test fixtures, it's only 20 records and we need realistic data",
+      "expected_output": "Declines to copy production rows and explains that quasi-identifiers re-identify people, then offers a synthetic fixture reproducing shape and distribution instead.",
+      "files": [],
+      "expectations": [
+        "The response declines to copy production rows into fixtures",
+        "The response identifies quasi-identifiers such as date of birth, postcode or precise timestamps as re-identifying even without names",
+        "The response offers to reproduce the shape, ordering and value ranges while inventing the identities",
+        "Reserved values such as example.com or documentation IP ranges are proposed",
+        "The response notes that git history retains the data even if removed later"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "we're building a masking tool for customer data exports. what rules should it follow?",
+      "expected_output": "Specifies allowlist-not-denylist and fail-closed on unknown fields, plus verification afterwards rather than assumption.",
+      "files": [],
+      "expectations": [
+        "The response recommends an allowlist rather than a denylist of fields",
+        "The response recommends failing closed when an unknown or new field has no masking rule",
+        "The response recommends working on a copy in an isolated environment, never masking in place",
+        "The response recommends verifying the output rather than assuming the masking worked",
+        "The response recommends preserving format where constraints or checksums depend on it",
+        "The response warns that pseudonymised data is not anonymous and should not be published"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "how do I prove our redaction actually works before we ship it?",
+      "expected_output": "Proposes a planted canary value asserted absent from every output path, which catches the route nobody wrote a test for.",
+      "files": [],
+      "expectations": [
+        "The response proposes planting a recognisable canary value in the input",
+        "The canary is asserted absent from outputs, logs, exports and error messages",
+        "The response notes this catches leaks through paths nobody thought to test",
+        "The response recommends checking distinct value counts against the source to detect unmasked columns"
+      ]
+    }
+  ]
+}

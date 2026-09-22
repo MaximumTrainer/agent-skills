@@ -1,0 +1,45 @@
+{
+  "skill_name": "engineering-white-paper",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "write me a white paper on trunk-based development for our engineering blog. we've been doing it for a year.",
+      "expected_output": "Follows the house structure, opens in the reader's problem, names mechanisms rather than adjectives, and includes an honest drawbacks section with mitigations.",
+      "files": [],
+      "expectations": [
+        "The paper opens with the reader's problem rather than with the practice",
+        "The practice is defined including what it is not",
+        "The origin is attributed and a primary source is referenced where one exists",
+        "Benefits name a mechanism rather than an adjective such as 'improves quality'",
+        "A drawbacks section is present, with a mitigation paired to each drawback",
+        "An adoption section gives a concrete first-week sequence",
+        "No invented statistics or percentages appear without provenance",
+        "Alternatives are described fairly rather than straw-manned"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "add a stat to the TDD white paper - something like 'teams using TDD see 40% fewer defects', it'll make the argument land better",
+      "expected_output": "Declines to invent the figure, explains why an unsourced number undermines the paper, and offers a mechanism-based claim instead.",
+      "files": [],
+      "expectations": [
+        "The response does not invent or fabricate the statistic",
+        "The response explains that a number without provenance weakens rather than strengthens the argument",
+        "The response offers a mechanism-based claim, or a figure with a named source, as the alternative",
+        "The response offers to find a real citation if one exists"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "should the spec-by-example thing be a white paper or one of our agent skills?",
+      "expected_output": "Distinguishes the two by reader and purpose rather than treating them as interchangeable, and suggests pairing them.",
+      "files": [],
+      "expectations": [
+        "The response distinguishes the audience: a human deciding whether to adopt versus an agent doing the task now",
+        "The response distinguishes the content: why and when versus how",
+        "The response suggests the two can be paired and cross-referenced",
+        "The response gives a concrete recommendation rather than only listing considerations"
+      ]
+    }
+  ]
+}

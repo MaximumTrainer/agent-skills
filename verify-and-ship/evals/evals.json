@@ -1,0 +1,44 @@
+{
+  "skill_name": "verify-and-ship",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "done with the feature, can you push it and make sure the build's green? repo has a Gradle backend and a Vite frontend, GitHub Actions.",
+      "expected_output": "Reproduces CI's jobs locally in cost order before pushing, pushes a branch rather than main, opens a PR, then confirms the run on the default branch specifically - not the PR's.",
+      "files": [],
+      "expectations": [
+        "The workflow files are read to determine what CI actually runs",
+        "Local checks are run in cost order, cheapest first, before pushing",
+        "The response checks whether the aggregate verify script omits anything CI runs, such as a format check",
+        "A branch is pushed rather than committing directly to the default branch",
+        "After merge, the response confirms the CI run on the default branch, not only the PR checks",
+        "The response reads the run conclusion explicitly rather than relying on the gh exit code",
+        "The response reports which suites did not really run, if any"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I ran `gh run watch` and it exited 1 but the GitHub UI shows a green tick. Is my build broken or not?",
+      "expected_output": "Explains that the gh exit code is not a reliable success signal, and shows how to read the conclusion field explicitly.",
+      "files": [],
+      "expectations": [
+        "The response explains that the gh exit code does not reliably indicate the run conclusion",
+        "The response gives a command that reads the conclusion field explicitly",
+        "The response states that only a conclusion of success counts as a pass",
+        "The response notes that in_progress, cancelled, skipped or neutral are not passes"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Our tests pass locally every time but CI fails maybe 1 in 3 runs on the date-handling tests. Before I push this fix can you check it'll actually pass?",
+      "expected_output": "Identifies timezone as the likely dimension, runs the suite under multiple offsets including a half-hour one, and refuses to declare it green from a single-timezone local run.",
+      "files": [],
+      "expectations": [
+        "The response identifies timezone or locale as the likely differing dimension",
+        "The suite is run under more than one timezone, including at least one non-UTC offset",
+        "The response does not declare the fix verified from a single default-timezone run",
+        "The response treats a runner-environment-dependent failure as a real defect in the test rather than infrastructure flakiness"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "skill_name": "api-quirk-fixtures",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "found a bug - our sync reads the athlete's HRV from the wrong end of the wellness window so it shows a value from two months ago. want to just fix the index?",
+      "expected_output": "Declines to fix only the index, because the fixture shares the code's wrong assumption and so cannot fail. Reproduces the trait in the fixture first, writes a failing test, then fixes.",
+      "files": [],
+      "expectations": [
+        "The response explains that fixing only the index leaves the fixture encoding the same wrong assumption",
+        "The trait is reproduced in the fixture before the code is changed",
+        "The trait is added to the fixture's header list of real-world traits",
+        "A failing test is written and observed failing before the fix",
+        "A row is added to the integration's quirks table documenting the trait and its consequence",
+        "The response recommends confirming the behaviour against the live API rather than only reasoning about it",
+        "The response addresses normalising ordering at the adapter boundary rather than relying on the returned order"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "our zod schema keeps rejecting real API responses in production but all our tests pass. the field is max_speed.",
+      "expected_output": "Identifies the optional-versus-nullish distinction and the fixture blind spot that hides it, and warns against defaulting the null to zero.",
+      "files": [],
+      "expectations": [
+        "The response identifies that the API sends an explicit null rather than omitting the field",
+        "The response recommends nullish rather than optional for the schema",
+        "The response explains the fixture omits the key instead of nulling it, which is why tests pass",
+        "The response warns that defaulting the null to 0 would read as a real measurement",
+        "The response states that no-data must stay distinguishable from zero through to presentation"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "writing fixtures for a new payments integration. what should the fixture actually contain?",
+      "expected_output": "Specifies present/null/absent coverage, deterministic construction, exported constants, and a trait list - rather than a single happy-path record.",
+      "files": [],
+      "expectations": [
+        "The fixture covers a field present, explicitly null, and absent entirely",
+        "The fixture is deterministic with a fixed reference date and no randomness",
+        "Constants the tests assert on are exported from the fixture rather than hard-coded in tests",
+        "A header comment lists the real-world traits the fixture reproduces",
+        "The response recommends capturing a real payload shape rather than inventing it from documentation",
+        "The response recommends no production or identifying data in the fixture"
+      ]
+    }
+  ]
+}

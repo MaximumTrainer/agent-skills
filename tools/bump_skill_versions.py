@@ -206,14 +206,28 @@ def run_check():
     return 1 if errors else 0
 
 
+# Only these are vendored into a consuming repo (see tools/build_catalogue.py).
+# A version bump is a signal to every seeded repo that there is something to
+# pull, so it must mean "what consumers receive changed". Development-only
+# files - evals, tests, changelogs - change nothing a consumer would receive,
+# and bumping for them shows OUTDATED everywhere while pulling does nothing.
+VENDORED_FILES = ("SKILL.md", "README.md")
+VENDORED_DIRS = ("references/", "scripts/", "assets/")
+
+
+def is_vendored(relpath):
+    """True when a path inside a skill is part of what consumers receive."""
+    return relpath in VENDORED_FILES or relpath.startswith(VENDORED_DIRS)
+
+
 def touched_skills(paths, skills):
-    """Skill names whose directory contains at least one of the given paths."""
+    """Skill names whose vendored content is changed by the given paths."""
     known = set(skills)
     touched = set()
     for p in paths:
-        top = p.split("/", 1)[0]
-        if top in known:
-            touched.add(top)
+        head, _, rest = p.partition("/")
+        if head in known and rest and is_vendored(rest):
+            touched.add(head)
     return sorted(touched)
 
 

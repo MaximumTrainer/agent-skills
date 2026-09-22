@@ -1,0 +1,43 @@
+{
+  "skill_name": "deliberate-decisions",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I found this in our FIT recorder and it looks like pointless indirection - it defers setData and addLap by a timer tick instead of just calling them in sequence. Can you clean it up?",
+      "expected_output": "Checks for a recorded decision before changing anything, and establishes that the deferral is load-bearing rather than accidental.",
+      "files": [],
+      "expectations": [
+        "The response looks for a recorded decision before making the change",
+        "The response checks git history for the code being previously changed and reverted",
+        "The response checks comments at the site and agent instruction files",
+        "The response does not remove the deferral without establishing why it is there",
+        "The response recognises that the failure mode would be silent, with data vanishing from a still-valid file"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "we keep having people 'fix' the same three weird bits of our codebase and then revert. how do we stop this happening?",
+      "expected_output": "Proposes a register whose entries state the failure mode, plus a test pinning the behaviour where possible, rather than relying on prose alone.",
+      "files": [],
+      "expectations": [
+        "The response proposes a single canonical location for recording the decisions",
+        "Each entry is said to state what breaks if the code is changed, not merely that it should not be",
+        "The response recommends a comment at the code site pointing to the register",
+        "The response recommends a test that pins the behaviour where it can be mechanically enforced",
+        "The response distinguishes between categories such as chosen, forced, dormant and provisional"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "adding a new export format to our reporting module. There's an old XmlReportWriter in there that looks like the closest thing to copy from.",
+      "expected_output": "Checks whether the old writer is dormant before extending it, since a deprecated module is exactly what an agent gravitates to when its name matches the request.",
+      "files": [],
+      "expectations": [
+        "The response checks whether XmlReportWriter is deprecated or dormant before building on it",
+        "The response looks for a dormant or do-not-extend list in the repo documentation",
+        "The response determines or asks where new code should go instead if the module is retired",
+        "The response does not assume the closest-named existing module is the right base"
+      ]
+    }
+  ]
+}

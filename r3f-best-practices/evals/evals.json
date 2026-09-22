@@ -1,0 +1,42 @@
+{
+  "skill_name": "r3f-best-practices",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "my R3F scene re-renders constantly and drops frames. here's the animation code:\n\nuseFrame(() => {\n  setRotation(r => r + 0.01);\n})",
+      "expected_output": "Identifies calling setState inside useFrame as the central R3F performance mistake and gives the ref-mutation alternative.",
+      "files": [],
+      "expectations": [
+        "The response identifies calling setState inside useFrame as the problem",
+        "The response explains this triggers a React re-render every frame",
+        "The response recommends mutating the object via a ref instead",
+        "The response mentions using delta rather than a fixed increment for frame-rate independence",
+        "The response does not recommend memoising the component as the primary fix"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "we use zustand for our R3F app state and subscribe to the whole store in every component. is that ok?",
+      "expected_output": "Identifies whole-store subscription as causing unnecessary re-renders and recommends selectors.",
+      "files": [],
+      "expectations": [
+        "The response identifies subscribing to the entire store as causing unnecessary re-renders",
+        "The response recommends selectors that subscribe to the specific slice needed",
+        "The response mentions transient subscriptions for values that change every frame",
+        "The response mentions keeping stores focused rather than one large store"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "toggling a 3D model on and off in our R3F scene causes a visible stutter each time. we conditionally render it with {show && <Model />}",
+      "expected_output": "Identifies remount cost and recommends toggling visibility instead of unmounting.",
+      "files": [],
+      "expectations": [
+        "The response identifies that conditional rendering unmounts and recreates the model",
+        "The response recommends toggling the visible prop instead of unmounting",
+        "The response explains this keeps the instance and its GPU resources alive",
+        "The response mentions preloading or suspense where the asset is loaded asynchronously"
+      ]
+    }
+  ]
+}

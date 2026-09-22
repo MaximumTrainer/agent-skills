@@ -1,0 +1,43 @@
+{
+  "skill_name": "skill-exchange",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "we need a skill for how we do code review in this repo. can you write one?",
+      "expected_output": "Checks the shared catalogue before writing anything, and distinguishes what to vendor from what genuinely belongs local.",
+      "files": [],
+      "expectations": [
+        "The catalogue is searched before any new skill is written",
+        "The search is by the problem rather than only by a guessed skill name",
+        "The response distinguishes reusing an existing skill from writing a local one",
+        "If a shared skill fits, it is pulled rather than copy-pasted or reworded",
+        "Repo-specific detail is proposed as a thin local skill deferring to the shared one, not spliced into a vendored copy",
+        "The response does not vendor the entire catalogue"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "`skills.py status` says DIVERGED for intervals-icu-api. what do I do?",
+      "expected_output": "Knows this is the one state where ordering matters and contributes before pulling.",
+      "files": [],
+      "expectations": [
+        "The response explains DIVERGED means both local edits and a newer upstream version exist",
+        "The response says to contribute the local change BEFORE pulling",
+        "The response explains that pulling first would silently destroy the local work",
+        "The response recommends reading the diff first"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "someone added a note to our copy of the outside-in-tdd skill saying our acceptance tests live in src/test/acceptance. should that go upstream?",
+      "expected_output": "Applies the general-versus-repo-specific test and splits the change rather than sending the path upstream.",
+      "files": [],
+      "expectations": [
+        "The response identifies the file path as repo-specific rather than general",
+        "The response applies a test such as whether the change would help a repo with a different stack and layout",
+        "The response recommends keeping the path in a thin local skill",
+        "The response does not propose contributing the repo-specific path to the catalogue"
+      ]
+    }
+  ]
+}

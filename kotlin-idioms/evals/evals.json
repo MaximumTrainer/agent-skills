@@ -1,0 +1,44 @@
+{
+  "skill_name": "kotlin-idioms",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "review this for me:\n\nfun activate(id: UUID): Account {\n  var account = repo.findById(id)!!\n  account.status = \"ACTIVE\"\n  return repo.save(account)\n}",
+      "expected_output": "Flags the non-null assertion as the most serious issue and shows the Elvis alternative, plus the avoidable var.",
+      "files": [],
+      "expectations": [
+        "The non-null assertion is flagged as the most serious issue",
+        "The response explains that it throws without saying what was null",
+        "An Elvis operator with a domain exception is offered as the replacement",
+        "The avoidable var is flagged",
+        "The response notes that the port should return a nullable type rather than requiring the assertion"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "can I just annotate my domain data class with @Entity? saves writing a mapper.",
+      "expected_output": "Explains the specific breakage - data class equality over generated ids breaks Hibernate identity - and recommends keeping the two separate.",
+      "files": [],
+      "expectations": [
+        "The response explains that data class equals/hashCode over a generated id breaks Hibernate identity semantics",
+        "The response notes that two unsaved entities with null ids would compare equal",
+        "The response recommends a separate JPA entity in the persistence adapter with a mapping function",
+        "The response acknowledges this is more code and says what it buys",
+        "The response notes the domain would also gain a framework dependency"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "detekt just started failing after we bumped Kotlin to 2.0.20, with some error about the compiler version. did our code break?",
+      "expected_output": "Recognises the version coupling rather than treating it as a code defect, and gives the classpath pin.",
+      "files": [],
+      "expectations": [
+        "The response identifies this as a detekt/Kotlin version coupling rather than a code defect",
+        "The response explains that detekt embeds a specific Kotlin compiler version",
+        "The response gives the resolution strategy pinning Kotlin artifacts on detekt's own classpath",
+        "The response notes the pin does not affect how the project compiles",
+        "The response does not propose changing application code or regenerating the baseline to hide it"
+      ]
+    }
+  ]
+}

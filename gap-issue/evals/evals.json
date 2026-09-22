@@ -1,0 +1,43 @@
+{
+  "skill_name": "gap-issue",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I finished the payment adapter, 6 of 7 acceptance criteria pass. the last one needs a real Stripe sandbox key which we don't have in CI. can you close the issue?",
+      "expected_output": "Closes the work honestly by filing a precise gap issue for the unverified criterion, linking both directions, and stating the gap plainly rather than ticking the box.",
+      "files": [],
+      "expectations": [
+        "A gap issue is filed for the unverified criterion rather than the box being ticked",
+        "The gap issue states what is unverified, why, what is not known, and what would close it",
+        "The gap issue assesses the blast radius if the assumption is wrong",
+        "The gap issue is linked from the closing comment of the original issue and vice versa",
+        "The response reports the gap plainly in its summary alongside the success",
+        "The response does not describe the work as fully verified or all tests passing"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "go through our open issues and close anything that's already shipped",
+      "expected_output": "Works from evidence - a green run on the default branch containing the work - rather than from memory, and quotes that evidence in each closing comment.",
+      "files": [],
+      "expectations": [
+        "Issues are closed only where the criteria are demonstrably met",
+        "The response verifies a CI run on the default branch that contains the work concluded successfully",
+        "The closing comment quotes the evidence, such as the run URL or which test covers which criterion",
+        "Issues with some but not all criteria met are not silently closed",
+        "The response asks before bulk-closing, or proceeds carefully rather than closing many at once without confirmation"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "write me a gap issue: 'the tests could be better'",
+      "expected_output": "Pushes back that this is a wish rather than a trackable gap, and asks what specifically a reader would have assumed was verified.",
+      "files": [],
+      "expectations": [
+        "The response identifies that this is too vague to be actionable or trackable",
+        "The response distinguishes a gap (something a reader would assume was verified and was not) from a general improvement wish",
+        "The response asks what specifically is unverified rather than filing the issue as stated"
+      ]
+    }
+  ]
+}

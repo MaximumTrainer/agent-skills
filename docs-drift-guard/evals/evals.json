@@ -1,0 +1,44 @@
+{
+  "skill_name": "docs-drift-guard",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I changed the ontology JSON and now the website page for it is out of date. can you update website/src/reference/ontology.md?",
+      "expected_output": "Refuses to hand-edit generated output and edits the source plus regenerates instead, then runs the drift check.",
+      "files": [],
+      "expectations": [
+        "The response determines whether the page is generated before editing it",
+        "The response does not hand-edit a file inside a generated output tree",
+        "The source is edited and the generator re-run instead",
+        "The drift check is run after regenerating",
+        "The response explains that a hand edit would be discarded or fail the drift check"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "we're adding a build timestamp to the generated docs pages so readers know how fresh they are. sensible?",
+      "expected_output": "Identifies that a timestamp makes generated output non-deterministic and breaks the drift check on every run, and offers the layout-level alternative.",
+      "files": [],
+      "expectations": [
+        "The response identifies that a timestamp would make the drift check fail on every run",
+        "The response explains that generated files must be a pure function of their sources",
+        "The response offers rendering the timestamp at build time outside the checked output tree",
+        "The same reasoning is applied to commit SHAs or version strings"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "our README documents features we removed two releases ago and the user guide screenshots are ancient. can you sort the docs out?",
+      "expected_output": "Verifies each claim against the source rather than trusting the prose, and regenerates screenshots rather than leaving stale images beside new text.",
+      "files": [],
+      "expectations": [
+        "Claims are verified by grepping the source rather than trusting the existing prose",
+        "UI claims such as menu paths and labels are checked against the actual UI definitions",
+        "Build commands are cross-checked against the CI workflow",
+        "Removed or dormant features are not documented",
+        "Screenshots are regenerated rather than left stale",
+        "The response proposes a check so the documentation cannot silently drift again"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "skill_name": "outside-in-tdd",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Can you implement issue #42 for me? It's 'reject duplicate flow names with a 409'. The repo is a Kotlin/Spring service, hexagonal layout, and the team is strict about TDD.",
+      "expected_output": "Reads the issue, works outside-in from the acceptance criterion, commits a failing test before the implementation, and confirms each test failed for the right reason before moving inward.",
+      "files": [],
+      "expectations": [
+        "The response reads the issue before writing any code",
+        "The response names which ring it is entering at and why",
+        "A failing test is written and run BEFORE any production code",
+        "The response explicitly confirms the test failed for the right reason (missing behaviour, not a typo or harness error)",
+        "The red test is committed as its own commit, separate from the implementation",
+        "Commit messages carry the issue reference (#42)",
+        "The response does not use --no-verify at any point",
+        "An in-memory implementation of the port is preferred over a mocking framework for the repository"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "here's my PR, can you review whether it was actually done test-first? git log --oneline shows:\na1b2c3d feat: add flow name uniqueness check\ne4f5g6h test: add tests for flow uniqueness\n(that's the whole branch)",
+      "expected_output": "Identifies that the implementation commit precedes the test commit, so the history shows test-after rather than test-first, and says so plainly rather than approving.",
+      "files": [],
+      "expectations": [
+        "The response notices the implementation commit comes BEFORE the test commit in the history",
+        "The response states the sequence does not show red-then-green",
+        "The response does not approve the change as test-driven",
+        "The response explains that the commit history is the evidence for the sequence",
+        "The response shows what the test-first commit ordering would have looked like"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I need to add a retry with exponential backoff to our SQS consumer. Where do I even start with the tests?",
+      "expected_output": "Identifies that the change is a rule inside existing plumbing, so the entry ring is a unit test over a pure function, and pushes the clock and randomness out as injected dependencies so the test is deterministic.",
+      "files": [],
+      "expectations": [
+        "The response names the ring it would enter at and justifies the choice",
+        "The response recommends entering at the unit or pure-function level rather than an end-to-end test",
+        "The response treats the clock or sleep as an injected dependency rather than calling it directly",
+        "The response addresses determinism, avoiding real time or real randomness in the test",
+        "The response does not recommend writing the implementation first"
+      ]
+    }
+  ]
+}

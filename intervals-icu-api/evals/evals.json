@@ -1,0 +1,46 @@
+{
+  "skill_name": "intervals-icu-api",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "write me a function that gets the athlete's most recent HRV reading from Intervals.icu",
+      "expected_output": "Applies the two quirks that make the naive version wrong: wellness is oldest-first, and future rows are forecasts.",
+      "files": [],
+      "expectations": [
+        "The response does not read index 0 of the wellness array as the latest value",
+        "The response states that /wellness is oldest-first, unlike /activities",
+        "Rows are sorted by date explicitly rather than relying on the returned order",
+        "Future-dated rows are excluded from current-state readings",
+        "The response explains future-dated wellness rows are forecasts, not measurements",
+        "Authentication uses HTTP Basic with the literal username API_KEY",
+        "A missing value is returned as absent rather than zero"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "our sprint analysis shows some reps with an average speed higher than the max speed for the same lap. is our maths wrong?",
+      "expected_output": "Recognises this as a known upstream behaviour rather than a calculation bug.",
+      "files": [],
+      "expectations": [
+        "The response identifies this as known upstream behaviour rather than a local calculation error",
+        "The response explains the two fields are computed differently upstream",
+        "The response advises not assuming the average-below-max invariant holds",
+        "The response does not propose 'fixing' the numbers by clamping without saying why"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "we want to write our planned sessions into the athlete's Intervals.icu calendar. anything to watch out for?",
+      "expected_output": "Applies the identify-and-undo rule for writing into someone's real training history, and read-back verification.",
+      "files": [],
+      "expectations": [
+        "The response requires a deterministic naming scheme so a re-sync updates rather than duplicates",
+        "The response states the athlete's own events and intervals must not be modified or deleted",
+        "The response requires a documented way to identify and undo what was written",
+        "Writes are idempotent so retries converge rather than accumulate",
+        "The response recommends reading the activity back and diffing against what was intended",
+        "The response mentions rate limiting and that a 429 can silently drop the last request"
+      ]
+    }
+  ]
+}

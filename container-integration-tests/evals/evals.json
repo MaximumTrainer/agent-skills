@@ -1,0 +1,45 @@
+{
+  "skill_name": "container-integration-tests",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "our Postgres repository adapter only has mocks. add a real integration test with Testcontainers.",
+      "expected_output": "Pins the image, makes readiness a real client call rather than a log line, seeds through the production parser, and adds a start guard so a failed container cannot masquerade as a skip.",
+      "files": [],
+      "expectations": [
+        "The container image tag is pinned rather than latest",
+        "Readiness is a real client call with a deadline, not a log-line wait strategy",
+        "The fixture seeds through the adapter's own connection-string or options parser rather than a hand-built client",
+        "A start guard test fails when Docker is available but the container did not start",
+        "The guard carries the underlying startup exception",
+        "The container is reused per class with isolation by unique schema or namespace rather than teardown",
+        "The response notes the Windows Docker named-pipe requirement or how to configure the Docker host"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "added the emulator tests, they pass locally and in CI in about 40ms. ship it?",
+      "expected_output": "Notices that 40ms is impossible for a container-backed suite and concludes it never started one.",
+      "files": [],
+      "expectations": [
+        "The response identifies that 40ms is far too fast for a suite that starts a container",
+        "The response concludes the container almost certainly never started",
+        "The response recommends checking the skip or guard behaviour rather than accepting the green result",
+        "The response does not approve shipping on the basis of the passing result"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "our cosmos db emulator tests hang forever in CI and then get killed. we're using a log message wait strategy.",
+      "expected_output": "Recognises the log-based wait as the failure, and knows the older Cosmos image logs to a file inside the container so no log wait can ever match.",
+      "files": [],
+      "expectations": [
+        "The response identifies the log-line wait strategy as the cause",
+        "The response explains that the image may log to a file inside the container so the wait can never match",
+        "The response recommends replacing the wait with a real client call retried against a deadline",
+        "The response mentions using a lighter or newer emulator image where one exists",
+        "The response recommends heavy images be gated behind an opt-in variable or a separate workflow"
+      ]
+    }
+  ]
+}

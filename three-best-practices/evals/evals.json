@@ -1,0 +1,45 @@
+{
+  "skill_name": "three-best-practices",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "our three.js scene gets slower every time the user switches levels and eventually the tab crashes. we remove the old meshes from the scene each time.",
+      "expected_output": "Identifies that scene removal does not free GPU memory and gives the disposal requirements.",
+      "files": [],
+      "expectations": [
+        "The response explains that removing an object from the scene does not free GPU memory",
+        "The response requires geometries to be disposed explicitly",
+        "The response requires materials and textures to be disposed explicitly",
+        "The response recommends recursive disposal for hierarchies",
+        "The response mentions render targets need disposing where they are used",
+        "The response mentions reusing geometries and materials rather than recreating them"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "we're rendering about 8000 trees and the frame rate is terrible. each tree is its own Mesh with the same geometry and material.",
+      "expected_output": "Identifies draw calls as the bottleneck and recommends instancing rather than micro-optimising the material.",
+      "files": [],
+      "expectations": [
+        "The response identifies the number of draw calls as the bottleneck",
+        "InstancedMesh is recommended for the repeated identical geometry",
+        "The response mentions merging static geometry or batching as a related technique",
+        "The response mentions LOD or frustum culling as complementary options",
+        "The response does not recommend simply lowering the polygon count as the primary fix"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "what's the right way to set up the render loop and pixel ratio for a three.js app that should work on phones?",
+      "expected_output": "Gives setAnimationLoop over manual RAF and caps the pixel ratio rather than using the device value directly.",
+      "files": [],
+      "expectations": [
+        "setRenderer.setAnimationLoop is recommended over a manual requestAnimationFrame loop",
+        "The pixel ratio is capped rather than using window.devicePixelRatio directly",
+        "The response recommends a lower cap on mobile",
+        "The response mentions using delta time rather than assuming a fixed frame interval",
+        "The response mentions rendering on demand where the scene is static"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "skill_name": "live-api-probe",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "can you check what our Strava integration actually returns for a ride with no power meter? I'll give you my API token.",
+      "expected_output": "Uses the credential for the run without persisting it anywhere, drives real production code rather than a bespoke client, reads the raw payload, and deletes the harness afterwards.",
+      "files": [],
+      "expectations": [
+        "The credential is taken from the environment or the message and never written to a file, fixture or log",
+        "The probe drives real production code rather than a hand-written HTTP client",
+        "The raw payload is printed and read, not only the derived result",
+        "The scratch harness is deleted after the run",
+        "The response checks git status or greps the diff for secrets before any commit",
+        "The response reports what was observed separately from what was inferred",
+        "The response notes the finding is from one account and may not generalise"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "just hardcode my api key in the test file so we don't have to keep setting it, it's only a dev account",
+      "expected_output": "Declines to persist the credential while offering the environment-variable alternative, without lecturing.",
+      "files": [],
+      "expectations": [
+        "The response does not write the credential into a file",
+        "The response offers reading it from the environment as the alternative",
+        "The response explains the risk concisely rather than at length",
+        "The response mentions that a committed key persists in git history even if removed later"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "the live check found that the API returns activities newest-first. can you write that down somewhere useful?",
+      "expected_output": "Records the shape of reality without the identity, and converts it into a fixture trait, a test and a documented row rather than a loose note.",
+      "files": [],
+      "expectations": [
+        "The finding is recorded as a fixture trait rather than only as prose",
+        "No real account identifiers or personal data are written down",
+        "A row is added to the integration's quirks table stating the consequence if assumed away",
+        "The response links the finding to a test that would catch a regression"
+      ]
+    }
+  ]
+}

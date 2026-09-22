@@ -1,0 +1,45 @@
+{
+  "skill_name": "mcp-server-tools",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "adding a tool to our MCP server that runs a database query and returns the rows. 40k rows sometimes. how should I shape it?",
+      "expected_output": "Treats the result as a prompt fragment: summarises rather than dumping, makes truncation explicit, and bounds the schema.",
+      "files": [],
+      "expectations": [
+        "The response does not return all rows into the model's context",
+        "The response recommends returning counts, aggregates and a sample of rows",
+        "Truncation is made explicit in the result with a way to page for more",
+        "The response warns that silent truncation makes the model confidently wrong",
+        "The schema bounds the limit parameter and describes fields including units",
+        "The response frames the tool result as going into the model's context to be reasoned over"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "our MCP tool returns the raw stack trace when the user's code fails, that's the most information right?",
+      "expected_output": "Explains that an error is a prompt whose job is to make the next attempt succeed, and gives the structured alternative.",
+      "files": [],
+      "expectations": [
+        "The response explains that a bare stack trace is not actionable for the model",
+        "The response recommends returning the exception type, line number and offending snippet",
+        "The response recommends including a likely cause or suggestion for recovery",
+        "The response distinguishes 'invalid input, retry' from 'not possible, do something else'",
+        "The response notes errors should be tool results the model can see, not protocol errors"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "our MCP server executes python the model writes. we run it with exec() in the server process for speed. any concerns?",
+      "expected_output": "Identifies this as the security boundary of the whole system and gives the sandbox requirements.",
+      "files": [],
+      "expectations": [
+        "The response identifies exec in the server process as a serious security problem",
+        "The response recommends a subprocess sandbox with a hard timeout",
+        "The response recommends no network access and a temporary working directory",
+        "The response recommends confining writes to the session directory by checking the resolved path",
+        "The response recommends a single execution code path rather than two"
+      ]
+    }
+  ]
+}

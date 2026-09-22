@@ -1,0 +1,44 @@
+{
+  "skill_name": "qt6-cross-platform",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "migrated our Qt5 app to Qt6. builds clean, but the combo box on the settings page does nothing now. no errors anywhere.",
+      "expected_output": "Knows the removed overload silently breaks name-based auto-connection, and points at the startup warning as the diagnostic.",
+      "files": [],
+      "expectations": [
+        "The response identifies that the QString overload of currentIndexChanged was removed in Qt6",
+        "The response explains that connectSlotsByName auto-slots then silently never fire",
+        "The response directs the user to grep the startup log for 'No matching signal'",
+        "The response recommends an explicit connect to currentTextChanged",
+        "The response recommends pointer-to-member connect syntax so this class of failure becomes a compile error"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "our AppImage works perfectly on my machine but users report it crashes the moment anything loads over HTTPS.",
+      "expected_output": "Recognises the dlopen blind spot in linuxdeploy's static scan and names the specific missing libraries.",
+      "files": [],
+      "expectations": [
+        "The response identifies that linuxdeploy's static scan misses libraries Qt loads via dlopen",
+        "The response names NSS modules as the likely cause of a crash on first HTTPS",
+        "The response mentions bundling the matched OpenSSL pair rather than libcrypto alone",
+        "The response recommends verifying the packaged artefact on a clean system rather than the build machine",
+        "The response recommends adding a verify step for anything newly dlopened"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "porting our Qt desktop app to WebAssembly. the settings dialog freezes the browser tab completely.",
+      "expected_output": "Identifies exec() and nested event loops as unavailable on the single-threaded WASM target and gives the async conversion.",
+      "files": [],
+      "expectations": [
+        "The response identifies QDialog::exec or a nested event loop as the cause",
+        "The response explains the WASM target is effectively single-threaded so blocking freezes the tab",
+        "The response recommends converting exec() to open() plus a signal or callback",
+        "The response notes other WASM constraints such as no filesystem, no QProcess or no direct sockets",
+        "The response recommends platform-specific code sit behind an adapter rather than ifdefs in business logic"
+      ]
+    }
+  ]
+}

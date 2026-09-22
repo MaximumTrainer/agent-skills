@@ -1,0 +1,47 @@
+{
+  "skill_name": "spec-by-example-issue",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "can you flesh out issue #12? right now the whole body is 'show recovery status on the dashboard'. we pull the data from Intervals.icu.",
+      "expected_output": "Probes the codebase and the real API before writing anything, then produces numbered requirements plus Given/When/Then examples with concrete values and a fixed reference date, and an outside-in test plan naming files.",
+      "files": [],
+      "expectations": [
+        "The response investigates the codebase and the real API response shape before writing the spec",
+        "Requirements are numbered and each states observable behaviour rather than implementation",
+        "Acceptance criteria are written as concrete examples with real values, not placeholders",
+        "Examples pin a fixed reference date rather than relying on the current date",
+        "At least one unhappy or boundary example is included (empty, null, or missing data)",
+        "Non-goals or scope boundaries are stated explicitly",
+        "An outside-in test plan names the ring, the file and the test for each criterion",
+        "Any new fixture work is called out explicitly"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "here's the acceptance criteria I wrote, good enough to start?\nGiven the user has some recent activity\nWhen they open the dashboard\nThen they see an appropriate readiness score",
+      "expected_output": "Identifies that every term in the criterion is unfalsifiable and rewrites it with concrete values and a fixed date.",
+      "files": [],
+      "expectations": [
+        "The response identifies that 'some recent activity' and 'appropriate' are not verifiable",
+        "The response explains that a criterion with placeholders defers the decision it exists to settle",
+        "A rewritten criterion is offered with concrete values",
+        "The rewritten criterion pins a fixed reference date",
+        "The response notes that the requirement is not yet understood if it cannot be written as a concrete example"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "we need to add SSO. write up the issue for me - it's a big one, SAML and OIDC, plus SCIM provisioning later",
+      "expected_output": "Recognises the scope is too large for one issue and splits it into vertical slices with stated dependencies, rather than producing one giant spec.",
+      "files": [],
+      "expectations": [
+        "The response proposes splitting the work rather than writing a single issue",
+        "The split is by vertical slice delivering observable behaviour, not by architectural layer",
+        "Dependencies between the issues are expressed as issue references",
+        "SCIM provisioning is separated from the authentication work",
+        "Each proposed issue is small enough to have roughly five or fewer criteria"
+      ]
+    }
+  ]
+}
