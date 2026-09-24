@@ -13,6 +13,9 @@
         "The response recommends recursive disposal for hierarchies",
         "The response mentions render targets need disposing where they are used",
         "The response mentions reusing geometries and materials rather than recreating them"
+      ],
+      "discriminating": [
+        0
       ]
     },
     {
@@ -26,6 +29,9 @@
         "The response mentions merging static geometry or batching as a related technique",
         "The response mentions LOD or frustum culling as complementary options",
         "The response does not recommend simply lowering the polygon count as the primary fix"
+      ],
+      "discriminating": [
+        1
       ]
     },
     {
@@ -39,6 +45,9 @@
         "The response recommends a lower cap on mobile",
         "The response mentions using delta time rather than assuming a fixed frame interval",
         "The response mentions rendering on demand where the scene is static"
+      ],
+      "discriminating": [
+        1
       ]
     }
   ]

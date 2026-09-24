@@ -41,7 +41,8 @@ def load(path):
         raise ValueError(f"invalid JSON: {e}") from e
 
 
-def check_skill(name, errors, warnings, stats):
+def check_skill(name, errors, warnings, stats, n_discriminating=None):
+    n_discriminating = n_discriminating if n_discriminating is not None else [0]
     path = ROOT / name / "evals" / "evals.json"
     if not path.is_file():
         errors.append(f"{name}: no evals/evals.json")
@@ -108,6 +109,32 @@ def check_skill(name, errors, warnings, stats):
         if len(set(e.strip().lower() for e in expectations)) != len(expectations):
             errors.append(f"{label}: duplicate expectations")
 
+        # At least one expectation must be one the skill alone should produce.
+        # Without this, an eval can pass entirely on things the model already
+        # does, which measures the model rather than the skill. The pilot found
+        # 28 of 37 expectations passing in both arms, which is what this stops.
+        marks = ev.get("discriminating")
+        if not isinstance(marks, list) or not marks:
+            errors.append(
+                f"{label}: no discriminating expectations. Mark the index of at least one "
+                f"expectation the skill alone should produce, as \"discriminating\": [i]"
+            )
+        else:
+            if len(set(marks)) != len(marks):
+                errors.append(f"{label}: duplicate entries in discriminating")
+            for i in marks:
+                if not isinstance(i, int) or not 0 <= i < len(expectations):
+                    errors.append(
+                        f"{label}: discriminating index {i!r} is out of range "
+                        f"(0..{len(expectations) - 1})"
+                    )
+            if len(marks) == len(expectations):
+                warnings.append(
+                    f"{label}: every expectation is marked discriminating, which is "
+                    f"unlikely - the mark loses meaning if it is not selective"
+                )
+            n_discriminating[0] += len(marks)
+
         for text in expectations:
             if not isinstance(text, str) or not text.strip():
                 errors.append(f"{label}: empty expectation")
@@ -127,9 +154,10 @@ def check_skill(name, errors, warnings, stats):
 def main(argv):
     skills = sorted(p.parent.name for p in ROOT.glob("*/SKILL.md"))
     errors, warnings, stats = [], [], []
+    n_discriminating = [0]
 
     for name in skills:
-        check_skill(name, errors, warnings, stats)
+        check_skill(name, errors, warnings, stats, n_discriminating)
 
     if "--stats" in argv:
         print(f"{'skill':<32} {'evals':>6} {'expectations':>13}")
@@ -145,7 +173,8 @@ def main(argv):
     total_e = sum(s[1] for s in stats)
     total_x = sum(s[2] for s in stats)
     print(
-        f"{len(skills)} skill(s), {total_e} eval(s), {total_x} expectation(s); "
+        f"{len(skills)} skill(s), {total_e} eval(s), {total_x} expectation(s) "
+        f"({n_discriminating[0]} discriminating); "
         f"{len(errors)} error(s), {len(warnings)} warning(s)"
     )
     return 1 if errors else 0

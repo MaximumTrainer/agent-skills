@@ -13,6 +13,10 @@
         "If a shared skill fits, it is pulled rather than copy-pasted or reworded",
         "Repo-specific detail is proposed as a thin local skill deferring to the shared one, not spliced into a vendored copy",
         "The response does not vendor the entire catalogue"
+      ],
+      "discriminating": [
+        0,
+        4
       ]
     },
     {
@@ -25,6 +29,10 @@
         "The response says to contribute the local change BEFORE pulling",
         "The response explains that pulling first would silently destroy the local work",
         "The response recommends reading the diff first"
+      ],
+      "discriminating": [
+        1,
+        2
       ]
     },
     {
@@ -37,6 +45,10 @@
         "The response applies a test such as whether the change would help a repo with a different stack and layout",
         "The response recommends keeping the path in a thin local skill",
         "The response does not propose contributing the repo-specific path to the catalogue"
+      ],
+      "discriminating": [
+        2,
+        3
       ]
     }
   ]

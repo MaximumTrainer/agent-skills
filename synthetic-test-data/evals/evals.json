@@ -12,6 +12,11 @@
         "The response offers to reproduce the shape, ordering and value ranges while inventing the identities",
         "Reserved values such as example.com or documentation IP ranges are proposed",
         "The response notes that git history retains the data even if removed later"
+      ],
+      "discriminating": [
+        0,
+        1,
+        4
       ]
     },
     {
@@ -26,6 +31,10 @@
         "The response recommends verifying the output rather than assuming the masking worked",
         "The response recommends preserving format where constraints or checksums depend on it",
         "The response warns that pseudonymised data is not anonymous and should not be published"
+      ],
+      "discriminating": [
+        1,
+        5
       ]
     },
     {
@@ -38,6 +47,10 @@
         "The canary is asserted absent from outputs, logs, exports and error messages",
         "The response notes this catches leaks through paths nobody thought to test",
         "The response recommends checking distinct value counts against the source to detect unmasked columns"
+      ],
+      "discriminating": [
+        0,
+        1
       ]
     }
   ]

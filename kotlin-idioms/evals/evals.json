@@ -12,6 +12,9 @@
         "An Elvis operator with a domain exception is offered as the replacement",
         "The avoidable var is flagged",
         "The response notes that the port should return a nullable type rather than requiring the assertion"
+      ],
+      "discriminating": [
+        4
       ]
     },
     {
@@ -25,6 +28,9 @@
         "The response recommends a separate JPA entity in the persistence adapter with a mapping function",
         "The response acknowledges this is more code and says what it buys",
         "The response notes the domain would also gain a framework dependency"
+      ],
+      "discriminating": [
+        1
       ]
     },
     {
@@ -38,6 +44,12 @@
         "The response gives the resolution strategy pinning Kotlin artifacts on detekt's own classpath",
         "The response notes the pin does not affect how the project compiles",
         "The response does not propose changing application code or regenerating the baseline to hide it"
+      ],
+      "discriminating": [
+        0,
+        1,
+        2,
+        3
       ]
     }
   ]

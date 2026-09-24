@@ -23,6 +23,16 @@
       ]
     },
     {
+      "name": "code-review",
+      "directory": "code-review",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Perform a structured code review of a diff, PR, or set of files, evaluating test coverage, test correctness, security, and whether the code reads as fluent, human-readable, domain-oriented language rather than mechanical implementation detail. Use this skill whenever the user asks to \"review this code,\" \"review my PR,\" \"check this diff,\" or shares a code change and asks for feedback, even if they don't name these four areas explicitly — they are the default lens for any review. Also use it when asked to write review comments, assess \"is this ready to merge,\" or audit test suites for gaps.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
       "name": "connect-iq-monkeyc",
       "directory": "connect-iq-monkeyc",
       "version": "1.0.0",

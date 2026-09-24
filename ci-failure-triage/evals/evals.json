@@ -13,6 +13,10 @@
         "The response reads the deepest Caused by rather than the last line of a stack trace",
         "The fix is reproduced locally at the failing commit before being proposed",
         "The fix is landed on a branch rather than pushed directly to the red default branch"
+      ],
+      "discriminating": [
+        2,
+        3
       ]
     },
     {
@@ -25,6 +29,9 @@
         "The response does not propose changes to application or test logic to fix it",
         "The response explains that a Docker failure surfaces as a wall of failing tests that are not really code failures",
         "The response mentions checking the Docker host or context configuration"
+      ],
+      "discriminating": [
+        0
       ]
     },
     {
@@ -38,6 +45,10 @@
         "The response enumerates likely causes of non-determinism such as real time, shared state, ordering or timezone",
         "The response explains why a retry or a longer timeout hides rather than fixes the problem",
         "The response does not recommend skipping or quarantining the test as the resolution"
+      ],
+      "discriminating": [
+        0,
+        1
       ]
     }
   ]

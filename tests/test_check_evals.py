@@ -56,12 +56,22 @@ class TestEvalSchema(unittest.TestCase):
                 self.assertGreaterEqual(len(data["evals"]), 2)
                 for ev in data["evals"]:
                     self.assertEqual(
-                        set(ev) , {"id", "prompt", "expected_output", "files", "expectations"},
+                        set(ev),
+                        {"id", "prompt", "expected_output", "files", "expectations",
+                         "discriminating"},
                         f"{name}#{ev.get('id')} has unexpected or missing fields",
                     )
                     self.assertIsInstance(ev["id"], int)
                     self.assertIsInstance(ev["files"], list)
                     self.assertGreaterEqual(len(ev["expectations"]), 3)
+                    # every eval must name at least one expectation the skill
+                    # alone should produce, and fewer than all of them
+                    marks = ev["discriminating"]
+                    self.assertTrue(marks, f"{name}#{ev['id']} marks nothing discriminating")
+                    self.assertLess(len(marks), len(ev["expectations"]),
+                                    f"{name}#{ev['id']} marks everything discriminating")
+                    for i in marks:
+                        self.assertIn(i, range(len(ev["expectations"])))
 
     def test_ids_are_unique_and_sequential(self):
         for name in skills():
@@ -117,6 +127,7 @@ class TestCheckerCatchesProblems(unittest.TestCase):
             "expected_output": "Something happens.",
             "files": [],
             "expectations": ["The response does A", "The response does B", "The response does C"],
+            "discriminating": [0],
         }
         ev.update(over)
         return ev
@@ -162,6 +173,34 @@ class TestCheckerCatchesProblems(unittest.TestCase):
             self.write(tmp, "skillx", {"skill_name": "skillx", "evals": [self.good_eval(), self.good_eval()]})
             self.check(tmp, "skillx")
         self.assertTrue(any("duplicate id" in e for e in self.errors))
+
+    def test_unmarked_eval_is_rejected(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as td:
+            tmp = Path(td)
+            ev = self.good_eval(); ev.pop("discriminating", None)
+            self.write(tmp, "skillx", {"skill_name": "skillx", "evals": [ev, self.good_eval(id=2)]})
+            self.check(tmp, "skillx")
+        self.assertTrue(any("no discriminating expectations" in e for e in self.errors))
+
+    def test_out_of_range_discriminating_index_is_rejected(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as td:
+            tmp = Path(td)
+            bad = self.good_eval(); bad["discriminating"] = [9]
+            self.write(tmp, "skillx", {"skill_name": "skillx", "evals": [bad, self.good_eval(id=2)]})
+            self.check(tmp, "skillx")
+        self.assertTrue(any("out of range" in e for e in self.errors))
+
+    def test_marking_everything_warns(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as td:
+            tmp = Path(td)
+            ev = self.good_eval(); ev["discriminating"] = [0, 1, 2]
+            self.write(tmp, "skillx", {"skill_name": "skillx", "evals": [ev, self.good_eval(id=2)]})
+            self.check(tmp, "skillx")
+        self.assertTrue(any("loses meaning" in w for w in self.warnings))
+        self.assertEqual(self.errors, [])
 
     def test_vague_expectation_is_a_warning(self):
         import tempfile

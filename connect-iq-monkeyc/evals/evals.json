@@ -12,6 +12,9 @@
         "The response notes the resulting file still validates, which is why the failure is silent",
         "The response considers the setData/addLap yield requirement as another cause",
         "The response recommends a fake session recording calls in order rather than faking Toybox.FitContributor"
+      ],
+      "discriminating": [
+        1
       ]
     },
     {
@@ -24,6 +27,10 @@
         "The response explains that a UINT32 value does not fit and decodes negative",
         "The response recommends subtracting the reference point while still a Long, then narrowing",
         "The response does not suggest simply casting or taking an absolute value"
+      ],
+      "discriminating": [
+        0,
+        2
       ]
     },
     {
@@ -36,6 +43,10 @@
         "The response recommends keeping the rejection path cheap and allocation-free",
         "The response warns against allocating per advertisement, including string concatenation",
         "The response notes a broadcast-only device accepts no connection so connection limits do not apply"
+      ],
+      "discriminating": [
+        0,
+        1
       ]
     }
   ]

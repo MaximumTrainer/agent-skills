@@ -14,6 +14,12 @@
         "The guard carries the underlying startup exception",
         "The container is reused per class with isolation by unique schema or namespace rather than teardown",
         "The response notes the Windows Docker named-pipe requirement or how to configure the Docker host"
+      ],
+      "discriminating": [
+        1,
+        2,
+        3,
+        4
       ]
     },
     {
@@ -26,6 +32,9 @@
         "The response concludes the container almost certainly never started",
         "The response recommends checking the skip or guard behaviour rather than accepting the green result",
         "The response does not approve shipping on the basis of the passing result"
+      ],
+      "discriminating": [
+        3
       ]
     },
     {
@@ -39,6 +48,9 @@
         "The response recommends replacing the wait with a real client call retried against a deadline",
         "The response mentions using a lighter or newer emulator image where one exists",
         "The response recommends heavy images be gated behind an opt-in variable or a separate workflow"
+      ],
+      "discriminating": [
+        1
       ]
     }
   ]

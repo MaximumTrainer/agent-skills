@@ -13,6 +13,11 @@
         "The proposed band definition includes the human-readable label and range text, not just the numbers",
         "The tooltip or UI copy is generated from the definition rather than typed separately",
         "The response proposes a test asserting the bands are contiguous with no gap or overlap"
+      ],
+      "discriminating": [
+        3,
+        4,
+        5
       ]
     },
     {
@@ -26,6 +31,9 @@
         "The response addresses boundary inclusivity explicitly, such as half-open intervals",
         "The response warns against restating the numbers in documentation or UI copy",
         "The response proposes a boundary or contiguity test"
+      ],
+      "discriminating": [
+        1
       ]
     },
     {
@@ -38,6 +46,9 @@
         "The response identifies the intersection of numbers appearing in both code and documentation as the drift candidates",
         "For each candidate the response asks whether the code owns the number",
         "The response recommends the documentation point at the constant rather than restating its value"
+      ],
+      "discriminating": [
+        1
       ]
     }
   ]

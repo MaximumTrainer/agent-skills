@@ -14,6 +14,11 @@
         "The response explains future-dated wellness rows are forecasts, not measurements",
         "Authentication uses HTTP Basic with the literal username API_KEY",
         "A missing value is returned as absent rather than zero"
+      ],
+      "discriminating": [
+        1,
+        3,
+        4
       ]
     },
     {
@@ -26,6 +31,10 @@
         "The response explains the two fields are computed differently upstream",
         "The response advises not assuming the average-below-max invariant holds",
         "The response does not propose 'fixing' the numbers by clamping without saying why"
+      ],
+      "discriminating": [
+        0,
+        2
       ]
     },
     {
@@ -40,6 +49,10 @@
         "Writes are idempotent so retries converge rather than accumulate",
         "The response recommends reading the activity back and diffing against what was intended",
         "The response mentions rate limiting and that a 429 can silently drop the last request"
+      ],
+      "discriminating": [
+        0,
+        2
       ]
     }
   ]

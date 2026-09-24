@@ -14,6 +14,9 @@
         "After merge, the response confirms the CI run on the default branch, not only the PR checks",
         "The response reads the run conclusion explicitly rather than relying on the gh exit code",
         "The response reports which suites did not really run, if any"
+      ],
+      "discriminating": [
+        2
       ]
     },
     {
@@ -28,6 +31,10 @@
         "The response gives a command that reads the conclusion field explicitly",
         "The response states that only a conclusion of success counts as a pass",
         "The response notes that in_progress with an empty conclusion is not a pass"
+      ],
+      "discriminating": [
+        0,
+        1
       ]
     },
     {
@@ -40,6 +47,9 @@
         "The suite is run under more than one timezone, including at least one non-UTC offset",
         "The response does not declare the fix verified from a single default-timezone run",
         "The response treats a runner-environment-dependent failure as a real defect in the test rather than infrastructure flakiness"
+      ],
+      "discriminating": [
+        1
       ]
     }
   ]

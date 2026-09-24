@@ -13,6 +13,10 @@
         "The failing unit test for the service comes before the service implementation",
         "The controller is said to depend on the inbound port interface, not the concrete service class",
         "The response states the domain must not import Spring, JPA or other framework types"
+      ],
+      "discriminating": [
+        1,
+        2
       ]
     },
     {
@@ -26,6 +30,10 @@
         "The response flags the status derivation as domain logic that does not belong in a controller",
         "The response recommends the controller depend on an interface",
         "The response suggests the status derivation move into the domain"
+      ],
+      "discriminating": [
+        0,
+        3
       ]
     },
     {
@@ -39,6 +47,10 @@
         "The response keeps container-backed tests for the adapters rather than removing them entirely",
         "The response does not simply suggest making the containers faster or mocking the database driver",
         "The response mentions that the clock or other ambient dependencies should be injected"
+      ],
+      "discriminating": [
+        3,
+        4
       ]
     }
   ]

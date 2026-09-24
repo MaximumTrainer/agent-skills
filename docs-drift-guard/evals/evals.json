@@ -12,6 +12,9 @@
         "The source is edited and the generator re-run instead",
         "The drift check is run after regenerating",
         "The response explains that a hand edit would be discarded or fail the drift check"
+      ],
+      "discriminating": [
+        1
       ]
     },
     {
@@ -24,6 +27,10 @@
         "The response explains that generated files must be a pure function of their sources",
         "The response offers rendering the timestamp at build time outside the checked output tree",
         "The same reasoning is applied to commit SHAs or version strings"
+      ],
+      "discriminating": [
+        0,
+        1
       ]
     },
     {
@@ -38,6 +45,9 @@
         "Removed or dormant features are not documented",
         "Screenshots are regenerated rather than left stale",
         "The response proposes a check so the documentation cannot silently drift again"
+      ],
+      "discriminating": [
+        0
       ]
     }
   ]

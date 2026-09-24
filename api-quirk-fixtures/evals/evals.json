@@ -14,6 +14,10 @@
         "A row is added to the integration's quirks table documenting the trait and its consequence",
         "The response recommends confirming the behaviour against the live API rather than only reasoning about it",
         "The response addresses normalising ordering at the adapter boundary rather than relying on the returned order"
+      ],
+      "discriminating": [
+        0,
+        2
       ]
     },
     {
@@ -27,6 +31,11 @@
         "The response explains the fixture omits the key instead of nulling it, which is why tests pass",
         "The response warns that defaulting the null to 0 would read as a real measurement",
         "The response states that no-data must stay distinguishable from zero through to presentation"
+      ],
+      "discriminating": [
+        0,
+        1,
+        3
       ]
     },
     {
@@ -41,6 +50,9 @@
         "A header comment lists the real-world traits the fixture reproduces",
         "The response recommends capturing a real payload shape rather than inventing it from documentation",
         "The response recommends no production or identifying data in the fixture"
+      ],
+      "discriminating": [
+        4
       ]
     }
   ]

@@ -12,6 +12,9 @@
         "The response recommends mutating the object via a ref instead",
         "The response mentions using delta rather than a fixed increment for frame-rate independence",
         "The response does not recommend memoising the component as the primary fix"
+      ],
+      "discriminating": [
+        0
       ]
     },
     {
@@ -24,6 +27,9 @@
         "The response recommends selectors that subscribe to the specific slice needed",
         "The response mentions transient subscriptions for values that change every frame",
         "The response mentions keeping stores focused rather than one large store"
+      ],
+      "discriminating": [
+        1
       ]
     },
     {
@@ -36,6 +42,9 @@
         "The response recommends toggling the visible prop instead of unmounting",
         "The response explains this keeps the instance and its GPU resources alive",
         "The response mentions preloading or suspense where the asset is loaded asynchronously"
+      ],
+      "discriminating": [
+        1
       ]
     }
   ]

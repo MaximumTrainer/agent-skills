@@ -12,6 +12,11 @@
         "The response checks comments at the site and agent instruction files",
         "The response does not remove the deferral without establishing why it is there",
         "The response recognises that the failure mode would be silent, with data vanishing from a still-valid file"
+      ],
+      "discriminating": [
+        0,
+        2,
+        4
       ]
     },
     {
@@ -25,6 +30,9 @@
         "The response recommends a comment at the code site pointing to the register",
         "The response recommends a test that pins the behaviour where it can be mechanically enforced",
         "The response distinguishes between categories such as chosen, forced, dormant and provisional"
+      ],
+      "discriminating": [
+        1
       ]
     },
     {
@@ -37,6 +45,10 @@
         "The response looks for a dormant or do-not-extend list in the repo documentation",
         "The response determines or asks where new code should go instead if the module is retired",
         "The response does not assume the closest-named existing module is the right base"
+      ],
+      "discriminating": [
+        1,
+        3
       ]
     }
   ]

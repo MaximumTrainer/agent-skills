@@ -17,6 +17,10 @@
         "A .dockerignore is provided",
         "The response includes a docker buildx build command with --platform linux/amd64,linux/arm64",
         "lint_dockerfile.py reports no errors or warnings on the produced Dockerfile"
+      ],
+      "discriminating": [
+        2,
+        5
       ]
     },
     {
@@ -35,6 +39,9 @@
         "The final stage sets a non-root USER",
         "CMD uses exec (JSON array) form",
         "Sizes are presented as estimates unless an image was actually built and measured"
+      ],
+      "discriminating": [
+        9
       ]
     },
     {
@@ -50,6 +57,10 @@
         "The final stage runs as non-root",
         "The response addresses Cloud Run's PORT environment variable or listens on 8080",
         "CMD or ENTRYPOINT uses exec form and starts server.js"
+      ],
+      "discriminating": [
+        0,
+        2
       ]
     },
     {
@@ -65,6 +76,10 @@
         "The revised Dockerfile is multi-stage and the final base is distroless/cc, distroless/static or scratch",
         "The revised Dockerfile sets a non-root USER and exec-form CMD or ENTRYPOINT",
         "The revised Dockerfile contains no secret values"
+      ],
+      "discriminating": [
+        0,
+        1
       ]
     }
   ]

@@ -8,9 +8,13 @@
       "files": [],
       "expectations": [
         "Identifies SQL injection risk from string-concatenating coupon_code into the query",
-        "Tags the SQL injection finding as blocking severity (\ud83d\udd34)",
+        "Tags the SQL injection finding as blocking severity (🔴)",
         "Flags the missing test coverage for the new apply_coupon function",
         "Output is organized by pillar with severity tags, not just free-form prose"
+      ],
+      "discriminating": [
+        1,
+        3
       ]
     },
     {
@@ -23,11 +27,15 @@
         "Notes the test would still pass if the discount calculation were broken",
         "Identifies over-mocking of get_db_connection/get_order/save_order as hiding real behavior",
         "Suggests a concrete improved assertion, not just 'add more assertions'"
+      ],
+      "discriminating": [
+        1,
+        2
       ]
     },
     {
       "id": 3,
-      "prompt": "Quick review of this shipping calculator, it passes all tests already:\n\n```python\ndef calc(o, r, x=1):\n    w = o['weight']\n    d = o['dist']\n    if x == 1:\n        c = w * 0.5 + d * 0.1\n    else:\n        c = w * 0.4 + d * 0.15\n    if r:\n        c = c * 0.9\n    return round(c, 2)\n```\nExisting tests cover both branches of x and r with correct expected values, and there's no external/untrusted input involved \u2014 o is built internally from validated order data upstream.",
+      "prompt": "Quick review of this shipping calculator, it passes all tests already:\n\n```python\ndef calc(o, r, x=1):\n    w = o['weight']\n    d = o['dist']\n    if x == 1:\n        c = w * 0.5 + d * 0.1\n    else:\n        c = w * 0.4 + d * 0.15\n    if r:\n        c = c * 0.9\n    return round(c, 2)\n```\nExisting tests cover both branches of x and r with correct expected values, and there's no external/untrusted input involved — o is built internally from validated order data upstream.",
       "expected_output": "Review focuses on pillar 4 (naming/domain clarity, magic numbers) and does not fabricate coverage or security findings given tests are adequate and there's no untrusted input.",
       "files": [],
       "expectations": [
@@ -35,6 +43,10 @@
         "Flags the unexplained magic numbers (0.5, 0.1, 0.4, 0.15, 0.9, x==1) as needing named constants",
         "Does NOT raise a blocking security finding given no untrusted input is present",
         "Does NOT raise a blocking coverage finding given tests already cover both branches with real assertions"
+      ],
+      "discriminating": [
+        2,
+        3
       ]
     }
   ]

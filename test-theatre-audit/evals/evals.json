@@ -14,6 +14,11 @@
         "The response checks whether a self-skipping suite has a guard that fails when setup should have worked",
         "Findings are ranked by how much false confidence they buy rather than by ease of fix",
         "The response notes that coverage percentages do not detect these patterns"
+      ],
+      "discriminating": [
+        0,
+        4,
+        6
       ]
     },
     {
@@ -27,6 +32,9 @@
         "The response recommends asserting the collection is non-empty before the loop",
         "The response recommends the skip be reported rather than silent",
         "The response recommends a guard test that fails when the connection should have been available"
+      ],
+      "discriminating": [
+        1
       ]
     },
     {
@@ -40,6 +48,9 @@
         "The response considers whether mocks are being asserted against themselves rather than real behaviour",
         "The response considers whether snapshots were bulk-accepted rather than reviewed",
         "The response does not accept the suite passing as sufficient evidence of coverage"
+      ],
+      "discriminating": [
+        4
       ]
     }
   ]

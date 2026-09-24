@@ -15,6 +15,10 @@
         "An adoption section gives a concrete first-week sequence",
         "No invented statistics or percentages appear without provenance",
         "Alternatives are described fairly rather than straw-manned"
+      ],
+      "discriminating": [
+        3,
+        4
       ]
     },
     {
@@ -27,6 +31,9 @@
         "The response explains that a number without provenance weakens rather than strengthens the argument",
         "The response offers a mechanism-based claim, or a figure with a named source, as the alternative",
         "The response offers to find a real citation if one exists"
+      ],
+      "discriminating": [
+        0
       ]
     },
     {
@@ -39,6 +46,9 @@
         "The response distinguishes the content: why and when versus how",
         "The response suggests the two can be paired and cross-referenced",
         "The response gives a concrete recommendation rather than only listing considerations"
+      ],
+      "discriminating": [
+        0
       ]
     }
   ]

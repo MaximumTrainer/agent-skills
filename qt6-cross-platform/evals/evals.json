@@ -12,6 +12,11 @@
         "The response directs the user to grep the startup log for 'No matching signal'",
         "The response recommends an explicit connect to currentTextChanged",
         "The response recommends pointer-to-member connect syntax so this class of failure becomes a compile error"
+      ],
+      "discriminating": [
+        0,
+        1,
+        2
       ]
     },
     {
@@ -25,6 +30,10 @@
         "The response mentions bundling the matched OpenSSL pair rather than libcrypto alone",
         "The response recommends verifying the packaged artefact on a clean system rather than the build machine",
         "The response recommends adding a verify step for anything newly dlopened"
+      ],
+      "discriminating": [
+        1,
+        2
       ]
     },
     {
@@ -38,6 +47,9 @@
         "The response recommends converting exec() to open() plus a signal or callback",
         "The response notes other WASM constraints such as no filesystem, no QProcess or no direct sockets",
         "The response recommends platform-specific code sit behind an adapter rather than ifdefs in business logic"
+      ],
+      "discriminating": [
+        1
       ]
     }
   ]

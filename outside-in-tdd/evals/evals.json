@@ -15,6 +15,10 @@
         "Commit messages carry the issue reference (#42)",
         "The response does not use --no-verify at any point",
         "An in-memory implementation of the port is preferred over a mocking framework for the repository"
+      ],
+      "discriminating": [
+        3,
+        4
       ]
     },
     {
@@ -28,6 +32,11 @@
         "The response does not approve the change as test-driven on the strength of the commit order",
         "The response proposes checking out the test commit and running it to see whether it fails",
         "The response notes that commit ordering alone can be manufactured by staging or rebasing"
+      ],
+      "discriminating": [
+        0,
+        2,
+        4
       ]
     },
     {
@@ -41,6 +50,10 @@
         "The response treats the clock or sleep as an injected dependency rather than calling it directly",
         "The response addresses determinism, avoiding real time or real randomness in the test",
         "The response does not recommend writing the implementation first"
+      ],
+      "discriminating": [
+        0,
+        2
       ]
     }
   ]

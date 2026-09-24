@@ -13,6 +13,10 @@
         "The response warns that silent truncation makes the model confidently wrong",
         "The schema bounds the limit parameter and describes fields including units",
         "The response frames the tool result as going into the model's context to be reasoned over"
+      ],
+      "discriminating": [
+        3,
+        5
       ]
     },
     {
@@ -26,6 +30,9 @@
         "The response recommends including a likely cause or suggestion for recovery",
         "The response distinguishes 'invalid input, retry' from 'not possible, do something else'",
         "The response notes errors should be tool results the model can see, not protocol errors"
+      ],
+      "discriminating": [
+        0
       ]
     },
     {
@@ -39,6 +46,9 @@
         "The response recommends no network access and a temporary working directory",
         "The response recommends confining writes to the session directory by checking the resolved path",
         "The response recommends a single execution code path rather than two"
+      ],
+      "discriminating": [
+        0
       ]
     }
   ]

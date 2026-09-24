@@ -15,6 +15,13 @@
         "The DOM is interrogated before any rendering bug is reported",
         "The response states that it actually looked at the resulting image",
         "Page errors are collected and reported alongside the image"
+      ],
+      "discriminating": [
+        0,
+        1,
+        3,
+        4,
+        5
       ]
     },
     {
@@ -28,6 +35,9 @@
         "The response checks whether the capture used virtual time or captureBeyondViewport",
         "The response explains that these capture options produce images that look exactly like missing data",
         "The response distinguishes a healthy DOM with a bad capture from genuinely absent data"
+      ],
+      "discriminating": [
+        2
       ]
     },
     {
@@ -41,6 +51,10 @@
         "Window size and device scale factor are pinned for consistency between runs",
         "An existing screenshot script is used where one exists so images are captured the same way",
         "The response reads the resulting images rather than assuming they rendered as intended"
+      ],
+      "discriminating": [
+        1,
+        2
       ]
     }
   ]
