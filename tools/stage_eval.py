@@ -88,17 +88,37 @@ def stage(skill, eval_id, config, workspace):
         f"SAVE YOUR COMPLETE RESPONSE to: {response}",
         "Final message: just confirm the file was written.",
     ]
-    return run_dir, "\n".join(lines)
+    prompt = "\n".join(lines)
+    # Write the prompt to disk so a runner can be pointed at it rather than
+    # having it pasted in, which keeps every run identical.
+    (run_dir / "PROMPT.txt").write_text(prompt + "\n", encoding="utf-8")
+    return run_dir, prompt
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument("skill")
-    parser.add_argument("eval_id", type=int)
-    parser.add_argument("--config", choices=("with_skill", "without_skill"), required=True)
+    parser.add_argument("skill", nargs="?")
+    parser.add_argument("eval_id", nargs="?", type=int)
+    parser.add_argument("--config", choices=("with_skill", "without_skill"))
     parser.add_argument("--workspace", required=True)
+    parser.add_argument("--all-for", nargs="+", metavar="SKILL",
+                        help="stage every eval of these skills, both configs")
     args = parser.parse_args(argv)
 
+    if args.all_for:
+        staged = 0
+        for skill in args.all_for:
+            data = json.loads((ROOT / skill / "evals" / "evals.json").read_text(encoding="utf-8"))
+            for ev in data["evals"]:
+                for config in ("with_skill", "without_skill"):
+                    run_dir, _ = stage(skill, ev["id"], config, args.workspace)
+                    print(f"{run_dir / 'PROMPT.txt'}")
+                    staged += 1
+        print(f"# staged {staged} run(s)", file=sys.stderr)
+        return 0
+
+    if not (args.skill and args.eval_id and args.config):
+        parser.error("give SKILL EVAL_ID --config, or --all-for SKILL...")
     run_dir, prompt = stage(args.skill, args.eval_id, args.config, args.workspace)
     print(f"# staged {args.skill}#{args.eval_id} [{args.config}] -> {run_dir}")
     print("# ---- prompt below ----")
