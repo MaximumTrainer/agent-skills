@@ -30,10 +30,11 @@
         "The response states the presentation text belongs in the same definition as the numbers",
         "The response addresses boundary inclusivity explicitly, such as half-open intervals",
         "The response warns against restating the numbers in documentation or UI copy",
-        "The response proposes a boundary or contiguity test"
+        "The response says the UI label is rendered from the definition rather than typed separately"
       ],
       "discriminating": [
-        1
+        1,
+        4
       ]
     },
     {

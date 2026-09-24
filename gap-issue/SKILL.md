@@ -3,7 +3,7 @@ name: gap-issue
 description: Record what a piece of work deliberately left unverified or unbuilt, as a precise GitHub issue, so the gap is tracked rather than forgotten. Use when closing work with an acceptance criterion unmet, when something is wired but untested, when hardware or a live account was unavailable, when asked to "create issues for anything incomplete" or "what's left", and when reconciling a backlog against what has actually shipped. The alternative to a gap issue is a silent false green.
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
 ---
 
 # File the gap instead of hiding it
@@ -20,18 +20,12 @@ A gap is not a failure to be apologised for. Hardware you do not have, an accoun
 
 ## When to file one
 
-File a gap issue when any of these is true at the point you would otherwise call the work done:
+At the point you would otherwise call the work done, anything a reader of the
+closed issue would reasonably have assumed was verified, and was not.
 
-- An acceptance criterion is not met, or is met but not verified.
-- Code is wired but exercised only by a mock — the adapter compiles and is injected, and nothing has ever run it against the real thing.
-- A test exists but cannot run in CI, and did not run locally either (no Docker, no credentials, no hardware, no SDK licence).
-- A behaviour was verified manually and the manual step is not repeatable by someone else.
-- You fixed a symptom and know the cause is elsewhere.
-- The implementation deliberately diverges from the spec, and the spec was not updated.
-- A criterion turned out to be untestable as written, and you implemented something adjacent.
-- A test was skipped, quarantined, or weakened to get to green. (Prefer fixing it — see `test-theatre-audit`.)
-
-Do **not** file one for: a hypothetical improvement, a refactor you would like, a general "add more tests". Those are wishes, not gaps. A gap is something a reader of the closed issue would reasonably have assumed was verified and was not.
+Not a gap: a hypothetical improvement, a refactor you would like, "add more
+tests". Those are wishes. The test is whether closing without saying so would
+mislead someone.
 
 ## What a gap issue must contain
 
@@ -73,9 +67,12 @@ unaffected. No data loss, no silent wrong output.
 Origin: #77 (closed 2026-09-12). Referenced from README quirks table.
 ```
 
-The five headings are the point: **what**, **why**, **what we do not know**, **what would close it**, **blast radius**. Each one answers a question the future reader will otherwise have to reconstruct.
+The five headings are the point: **what**, **why**, **what we do not know**,
+**what would close it**, **blast radius**. Each answers a question the future
+reader would otherwise have to reconstruct.
 
-Size the blast radius honestly. "Silently produces wrong numbers on the dashboard" and "the feature errors visibly" are different priorities, and only you know which it is right now.
+**Blast radius is the one most often left out, and the one that sets priority.**
+Size it honestly. "Silently produces wrong numbers on the dashboard" and "the feature errors visibly" are different priorities, and only you know which it is right now.
 
 ## Filing it
 

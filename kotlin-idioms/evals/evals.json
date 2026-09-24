@@ -20,17 +20,19 @@
     {
       "id": 2,
       "prompt": "can I just annotate my domain data class with @Entity? saves writing a mapper.",
-      "expected_output": "Explains the specific breakage - data class equality over generated ids breaks Hibernate identity - and recommends keeping the two separate.",
+      "expected_output": "Declines, and gives the reason this codebase keeps them separate: a domain testable with no database and no Spring context, and a schema that is not the domain's public API.",
       "files": [],
       "expectations": [
-        "The response explains that data class equals/hashCode over a generated id breaks Hibernate identity semantics",
-        "The response notes that two unsaved entities with null ids would compare equal",
-        "The response recommends a separate JPA entity in the persistence adapter with a mapping function",
-        "The response acknowledges this is more code and says what it buys",
-        "The response notes the domain would also gain a framework dependency"
+        "The response declines to annotate the domain data class",
+        "The response states the domain would gain a framework dependency on jakarta.persistence",
+        "The response gives the testability reason: the domain stays runnable with no database and no Spring context",
+        "The response notes the schema would become the domain's public API",
+        "The response recommends a separate entity in the persistence adapter with a mapping function",
+        "The response acknowledges the mapper is extra code and says what it buys"
       ],
       "discriminating": [
-        1
+        2,
+        3
       ]
     },
     {

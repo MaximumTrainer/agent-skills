@@ -3,7 +3,7 @@ name: live-api-probe
 description: Run real code against a real third-party account to find out what the API actually does, then delete the harness — with strict credential and PII hygiene. Use to confirm a domain or sync change behaves on real data, to diagnose "why does my dashboard show X", to discover an API behaviour the fixtures do not reproduce, or to ground a specification before writing it. Covers scratch-harness conventions, credential handling that never persists a secret, rate limiting, and what may and may not be written down afterwards.
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
 ---
 
 # Probe a live account
@@ -16,26 +16,25 @@ A live probe is a **diagnostic**, not a test. It is temporary by design: written
 
 ## Credentials
 
-Environment variables only. Never write them to a file, never commit them, never paste them into a test that stays on disk.
+Environment variables only; never a file, a fixture, a filename, a log line or a
+summary. Least-privilege or read-only where the provider offers it. If the user
+pastes a key in chat, use it for the run and let it stay in the transcript - do
+not persist it. Ask rather than hunting through `.env`, a keychain or another
+project's config; a key you were not offered belongs to a different account.
 
 ```bash
 ICU_ID=<athlete id> ICU_KEY=<api key> npx vitest run tests/__live.test.ts
 ```
 
-- **Read-only or least-privilege credentials** where the provider offers them. A probe should not be able to mutate the account.
-- **If the user pastes credentials in chat**, use them for the run and let them stay in the transcript — do not persist them anywhere. Do not echo them back, do not put them in a filename, and do not include them in a summary.
-- **Never log the credential**, and be careful with what logs *near* it: a request-dump helper will happily print an `Authorization` header. Redact at the logging boundary, not at each call site.
-- Know the auth scheme's shape before guessing. Several APIs use HTTP Basic with a literal username and the key as the password:
-  ```js
-  'Basic ' + Buffer.from(`API_KEY:${process.env.ICU_KEY}`).toString('base64')
-  ```
-- **Grep before committing anything** from a session that touched credentials:
-  ```bash
-  git diff | grep -nEi 'i[0-9]{5,}|api[_-]?key|secret|password|bearer |[:=]\s*gh[pous]_'
-  git status --porcelain           # is the scratch harness still there?
-  ```
+Auth schemes are worth checking rather than guessing - several APIs use HTTP
+Basic with a literal username and the key as the password.
 
-Ask the user for credentials rather than hunting for them. Do not read `.env`, a keychain, a credential helper, or another project's config to find a key that was not offered — that is a different account than the one you were invited to use.
+Grep before committing anything from a session that touched credentials:
+
+```bash
+git diff | grep -nEi 'api[_-]?key|secret|password|bearer '
+git status --porcelain     # is the scratch harness still there?
+```
 
 ## The harness
 

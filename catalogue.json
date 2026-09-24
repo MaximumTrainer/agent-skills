@@ -85,7 +85,7 @@
     {
       "name": "gap-issue",
       "directory": "gap-issue",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "license": "MIT",
       "description": "Record what a piece of work deliberately left unverified or unbuilt, as a precise GitHub issue, so the gap is tracked rather than forgotten. Use when closing work with an acceptance criterion unmet, when something is wired but untested, when hardware or a live account was unavailable, when asked to \"create issues for anything incomplete\" or \"what's left\", and when reconciling a backlog against what has actually shipped. The alternative to a gap issue is a silent false green.",
       "files": [
@@ -115,9 +115,9 @@
     {
       "name": "kotlin-idioms",
       "directory": "kotlin-idioms",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "license": "MIT",
-      "description": "Write idiomatic Kotlin for a Spring Boot / JPA service — immutability by default, nullability handled at the type level with no `!!`, expression-oriented domain code, and the ktlint/detekt/JSR-305 toolchain that enforces it. Use when writing or reviewing Kotlin, when a `!!` or a needless `var` appears in a diff, when deciding between a nullable type and `Optional` at a port boundary, when data classes meet JPA entities, or when ktlint/detekt fails and the cause is a version coupling rather than the code. Covers the project conventions shared across the Kotlin services here and the gotchas that cost build time.",
+      "description": "The Kotlin conventions enforced across the Spring Boot services here, and the toolchain traps that cost build time - the detekt/Kotlin compiler version coupling, versions that differ per repo, and `check` rather than `test` as the real gate. Use when writing or reviewing Kotlin in these repos, when detekt or ktlint fails after a version bump, when a `!!` or an avoidable `var` appears in a diff, or when deciding what belongs in the domain versus the persistence adapter.",
       "files": [
         "SKILL.md"
       ]
@@ -125,7 +125,7 @@
     {
       "name": "live-api-probe",
       "directory": "live-api-probe",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "license": "MIT",
       "description": "Run real code against a real third-party account to find out what the API actually does, then delete the harness — with strict credential and PII hygiene. Use to confirm a domain or sync change behaves on real data, to diagnose \"why does my dashboard show X\", to discover an API behaviour the fixtures do not reproduce, or to ground a specification before writing it. Covers scratch-harness conventions, credential handling that never persists a secret, rate limiting, and what may and may not be written down afterwards.",
       "files": [
@@ -171,9 +171,9 @@
     {
       "name": "qt6-cross-platform",
       "directory": "qt6-cross-platform",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "license": "MIT",
-      "description": "Build, debug and package a Qt6 C++ desktop application across Linux, Windows, macOS and WebAssembly, including the Qt5-to-Qt6 signal changes that silently break auto-connected slots, AppImage bundling of libraries Qt dlopens at runtime, and the WASM single-thread constraints. Use when working on a Qt or QtWidgets application, migrating from Qt5, packaging a desktop release, debugging a slot that never fires or a TLS failure that only happens on another machine, or targeting Qt for WebAssembly.",
+      "description": "The Qt6 traps that cost real time in this codebase - initialisation that must happen before QApplication, libraries Qt dlopens that packaging misses, and verifying the packaged artefact somewhere other than the build machine. Use when working on a Qt6 C++ desktop or WASM build, migrating from Qt5, packaging an AppImage, or debugging something that works locally and fails for users.",
       "files": [
         "SKILL.md"
       ]
@@ -201,9 +201,9 @@
     {
       "name": "single-source-constants",
       "directory": "single-source-constants",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "license": "MIT",
-      "description": "Find thresholds, bands and limits duplicated between domain logic, UI copy, tests and documentation, and collapse them to one definition everything else derives from. Use when a displayed value contradicts what the app does, when adding a threshold or configuration value, when a user asks \"why does it say X when it does Y\", when a README restates a number the code owns, and when reviewing a change that hard-codes a boundary. Two user-visible bugs in these projects were caused by exactly this and both looked like calculation bugs.",
+      "description": "Collapse a threshold that is written down twice - once in code, once in prose - into one definition everything else derives from, including the human-readable text. Use when a displayed value contradicts what the app does, when a user asks \"why does it say X when it does Y\", when a README restates a number the code owns, or when adding a band or tier. Covers the audit that finds existing drift and the one case where duplication is correct.",
       "files": [
         "SKILL.md"
       ]
