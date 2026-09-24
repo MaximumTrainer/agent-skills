@@ -82,6 +82,16 @@ def main(argv=None):
     parser.add_argument("--json", dest="out", default=None)
     args = parser.parse_args(argv)
 
+    # Expectation text can contain emoji (severity tags, for one). On a cp1252
+    # console the notes print dies before benchmark.json is ever written, so the
+    # run looks like it produced nothing. Same class of bug as the git decode
+    # one; pin the streams.
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, ValueError):
+            pass
+
     workspace = Path(args.workspace)
     if not workspace.is_dir():
         sys.exit(f"no such workspace: {workspace}")
