@@ -135,6 +135,34 @@ Every number is against one model at one date. `three-best-practices` almost
 certainly *did* lift when it was written; it measures zero now because the model
 improved, not because the skill got worse.
 
-**Skill value decays silently and nothing else detects it.** Commit
-`benchmark.json` per model version and diff on each major release. A skill whose
-delta has reached zero should shrink or go — on evidence, not on a hunch.
+**Skill value decays silently and nothing else here detects it.** Nothing in the
+repository would tell you: the frontmatter is valid, the evals pass, CI is green,
+and the SKILL.md is accurate. It has simply stopped being needed.
+
+So each model version gets a committed benchmark, and the next one is diffed
+against it:
+
+```bash
+python3 tools/aggregate_evals.py WS --model claude-opus-5 \
+    --json benchmarks/claude-opus-5.json
+
+python3 tools/diff_benchmark.py benchmarks/claude-opus-5.json \
+                                benchmarks/claude-opus-6.json
+```
+
+The output is a worklist, not a score:
+
+| Verdict | Meaning | Action |
+|---|---|---|
+| `DECAYED` | lift has fallen to roughly nothing | Shrink to whatever the model still does not do, or reduce to a stub |
+| `WEAKER` | lift dropped but has not reached zero | Read the responses; find what the skill stopped adding |
+| `IMPROVED` | lift rose | Usually the skill was edited. Occasionally the model regressed — worth knowing which |
+
+A shift below `--threshold` (default 10%) is not reported. Two judges over three
+evals do not resolve five points, and **treating noise as decay is how a good
+skill gets deleted.**
+
+This is the expected end state for a skill that taught a *fact* rather than an
+*ordering*. Facts arrive in the weights eventually. That is not a failure of the
+skill; it is the skill having been overtaken, and the honest response is to
+shrink it rather than to keep shipping it.

@@ -26,6 +26,12 @@ properties being measured: a drifted constant, a test that asserts nothing, a
 An eval with no `fixture` runs bare, deliberately: a prompt that carries its
 subject inline, or that is pure authoring, gains nothing from scenery.
 
+The answer key lives in <workspace>/.keys/, NOT in the run directory. It used to
+sit one level up from the sandbox, beside response.md, and a runner read it and
+said so in its own report - so that run was answering against the expectations
+it was about to be graded on. The prompt told it to stay in the sandbox and it
+did not. Putting the key out of reach is the fix; asking more firmly is not.
+
 Stdlib only.
 
 Usage:
@@ -85,10 +91,14 @@ def stage(skill, eval_id, config, workspace):
     else:
         skill_path = None
 
-    (run_dir / "eval.json").write_text(
-        json.dumps({"skill": skill, "eval_id": eval_id, "config": config,
+    # Out of the runner's reach. See the note in the module docstring.
+    keys = Path(workspace) / ".keys"
+    keys.mkdir(parents=True, exist_ok=True)
+    (keys / f"{skill}-{eval_id}.json").write_text(
+        json.dumps({"skill": skill, "eval_id": eval_id,
                     "prompt": ev["prompt"], "expectations": ev["expectations"],
-                    "discriminating": ev.get("discriminating", [])},
+                    "discriminating": ev.get("discriminating", []),
+                    "fixture": fixture},
                    indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
     response = (run_dir / "response.md").resolve()

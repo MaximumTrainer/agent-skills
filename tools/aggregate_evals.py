@@ -120,10 +120,30 @@ def non_discriminating(runs):
     return flagged
 
 
+def by_skill(runs):
+    """Mean delta per skill. This is the unit that decays, not the eval."""
+    pairs = {}
+    for r in runs:
+        pairs.setdefault(r["eval_name"], {})[r["configuration"]] = r
+    per = {}
+    for name, pair in pairs.items():
+        if set(pair) != set(CONFIGS):
+            continue
+        skill = name.rsplit("-", 1)[0]
+        per.setdefault(skill, []).append(
+            pair["with_skill"]["pass_rate"] - pair["without_skill"]["pass_rate"])
+    return {s: {"delta": round(sum(v) / len(v), 4), "evals": len(v)}
+            for s, v in sorted(per.items())}
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument("workspace")
     parser.add_argument("--json", dest="out", default=None)
+    parser.add_argument("--model", default=None,
+                        help="model id that produced these runs. Recorded in the "
+                             "benchmark, because a delta without one cannot be "
+                             "compared to anything later.")
     args = parser.parse_args(argv)
 
     # Expectation text can contain emoji (severity tags, for one). On a cp1252
@@ -171,6 +191,12 @@ def main(argv=None):
           f"(sd {summary['without_skill']['stddev']:.2f}, n={len(by_config['without_skill'])})")
     print(f"delta         : {delta:+.1%}")
 
+    per = by_skill(runs)
+    if len(per) > 1:
+        print()
+        for skill, v in sorted(per.items(), key=lambda kv: -kv[1]["delta"]):
+            print(f"  {skill:<30} {v['delta']:+.0%}  ({v['evals']} evals)")
+
     single = sorted({r["eval_name"] for r in runs if r["judges"] < 2})
     if single:
         print(f"\nsingle-judge runs ({len(single)}) - no second opinion, treat the delta as soft:")
@@ -198,7 +224,9 @@ def main(argv=None):
 
     if args.out:
         payload = {
-            "metadata": {"workspace": str(workspace), "evals_run": sorted(by_eval)},
+            "metadata": {"workspace": workspace.name, "model": args.model,
+                         "evals_run": sorted(by_eval)},
+            "by_skill": by_skill(runs),
             "runs": [
                 {"eval_name": r["eval_name"], "configuration": r["configuration"], "run_number": 1,
                  "result": {"pass_rate": r["pass_rate"], "passed": r["passed"], "total": r["total"]},

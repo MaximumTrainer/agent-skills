@@ -88,7 +88,7 @@ def write_keys(workspace, only=(), rng=None):
         skill = d.name.rsplit("-", 1)[0]
         if only and skill not in only:
             continue
-        src = d / "with_skill" / "eval.json"
+        src = Path(workspace) / ".keys" / f"{d.name}.json"
         if not src.is_file():
             continue
         ev = json.loads(src.read_text(encoding="utf-8"))

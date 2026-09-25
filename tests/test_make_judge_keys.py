@@ -15,13 +15,21 @@ from tempfile import TemporaryDirectory
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "tools"))
 import make_judge_keys  # noqa: E402
+import stage_eval  # noqa: E402
 
 
 def stage(ws, name, expectations, discriminating):
+    """Mirror stage_eval: responses in the run dir, the answer key in .keys/.
+
+    The key is deliberately NOT under the run directory. It sat there once, a
+    runner read it, and that run answered against the expectations it was about
+    to be graded on."""
     d = Path(ws) / name
     for cfg in ("with_skill", "without_skill"):
         (d / cfg).mkdir(parents=True)
-    (d / "with_skill" / "eval.json").write_text(json.dumps({
+    keys = Path(ws) / ".keys"
+    keys.mkdir(exist_ok=True)
+    (keys / f"{name}.json").write_text(json.dumps({
         "id": 1, "prompt": "p",
         "expectations": expectations,
         "discriminating": discriminating,
@@ -105,3 +113,23 @@ class JudgePrompt(unittest.TestCase):
 
     def test_prompt_names_the_run_directory(self):
         self.assertIn("/w/s-1", make_judge_keys.judge_prompt("/w/s-1"))
+
+
+class KeyIsOutOfReach(unittest.TestCase):
+    """Regression for a real contamination: the answer key used to be written
+    into the run directory as eval.json, one level up from the sandbox. A
+    runner read it and said so in its own report."""
+
+    def test_stage_eval_writes_no_key_inside_the_run_directory(self):
+        with TemporaryDirectory() as ws:
+            run_dir, _ = stage_eval.stage("gap-issue", 1, "with_skill", ws)
+            leaked = [p.name for p in run_dir.rglob("*")
+                      if p.is_file() and p.suffix == ".json" and "sandbox" not in p.parts]
+            self.assertEqual(leaked, [], f"answer key reachable from the run dir: {leaked}")
+
+    def test_the_key_exists_where_the_judge_looks_for_it(self):
+        with TemporaryDirectory() as ws:
+            stage_eval.stage("gap-issue", 1, "with_skill", ws)
+            key = Path(ws) / ".keys" / "gap-issue-1.json"
+            self.assertTrue(key.is_file())
+            self.assertIn("expectations", json.loads(key.read_text(encoding="utf-8")))
