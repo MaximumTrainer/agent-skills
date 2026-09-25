@@ -145,7 +145,7 @@
     {
       "name": "minimal-docker",
       "directory": "minimal-docker",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "license": "MIT",
       "description": "Build small, secure, production-ready Docker images using multi-stage builds, minimal base images (scratch, distroless, Chainguard, Alpine, slim), non-root users, and tight layer caching. Use this skill whenever the user asks to write, containerize, dockerize, optimize, slim down, shrink, harden, or review a Dockerfile or container image, including requests like \"make my image smaller\", \"why is my Docker image 1GB\", \"containerize this app\", \"write a Dockerfile for my Go/Rust/Python/Node/Java/.NET service\", or \"use distroless/scratch\". Also use it when a task will produce a Dockerfile as a side effect (deploying to Kubernetes, Cloud Run, Fly, ECS, etc.), even if the user never says \"minimal\".",
       "files": [
@@ -161,7 +161,7 @@
     {
       "name": "outside-in-tdd",
       "directory": "outside-in-tdd",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "license": "MIT",
       "description": "Drive a change test-first from the outside in — acceptance test red, then contract/API red, then unit red, then the green implementation — with one commit per step so the history proves the sequence. Use whenever implementing a feature, fixing a bug, or starting work on an issue number in a repository that expects TDD, and whenever asked to \"do issue N\", \"implement X test-first\", \"red-green-refactor\", or \"work through the backlog\". Also use when reviewing whether a change was actually driven by tests.",
       "files": [
@@ -181,11 +181,19 @@
     {
       "name": "r3f-best-practices",
       "directory": "r3f-best-practices",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "license": "MIT",
       "description": "React Three Fiber (R3F) and Poimandres ecosystem best practices. Use when writing, reviewing, or optimizing R3F code. Triggers on tasks involving @react-three/fiber, @react-three/drei, zustand, @react-three/postprocessing, @react-three/rapier, or leva.",
       "files": [
-        "SKILL.md"
+        "SKILL.md",
+        "references/rules/_sections.md",
+        "references/rules/drei-use-gltf.md",
+        "references/rules/frame-delta-time.md",
+        "references/rules/loading-suspense.md",
+        "references/rules/perf-never-set-state-in-useframe.md",
+        "references/rules/perf-r3f-perf.md",
+        "references/rules/perf-visibility-toggle.md",
+        "references/rules/perf-zustand-selectors.md"
       ]
     },
     {
@@ -252,11 +260,39 @@
     {
       "name": "three-best-practices",
       "directory": "three-best-practices",
-      "version": "2.1.0",
+      "version": "2.2.0",
       "license": "MIT",
       "description": "Three.js performance optimization and best practices guidelines. Use when writing, reviewing, or optimizing Three.js code. Triggers on tasks involving 3D scenes, WebGL/WebGPU rendering, geometries, materials, textures, lighting, shaders, or TSL.",
       "files": [
-        "SKILL.md"
+        "SKILL.md",
+        "references/rules/_sections.md",
+        "references/rules/animation-system.md",
+        "references/rules/asset-compression.md",
+        "references/rules/audio-spatial.md",
+        "references/rules/core-web-vitals.md",
+        "references/rules/debug-devtools.md",
+        "references/rules/draw-call-optimization.md",
+        "references/rules/error-handling-recovery.md",
+        "references/rules/geometry-instanced-mesh.md",
+        "references/rules/gltf-loading-optimization.md",
+        "references/rules/lighting-shadows-advanced.md",
+        "references/rules/memory-dispose-geometry.md",
+        "references/rules/migration-checklist.md",
+        "references/rules/mobile-optimization.md",
+        "references/rules/object-pooling.md",
+        "references/rules/physics-integration.md",
+        "references/rules/postprocessing-optimization.md",
+        "references/rules/raycasting-optimization.md",
+        "references/rules/render-delta-time.md",
+        "references/rules/setup-use-import-maps.md",
+        "references/rules/shader-mobile.md",
+        "references/rules/tsl-complete-reference.md",
+        "references/rules/tsl-compute-shaders.md",
+        "references/rules/tsl-material-slots.md",
+        "references/rules/tsl-post-processing.md",
+        "references/rules/tsl-why-use.md",
+        "references/rules/webgpu-renderer.md",
+        "references/rules/webxr-setup.md"
       ]
     },
     {

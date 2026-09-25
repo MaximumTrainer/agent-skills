@@ -3,8 +3,11 @@
 __pycache__/
 *.py[cod]
 
-# Packaged skills
+# Packaged skills. A .skill is a zip of a skill's own source, so a committed
+# one silently disagrees with the files beside it the moment either is edited.
+# minimal-docker already ignored its own; this makes it catalogue-wide.
 dist/
+*.skill
 
 # Local scratch
 *.local

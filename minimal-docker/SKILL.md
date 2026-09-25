@@ -3,7 +3,7 @@ name: minimal-docker
 description: Build small, secure, production-ready Docker images using multi-stage builds, minimal base images (scratch, distroless, Chainguard, Alpine, slim), non-root users, and tight layer caching. Use this skill whenever the user asks to write, containerize, dockerize, optimize, slim down, shrink, harden, or review a Dockerfile or container image, including requests like "make my image smaller", "why is my Docker image 1GB", "containerize this app", "write a Dockerfile for my Go/Rust/Python/Node/Java/.NET service", or "use distroless/scratch". Also use it when a task will produce a Dockerfile as a side effect (deploying to Kubernetes, Cloud Run, Fly, ECS, etc.), even if the user never says "minimal".
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
 ---
 
 # Minimal Docker Containers

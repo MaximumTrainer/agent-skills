@@ -4,7 +4,7 @@ description: Three.js performance optimization and best practices guidelines. Us
 license: MIT
 metadata:
   author: three-agent-skills
-  version: "2.1.0"
+  version: "2.2.0"
   three-version: "0.182.0+"
 ---
 
@@ -273,10 +273,10 @@ Reference these guidelines when:
 Read individual rule files for detailed explanations and code examples:
 
 ```
-rules/setup-use-import-maps.md
-rules/memory-dispose-geometry.md
-rules/tsl-complete-reference.md
-rules/mobile-optimization.md
+references/rules/setup-use-import-maps.md
+references/rules/memory-dispose-geometry.md
+references/rules/tsl-complete-reference.md
+references/rules/mobile-optimization.md
 ```
 
 Each rule file contains:

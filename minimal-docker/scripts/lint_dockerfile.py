@@ -11,6 +11,12 @@ This is deliberately simple and dependency-free. It catches common patterns,
 not intent — always read the Dockerfile yourself as well.
 """
 
+# PEP 604 annotations (`str | None`) are evaluated at class-definition time
+# without this, so the module raised TypeError on Python 3.9 - which is what a
+# lot of machines still have first on PATH. The linter then looked broken
+# rather than the Dockerfile.
+from __future__ import annotations
+
 import json
 import os
 import re
@@ -269,6 +275,16 @@ def lint(path):
 
 
 def main():
+    # The clean-run line prints a check mark. On a cp1252 console (a default
+    # Windows Python) that print raises UnicodeEncodeError, so a Dockerfile with
+    # no issues exits 1 with a traceback while a bad one reports normally -
+    # exactly backwards. Pin the streams rather than dropping the character.
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, ValueError):
+            pass
+
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     as_json = "--json" in sys.argv
     path = args[0] if args else "Dockerfile"

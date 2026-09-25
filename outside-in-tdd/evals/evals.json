@@ -34,26 +34,26 @@
         "The response notes that commit ordering alone can be manufactured by staging or rebasing"
       ],
       "discriminating": [
-        0,
-        2,
+        3,
         4
       ]
     },
     {
       "id": 3,
-      "prompt": "I need to add a retry with exponential backoff to our SQS consumer. Where do I even start with the tests?",
+      "prompt": "We shipped a bug: our billing service charged a customer twice because a retry re-sent the same payment request. I've found the cause - the idempotency key was being regenerated per attempt instead of once per payment. Can you fix it?",
       "expected_output": "Identifies that the change is a rule inside existing plumbing, so the entry ring is a unit test over a pure function, and pushes the clock and randomness out as injected dependencies so the test is deterministic.",
       "files": [],
       "expectations": [
-        "The response names the ring it would enter at and justifies the choice",
-        "The response recommends entering at the unit or pure-function level rather than an end-to-end test",
-        "The response treats the clock or sleep as an injected dependency rather than calling it directly",
-        "The response addresses determinism, avoiding real time or real randomness in the test",
-        "The response does not recommend writing the implementation first"
+        "The response writes a failing test that reproduces the double charge before changing the code",
+        "The response identifies which test ring should have caught this and did not",
+        "The response treats the absent test ring as a finding worth reporting, not just an implementation detail",
+        "The response states the observed failure of the reproduction test, not merely that it was run",
+        "The response does not weaken or skip an existing test to get to green"
       ],
       "discriminating": [
-        0,
-        2
+        1,
+        2,
+        3
       ]
     }
   ]

@@ -33,6 +33,12 @@ jobs:
       - name: Validate skill evals
         run: python3 tools/check_evals.py
 
+      # A SKILL.md that points at a payload file it does not ship is invisible
+      # to every other check: valid frontmatter, passing evals, green build, and
+      # an agent that reads it gets a list of filenames and no files.
+      - name: Validate skill references
+        run: python3 tools/check_skill_refs.py
+
       - name: Hook and version-bump tests
         run: python3 -m unittest discover -s tests -v
 

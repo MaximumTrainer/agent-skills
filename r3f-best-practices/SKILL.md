@@ -4,7 +4,7 @@ description: React Three Fiber (R3F) and Poimandres ecosystem best practices. Us
 license: MIT
 metadata:
   author: three-agent-skills
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # React Three Fiber Best Practices
@@ -158,14 +158,14 @@ Reference these guidelines when:
 Read individual rule files for detailed explanations and code examples:
 
 ```
-rules/perf-never-set-state-in-useframe.md
-rules/drei-use-gltf.md
-rules/state-zustand-selectors.md
+references/rules/perf-never-set-state-in-useframe.md
+references/rules/drei-use-gltf.md
+references/rules/perf-zustand-selectors.md
 ```
 
 ## Full Compiled Document
 
-For the complete guide with all rules expanded: `../R3F_BEST_PRACTICES.md`
+Each rule above is expanded in `references/rules/<rule-id>.md`.
 
 ## Critical Patterns
 
