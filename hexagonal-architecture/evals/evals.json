@@ -17,7 +17,8 @@
       "discriminating": [
         1,
         2
-      ]
+      ],
+      "fixture": "kotlin-service"
     },
     {
       "id": 2,
@@ -34,7 +35,8 @@
       "discriminating": [
         0,
         3
-      ]
+      ],
+      "fixture": "kotlin-service"
     },
     {
       "id": 3,
@@ -51,7 +53,8 @@
       "discriminating": [
         3,
         4
-      ]
+      ],
+      "fixture": "kotlin-service"
     }
   ]
 }

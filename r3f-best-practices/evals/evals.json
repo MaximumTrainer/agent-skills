@@ -15,7 +15,8 @@
       ],
       "discriminating": [
         0
-      ]
+      ],
+      "fixture": "ts-frontend"
     },
     {
       "id": 2,
@@ -30,7 +31,8 @@
       ],
       "discriminating": [
         1
-      ]
+      ],
+      "fixture": "ts-frontend"
     },
     {
       "id": 3,
@@ -45,7 +47,8 @@
       ],
       "discriminating": [
         1
-      ]
+      ],
+      "fixture": "ts-frontend"
     }
   ]
 }

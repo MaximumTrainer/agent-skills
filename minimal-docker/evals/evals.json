@@ -42,7 +42,8 @@
       ],
       "discriminating": [
         9
-      ]
+      ],
+      "fixture": "py-service"
     },
     {
       "id": 3,

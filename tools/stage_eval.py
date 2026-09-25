@@ -13,6 +13,19 @@ present and no path back to one. The with-skill arm gets the skill copied in,
 and nothing else from the catalogue - so it cannot lean on a neighbouring skill
 either.
 
+That isolation went too far. Staging an EMPTY directory also removed the task,
+and eight skills measured +0% under it. A skill that changes an ordering - read
+the issue before writing code, check the existing fixtures before inventing one,
+diff the aggregate script against the workflow - cannot bite when there is
+nothing to read: both arms answer from the prompt alone and converge on the same
+essay. So an eval may name a `fixture`, a small real repository copied into the
+sandbox identically for both arms. Fixtures live in eval-fixtures/ and carry the
+properties being measured: a drifted constant, a test that asserts nothing, a
+`verify` script that omits what CI runs.
+
+An eval with no `fixture` runs bare, deliberately: a prompt that carries its
+subject inline, or that is pure authoring, gains nothing from scenery.
+
 Stdlib only.
 
 Usage:
@@ -28,6 +41,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 PAYLOAD_DIRS = ("references", "scripts", "assets")
+FIXTURE_ROOT = ROOT / "eval-fixtures"
 
 
 def load_eval(skill, eval_id):
@@ -48,6 +62,15 @@ def stage(skill, eval_id, config, workspace):
     if sandbox.exists():
         shutil.rmtree(sandbox)
     sandbox.mkdir(parents=True)
+
+    fixture = ev.get("fixture")
+    if fixture:
+        src = FIXTURE_ROOT / fixture
+        if not src.is_dir():
+            sys.exit(f"{skill}#{eval_id} names fixture {fixture!r}, which does not exist")
+        # Identical in both arms. If the arms ever differ by anything but the
+        # skill, the delta stops meaning what it says.
+        shutil.copytree(src, sandbox / fixture)
 
     if config == "with_skill":
         # Only this skill. Not the catalogue, not its siblings, not the tooling.
@@ -73,6 +96,12 @@ def stage(skill, eval_id, config, workspace):
     if skill_path:
         lines.append(f"Skill evaluation. FIRST read the skill at {skill_path} and follow its guidance.")
         lines.append("")
+    if fixture:
+        lines += [
+            f"The repository you are working in is at {(sandbox / fixture).resolve()}.",
+            "Read it before answering. It is the codebase the user is talking about.",
+            "",
+        ]
     lines += [
         "Work only inside this directory:",
         f"  {sandbox.resolve()}",

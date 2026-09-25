@@ -17,7 +17,8 @@
       "discriminating": [
         2,
         3
-      ]
+      ],
+      "fixture": "py-service"
     },
     {
       "id": 2,
@@ -49,7 +50,8 @@
       "discriminating": [
         0,
         1
-      ]
+      ],
+      "fixture": "py-service"
     }
   ]
 }

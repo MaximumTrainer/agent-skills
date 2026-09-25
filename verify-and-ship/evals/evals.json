@@ -17,7 +17,8 @@
       ],
       "discriminating": [
         2
-      ]
+      ],
+      "fixture": "ts-frontend"
     },
     {
       "id": 2,
@@ -50,7 +51,8 @@
       ],
       "discriminating": [
         1
-      ]
+      ],
+      "fixture": "node-integration"
     }
   ]
 }

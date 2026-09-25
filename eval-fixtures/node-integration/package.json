@@ -1,0 +1,11 @@
+{
+  "name": "athlete-sync",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "verify": "npm run build && npm test"
+  },
+  "devDependencies": { "typescript": "^5.6.0", "vitest": "^2.1.0" }
+}

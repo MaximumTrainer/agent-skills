@@ -22,7 +22,8 @@
         3,
         4,
         5
-      ]
+      ],
+      "fixture": "qt-desktop"
     },
     {
       "id": 2,
@@ -55,7 +56,8 @@
       "discriminating": [
         1,
         2
-      ]
+      ],
+      "fixture": "qt-desktop"
     }
   ]
 }

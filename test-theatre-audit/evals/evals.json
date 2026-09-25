@@ -19,7 +19,8 @@
         0,
         4,
         6
-      ]
+      ],
+      "fixture": "node-integration"
     },
     {
       "id": 2,
@@ -51,7 +52,8 @@
       ],
       "discriminating": [
         4
-      ]
+      ],
+      "fixture": "kotlin-service"
     }
   ]
 }

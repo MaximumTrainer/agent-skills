@@ -33,7 +33,8 @@
       ],
       "discriminating": [
         1
-      ]
+      ],
+      "fixture": "kotlin-service"
     },
     {
       "id": 3,

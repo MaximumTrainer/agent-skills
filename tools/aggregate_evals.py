@@ -11,7 +11,14 @@ the skill - so this also flags non-discriminating expectations, which pass in
 both configurations and therefore tell you nothing.
 
 Layout expected:
-    <workspace>/<skill>-<eval id>/{with_skill,without_skill}/grading.json
+    <workspace>/<skill>-<eval id>/{with_skill,without_skill}/grading*.json
+
+More than one grading file per arm means more than one judge graded it. That is
+the default now: a single judge decided several results here by a whisker, and
+in three cases said so unprompted. Where judges disagree on an expectation the
+run is still counted - at the mean of their rates - but the disagreement is
+printed, because a contested expectation is a badly written expectation and the
+list is what needs fixing, not the arithmetic.
 
 Stdlib only.
 
@@ -29,22 +36,57 @@ from pathlib import Path
 CONFIGS = ("with_skill", "without_skill")
 
 
+def merge_judges(gradings):
+    """One run's verdict from one or more judges, plus what they disagreed on."""
+    per_expectation = {}
+    order = []
+    for data in gradings:
+        for e in data.get("expectations", []):
+            text = e["text"]
+            if text not in per_expectation:
+                per_expectation[text] = []
+                order.append(text)
+            per_expectation[text].append(bool(e["passed"]))
+
+    expectations, contested = [], []
+    for text in order:
+        votes = per_expectation[text]
+        if len(set(votes)) > 1:
+            contested.append(text)
+        # Mean of the votes, so two judges splitting scores a half rather than
+        # letting whichever ran last decide it.
+        expectations.append({"text": text, "passed": sum(votes) / len(votes)})
+
+    total = len(expectations)
+    passed = sum(e["passed"] for e in expectations)
+    return {
+        "expectations": expectations,
+        "passed": passed,
+        "total": total,
+        "pass_rate": round(passed / total, 4) if total else 0.0,
+        "contested": contested,
+        "judges": len(gradings),
+    }
+
+
 def load_runs(workspace):
     runs = []
     for eval_dir in sorted(p for p in workspace.iterdir() if p.is_dir()):
         for config in CONFIGS:
-            grading = eval_dir / config / "grading.json"
-            if not grading.is_file():
+            gradings = [json.loads(f.read_text(encoding="utf-8"))
+                        for f in sorted((eval_dir / config).glob("grading*.json"))]
+            if not gradings:
                 continue
-            data = json.loads(grading.read_text(encoding="utf-8"))
-            summary = data.get("summary", {})
+            merged = merge_judges(gradings)
             runs.append({
                 "eval_name": eval_dir.name,
                 "configuration": config,
-                "pass_rate": summary.get("pass_rate", 0.0),
-                "passed": summary.get("passed", 0),
-                "total": summary.get("total", 0),
-                "expectations": data.get("expectations", []),
+                "pass_rate": merged["pass_rate"],
+                "passed": merged["passed"],
+                "total": merged["total"],
+                "expectations": merged["expectations"],
+                "contested": merged["contested"],
+                "judges": merged["judges"],
             })
     return runs
 
@@ -71,7 +113,9 @@ def non_discriminating(runs):
             continue
         base = {e["text"]: e["passed"] for e in pair["without_skill"]["expectations"]}
         for e in pair["with_skill"]["expectations"]:
-            if e["passed"] and base.get(e["text"]) is True:
+            # Both arms cleared it outright. A half-pass means the judges split,
+            # which is a different problem and reported separately.
+            if e["passed"] == 1 and base.get(e["text"]) == 1:
                 flagged.append((name, e["text"]))
     return flagged
 
@@ -115,8 +159,8 @@ def main(argv=None):
         pair = by_eval[name]
         w = pair.get("with_skill")
         b = pair.get("without_skill")
-        ws = f"{w['passed']}/{w['total']} {w['pass_rate']:.0%}" if w else "-"
-        bs = f"{b['passed']}/{b['total']} {b['pass_rate']:.0%}" if b else "-"
+        ws = f"{w['passed']:g}/{w['total']} {w['pass_rate']:.0%}" if w else "-"
+        bs = f"{b['passed']:g}/{b['total']} {b['pass_rate']:.0%}" if b else "-"
         d = f"{(w['pass_rate'] - b['pass_rate']):+.0%}" if w and b else "-"
         print(f"{name:<{width}}  {ws:>12}  {bs:>12}  {d:>7}")
 
@@ -126,6 +170,23 @@ def main(argv=None):
     print(f"without skill : {summary['without_skill']['mean']:.1%} "
           f"(sd {summary['without_skill']['stddev']:.2f}, n={len(by_config['without_skill'])})")
     print(f"delta         : {delta:+.1%}")
+
+    single = sorted({r["eval_name"] for r in runs if r["judges"] < 2})
+    if single:
+        print(f"\nsingle-judge runs ({len(single)}) - no second opinion, treat the delta as soft:")
+        for name in single[:15]:
+            print(f"  {name}")
+        if len(single) > 15:
+            print(f"  ... and {len(single) - 15} more")
+
+    contested = [(r["eval_name"], r["configuration"], text)
+                 for r in runs for text in r["contested"]]
+    if contested:
+        print(f"\ncontested expectations ({len(contested)}) - judges disagreed, so the wording is unclear:")
+        for name, cfg, text in contested[:15]:
+            print(f"  {name} [{cfg}]: {text[:88]}")
+        if len(contested) > 15:
+            print(f"  ... and {len(contested) - 15} more")
 
     flagged = non_discriminating(runs)
     if flagged:
@@ -150,6 +211,8 @@ def main(argv=None):
                 "delta": {"pass_rate": f"{delta:+.4f}"},
             },
             "notes": [f"{name}: {text}" for name, text in flagged],
+            "contested": [f"{name} [{cfg}]: {text}" for name, cfg, text in contested],
+            "single_judge": single,
         }
         Path(args.out).write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         print(f"\nwrote {args.out}")

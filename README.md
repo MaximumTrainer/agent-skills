@@ -124,6 +124,17 @@ The skills cross-reference each other by name in their *Related skills* sections
 - Bodies are imperative and specific. Concrete commands over general advice; a named failure mode over a warning.
 - Where a rule exists because something broke, the body says what broke. That is what stops the rule being "simplified" away.
 - `references/`, `scripts/` and `assets/` subdirectories only where they carry weight — see `minimal-docker/` for the fullest example.
+- Every skill carries `evals/evals.json`, and every eval marks at least one **discriminating** expectation — one the skill alone should produce.
+
+## Measuring whether a skill earns its keep
+
+A skill's value is the difference it makes, not how good it reads. Each eval runs the same task twice — with the skill and without — and the number that matters is the **delta**.
+
+This is not a formality. Measured across 26 skills, **eight produce no measurable difference at all**: the model already writes `InstancedMesh`, caps the pixel ratio, and reaches for a distroless base unprompted. The skills that do earn their keep change an *ordering* or a *default* rather than supplying a fact — `hexagonal-architecture` scores +67% because it puts the outbound port before the adapter and the in-memory fake before the real one.
+
+> Facts are in the weights. Orderings are not.
+
+**[docs/EVALUATING.md](docs/EVALUATING.md)** is the procedure and, more usefully, the reasons — every one of which is a mistake made here first, usually one that produced a confident wrong number before it was caught.
 
 ## Versioning
 

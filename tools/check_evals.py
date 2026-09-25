@@ -113,6 +113,13 @@ def check_skill(name, errors, warnings, stats, n_discriminating=None):
         # Without this, an eval can pass entirely on things the model already
         # does, which measures the model rather than the skill. The pilot found
         # 28 of 37 expectations passing in both arms, which is what this stops.
+        fixture = ev.get("fixture")
+        if fixture is not None:
+            if not isinstance(fixture, str) or not fixture:
+                errors.append(f"{label}: fixture must be a non-empty string")
+            elif not (ROOT / "eval-fixtures" / fixture).is_dir():
+                errors.append(f"{label}: fixture {fixture!r} is not in eval-fixtures/")
+
         marks = ev.get("discriminating")
         if not isinstance(marks, list) or not marks:
             errors.append(

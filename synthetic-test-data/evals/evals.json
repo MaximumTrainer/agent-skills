@@ -17,7 +17,8 @@
         0,
         1,
         4
-      ]
+      ],
+      "fixture": "node-integration"
     },
     {
       "id": 2,

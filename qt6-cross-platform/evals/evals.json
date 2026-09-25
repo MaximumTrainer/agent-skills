@@ -17,7 +17,8 @@
         0,
         1,
         2
-      ]
+      ],
+      "fixture": "qt-desktop"
     },
     {
       "id": 2,
@@ -34,7 +35,8 @@
       "discriminating": [
         1,
         2
-      ]
+      ],
+      "fixture": "qt-desktop"
     },
     {
       "id": 3,
@@ -50,7 +52,8 @@
       ],
       "discriminating": [
         1
-      ]
+      ],
+      "fixture": "qt-desktop"
     }
   ]
 }

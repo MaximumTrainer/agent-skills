@@ -81,3 +81,27 @@ class JudgeKeys(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class JudgePrompt(unittest.TestCase):
+    def test_second_judge_writes_a_different_file(self):
+        """Both judges writing grading.json would leave one verdict, silently."""
+        one = make_judge_keys.judge_prompt("/w/s-1", 1)
+        two = make_judge_keys.judge_prompt("/w/s-1", 2)
+        self.assertIn("grading.json", one)
+        self.assertIn("grading.2.json", two)
+
+    def test_prompt_forbids_reading_the_skill(self):
+        """A judge that reads the skill knows which arm is which."""
+        p = make_judge_keys.judge_prompt("/w/s-1")
+        self.assertIn("Do not read the skill under test", p)
+
+    def test_prompt_carries_the_honesty_rule(self):
+        """The outside-in-tdd reversal: an honest 'not run' must not be marked
+        wrong just because the expectation is phrased as reporting a result."""
+        p = make_judge_keys.judge_prompt("/w/s-1")
+        self.assertIn("honestly saying", p)
+        self.assertIn("Never credit a claimed verification", p)
+
+    def test_prompt_names_the_run_directory(self):
+        self.assertIn("/w/s-1", make_judge_keys.judge_prompt("/w/s-1"))

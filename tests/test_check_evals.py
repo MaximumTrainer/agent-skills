@@ -55,10 +55,16 @@ class TestEvalSchema(unittest.TestCase):
                 self.assertEqual(data["skill_name"], name)
                 self.assertGreaterEqual(len(data["evals"]), 2)
                 for ev in data["evals"]:
+                    # Required set is exact, because the drift this catches is
+                    # a field NAME being wrong - `assertions` for
+                    # `expectations` - which silently grades nothing. `fixture`
+                    # is optional: an eval carrying its subject inline runs bare
+                    # on purpose.
+                    required = {"id", "prompt", "expected_output", "files",
+                                "expectations", "discriminating"}
+                    optional = {"fixture"}
                     self.assertEqual(
-                        set(ev),
-                        {"id", "prompt", "expected_output", "files", "expectations",
-                         "discriminating"},
+                        set(ev) - optional, required,
                         f"{name}#{ev.get('id')} has unexpected or missing fields",
                     )
                     self.assertIsInstance(ev["id"], int)
@@ -240,3 +246,26 @@ class TestCheckerCatchesProblems(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestFixtures(unittest.TestCase):
+    """Fixtures exist because an empty sandbox removed the task along with the
+    contamination, and eight skills measured +0% under it."""
+
+    def test_every_named_fixture_exists(self):
+        root = Path(__file__).resolve().parent.parent
+        for name in skills():
+            for ev in evals_for(name)["evals"]:
+                fx = ev.get("fixture")
+                if fx:
+                    with self.subTest(skill=name, eval=ev["id"]):
+                        self.assertTrue((root / "eval-fixtures" / fx).is_dir(),
+                                        f"{name}#{ev['id']} names missing fixture {fx!r}")
+
+    def test_fixtures_are_not_orphaned(self):
+        """A fixture nothing stages is dead weight that still gets maintained."""
+        root = Path(__file__).resolve().parent.parent
+        used = {ev.get("fixture") for name in skills() for ev in evals_for(name)["evals"]}
+        for d in (root / "eval-fixtures").iterdir():
+            if d.is_dir():
+                self.assertIn(d.name, used, f"eval-fixtures/{d.name} is staged by no eval")

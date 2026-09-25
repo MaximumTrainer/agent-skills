@@ -20,7 +20,8 @@
         3,
         5,
         6
-      ]
+      ],
+      "fixture": "node-integration"
     },
     {
       "id": 2,
@@ -51,7 +52,8 @@
       "discriminating": [
         1,
         2
-      ]
+      ],
+      "fixture": "node-integration"
     }
   ]
 }

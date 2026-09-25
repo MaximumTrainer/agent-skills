@@ -20,7 +20,8 @@
         2,
         3,
         4
-      ]
+      ],
+      "fixture": "kotlin-service"
     },
     {
       "id": 2,

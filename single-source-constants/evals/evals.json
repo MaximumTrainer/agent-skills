@@ -18,7 +18,8 @@
         3,
         4,
         5
-      ]
+      ],
+      "fixture": "ts-frontend"
     },
     {
       "id": 2,
@@ -35,7 +36,8 @@
       "discriminating": [
         1,
         4
-      ]
+      ],
+      "fixture": "ts-frontend"
     },
     {
       "id": 3,
@@ -50,7 +52,8 @@
       ],
       "discriminating": [
         1
-      ]
+      ],
+      "fixture": "py-service"
     }
   ]
 }

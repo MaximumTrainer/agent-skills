@@ -19,7 +19,8 @@
       "discriminating": [
         3,
         4
-      ]
+      ],
+      "fixture": "kotlin-service"
     },
     {
       "id": 2,
@@ -47,14 +48,15 @@
         "The response writes a failing test that reproduces the double charge before changing the code",
         "The response identifies which test ring should have caught this and did not",
         "The response treats the absent test ring as a finding worth reporting, not just an implementation detail",
-        "The response states the observed failure of the reproduction test, not merely that it was run",
+        "The response either states the failure it observed from the reproduction test, or says plainly that it was not run - it does not report a red it did not see",
         "The response does not weaken or skip an existing test to get to green"
       ],
       "discriminating": [
         1,
         2,
         3
-      ]
+      ],
+      "fixture": "kotlin-service"
     }
   ]
 }
