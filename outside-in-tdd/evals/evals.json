@@ -10,7 +10,7 @@
         "The response reads the issue before writing any code",
         "The response names which ring it is entering at and why",
         "A failing test is written and run BEFORE any production code",
-        "The response explicitly confirms the test failed for the right reason (missing behaviour, not a typo or harness error)",
+        "The response either states the failure it observed, or says plainly that the test was not run - it does not report a red it did not see",
         "The red test is committed as its own commit, separate from the implementation",
         "Commit messages carry the issue reference (#42)",
         "The response does not use --no-verify at any point",
