@@ -1,0 +1,183 @@
+#!/usr/bin/env python3
+"""Mock `gh` CLI for the eval suite.
+
+Records every invocation to $GH_MOCK_LOG as one JSON object per line.
+Returns fake issue numbers for `gh issue create`, starting at the
+value of $GH_MOCK_NEXT_ISSUE (default 100) and incrementing.
+
+Supported subcommands (minimum to drive the filer):
+    gh auth status
+    gh label list --repo <owner/repo> --limit N
+    gh issue create --repo <owner/repo> --title ... --body-file ... [--label L ...] [--milestone M]
+    gh issue edit <num> --repo <owner/repo> --body-file ...
+    gh issue list --repo <owner/repo> --search ...
+
+Behaviour knobs:
+    GH_MOCK_FAIL_AFTER=N  : the Nth `gh issue create` call fails with
+                            exit 1 and a non-empty stderr, mimicking a
+                            transient API failure. Prior calls succeed.
+    GH_MOCK_LABELS=path   : path to a JSON array of {name: str} for the
+                            label-list response. Default: empty list.
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import sys
+import time
+from pathlib import Path
+
+
+def _log(entry: dict) -> None:
+    log_path = os.environ.get("GH_MOCK_LOG")
+    if log_path:
+        with open(log_path, "a") as f:
+            f.write(json.dumps(entry) + "\n")
+
+
+def _flag(argv: list[str], name: str) -> str | None:
+    if name in argv:
+        return argv[argv.index(name) + 1]
+    return None
+
+
+def _flag_all(argv: list[str], name: str) -> list[str]:
+    out = []
+    for i, a in enumerate(argv):
+        if a == name:
+            out.append(argv[i + 1])
+    return out
+
+
+def _state_path() -> Path:
+    # Persist the next-issue counter across invocations in a file so
+    # multiple `gh issue create` calls return increasing numbers.
+    base = os.environ.get("GH_MOCK_STATE", "/tmp/gh-mock-state.json")
+    return Path(base)
+
+
+def _next_issue() -> int:
+    sp = _state_path()
+    if sp.exists():
+        data = json.loads(sp.read_text())
+    else:
+        data = {"next": int(os.environ.get("GH_MOCK_NEXT_ISSUE", "100"))}
+    n = data["next"]
+    data["next"] = n + 1
+    sp.write_text(json.dumps(data))
+    return n
+
+
+def _create_count_path() -> Path:
+    base = os.environ.get("GH_MOCK_CREATE_COUNT", "/tmp/gh-mock-create-count.json")
+    return Path(base)
+
+
+def _bump_create_count() -> int:
+    cp = _create_count_path()
+    if cp.exists():
+        data = json.loads(cp.read_text())
+    else:
+        data = {"n": 0}
+    data["n"] += 1
+    cp.write_text(json.dumps(data))
+    return data["n"]
+
+
+def main(argv: list[str]) -> int:
+    if len(argv) < 2:
+        print("mock gh: need a subcommand", file=sys.stderr)
+        return 2
+
+    sub = argv[1]
+
+    if sub == "auth" and len(argv) >= 3 and argv[2] == "status":
+        _log({"ts": time.time(), "cmd": argv[1:], "ok": True})
+        print("Logged in to github.com account mock-user (keyring)")
+        return 0
+
+    if sub == "label" and len(argv) >= 3 and argv[2] == "list":
+        repo = _flag(argv, "--repo") or ""
+        labels_path = os.environ.get("GH_MOCK_LABELS")
+        if labels_path and Path(labels_path).exists():
+            labels = json.loads(Path(labels_path).read_text())
+        else:
+            labels = []
+        _log({"ts": time.time(), "cmd": argv[1:], "repo": repo, "returned": len(labels)})
+        for lab in labels:
+            print(lab["name"])
+        return 0
+
+    if sub == "issue" and len(argv) >= 3 and argv[2] == "create":
+        n = _bump_create_count()
+        fail_after = int(os.environ.get("GH_MOCK_FAIL_AFTER", "0"))
+        if fail_after and n == fail_after:
+            _log({
+                "ts": time.time(),
+                "cmd": argv[1:],
+                "repo": _flag(argv, "--repo"),
+                "title": _flag(argv, "--title"),
+                "labels": _flag_all(argv, "--label"),
+                "milestone": _flag(argv, "--milestone"),
+                "ok": False,
+                "error": "simulated transient failure",
+            })
+            print("gh: HTTP 503: service temporarily unavailable", file=sys.stderr)
+            return 1
+
+        issue_num = _next_issue()
+        repo = _flag(argv, "--repo") or ""
+        title = _flag(argv, "--title") or ""
+        body_file = _flag(argv, "--body-file")
+        labels = _flag_all(argv, "--label")
+        milestone = _flag(argv, "--milestone")
+
+        body = ""
+        if body_file and Path(body_file).exists():
+            body = Path(body_file).read_text()
+
+        _log({
+            "ts": time.time(),
+            "cmd": "issue-create",
+            "repo": repo,
+            "title": title,
+            "labels": labels,
+            "milestone": milestone,
+            "body_len": len(body),
+            "ok": True,
+            "returned_number": issue_num,
+        })
+        print(f"https://github.com/{repo}/issues/{issue_num}")
+        return 0
+
+    if sub == "issue" and len(argv) >= 3 and argv[2] == "edit":
+        num = argv[3] if len(argv) > 3 else ""
+        repo = _flag(argv, "--repo") or ""
+        body_file = _flag(argv, "--body-file")
+        body = ""
+        if body_file and Path(body_file).exists():
+            body = Path(body_file).read_text()
+        _log({
+            "ts": time.time(),
+            "cmd": "issue-edit",
+            "repo": repo,
+            "issue": num,
+            "body_len": len(body),
+            "body": body,
+            "ok": True,
+        })
+        print(f"https://github.com/{repo}/issues/{num}")
+        return 0
+
+    if sub == "issue" and len(argv) >= 3 and argv[2] == "list":
+        _log({"ts": time.time(), "cmd": argv[1:], "ok": True})
+        print("[]")
+        return 0
+
+    print(f"mock gh: unsupported: {argv[1:]}", file=sys.stderr)
+    return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))

@@ -1,0 +1,84 @@
+version: 1
+
+# Walking-skeleton suite. Each case ships with the implementation
+# slice that turns it green; new cases are appended as the convention
+# grows, never editing the ones already green.
+
+cases:
+  - id: minimal-two-gap-review
+    kind: snapshot
+    input:
+      review: assets/fixtures/reviews/mini-kg-review.md
+      profile: sdlc-knowledge-graph
+      slug_prefix: KGR
+    expect:
+      snapshot_dir: tests/snapshots/minimal-two-gap-review/
+      exit_code: 0
+
+  - id: sections-complete
+    kind: lint
+    input:
+      review: assets/fixtures/reviews/mini-kg-review.md
+      profile: sdlc-knowledge-graph
+      slug_prefix: LINT
+    expect:
+      every_draft_has_sections:
+        - "## Context"
+        - "## Scope"
+        - "## Functional requirements"
+        - "## Acceptance criteria (Gherkin)"
+        - "## TDD plan"
+      no_section_body_empty: true
+
+  - id: label-validity-vr
+    kind: property
+    input:
+      review: assets/fixtures/reviews/vr-mini.md
+      profile: virtualrow
+      slug_prefix: VRP
+    expect:
+      no_labels_matching:
+        - "area:*"
+        - "module:*"
+        - "tdd:*"
+      all_labels_in_profile: true
+
+  - id: xl-pre-split
+    kind: structural
+    input:
+      review: assets/fixtures/reviews/auth-xl.md
+      profile: sdlc-knowledge-graph
+      slug_prefix: AUTH
+    expect:
+      files:
+        - glob: "*-parent-*.md"
+          count: 1
+          frontmatter:
+            labels_includes: ["size:XL"]
+            parent: null
+        - glob: "AUTH-child-*.md"
+          count_at_least: 3
+          frontmatter:
+            parent: "AUTH-parent"
+            labels_excludes: ["size:XL"]
+
+  - id: slug-idempotence
+    kind: idempotence
+    input:
+      first_review: assets/fixtures/reviews/mini-kg-review.md
+      second_review: assets/fixtures/reviews/mini-kg-review-reordered.md
+      profile: sdlc-knowledge-graph
+      slug_prefix: IDM
+    expect:
+      slug_per_title_stable: true
+
+  - id: unknown-repo-clean-failure
+    kind: negative
+    input:
+      review: assets/fixtures/reviews/mini-kg-review.md
+      profile: not-a-real-repo
+      slug_prefix: X
+    expect:
+      exit_code: 2
+      stderr_contains: "unknown repo profile 'not-a-real-repo'"
+      no_files_written: true

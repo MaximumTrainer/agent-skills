@@ -1,0 +1,73 @@
+# Per-repo label profiles. A draft's labels must resolve against the
+# profile for its target repo. The parser maps review hints like
+# "Area: ontology" to the matching label in the profile; unknown
+# labels error out at render time rather than silently passing through.
+#
+# Keep this file the single source of truth; vendored into each repo
+# via skill-exchange rather than duplicated.
+
+sdlc-knowledge-graph:
+  slug_prefix: KG
+  scheme:
+    area:
+      - area:backend
+      - area:ci
+      - area:connector
+      - area:frontend
+      - area:ontology
+      - area:security
+    size:
+      - size:S
+      - size:M
+      - size:L
+      - size:XL
+    tdd:
+      - tdd:acceptance-first
+    type:
+      - type:bug
+      - type:feature
+      - type:foundation
+  defaults:
+    - tdd:acceptance-first
+
+virtualrow:
+  slug_prefix: VR
+  scheme:
+    # flat labels — no area:/module: namespacing
+    flat:
+      - camera
+      - hud
+      - tooling
+      - physics
+      - networking
+    size:
+      - size:S
+      - size:M
+      - size:L
+      - size:XL
+    priority:
+      - priority:P0
+      - priority:P1
+      - priority:P2
+      - priority:P3
+  defaults: []
+
+chorus:
+  slug_prefix: CH
+  scheme:
+    module:
+      - module:int
+      - module:brain
+      - module:code
+      - module:mcp
+      - module:agent
+    size:
+      - size:S
+      - size:M
+      - size:L
+      - size:XL
+    type:
+      - type:bug
+      - type:feature
+      - type:foundation
+  defaults: []

@@ -30,6 +30,8 @@ The skills here are the **portable** version of that knowledge. Most of the spec
 |---|---|
 | [spec-by-example-issue](spec-by-example-issue/) | Elaborating a thin issue into requirements and acceptance criteria; picking up the next piece of work |
 | [gap-issue](gap-issue/) | Closing work with something unverified; "create issues for anything incomplete"; reconciling a backlog |
+| [issue-drafting](issue-drafting/) | Turning a review that surfaced many gaps into a folder of draft issues in the five-section convention, labelled per repo, with size:XL pre-split |
+| [issue-filing](issue-filing/) | Filing a folder of drafted issues to a repo via gh — label-preflight, dependency order, idempotent reruns, cross-ref rewriting |
 | [docs-drift-guard](docs-drift-guard/) | Changing docs; a stale website; a README describing a removed feature |
 | [engineering-white-paper](engineering-white-paper/) | Writing up an engineering practice, kata or facilitation guide |
 

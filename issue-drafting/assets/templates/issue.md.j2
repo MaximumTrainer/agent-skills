@@ -1,0 +1,35 @@
+---
+slug: {{ slug }}
+title: {{ title | tojson }}
+repo: {{ repo }}
+labels:
+{%- for label in labels %}
+  - {{ label }}
+{%- endfor %}
+milestone: null
+blocks: []
+blocked_by: []
+parent: {{ parent if parent else "null" }}
+---
+
+## Context
+
+{{ context }}
+
+## Scope
+
+{{ scope }}
+
+## Functional requirements
+
+{% for fr in frs -%}
+- {{ fr }}
+{% endfor %}
+
+## Acceptance criteria (Gherkin)
+
+{{ gherkin }}
+
+## TDD plan
+
+{{ tdd }}
