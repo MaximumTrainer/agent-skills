@@ -1,0 +1,15 @@
+[
+  {"name": "hud"},
+  {"name": "tooling"},
+  {"name": "camera"},
+  {"name": "physics"},
+  {"name": "networking"},
+  {"name": "size:S"},
+  {"name": "size:M"},
+  {"name": "size:L"},
+  {"name": "size:XL"},
+  {"name": "priority:P0"},
+  {"name": "priority:P1"},
+  {"name": "priority:P2"},
+  {"name": "priority:P3"}
+]

@@ -1,0 +1,74 @@
+version: 1
+
+# Walking-skeleton suite for issue-filing. Case #1 is a dry-run
+# snapshot of the exact gh call sequence against the vr-mini drafts.
+
+cases:
+  - id: dry-run-vr-mini
+    kind: snapshot
+    input:
+      drafts: tests/fixtures/drafts/vr-mini
+      repo: MaximumTrainer/virtualrow
+      labels_fixture: null
+    expect:
+      log_snapshot: tests/snapshots/dry-run-vr-mini.jsonl
+      exit_code: 0
+
+  - id: dependency-ordering
+    kind: ordering
+    input:
+      drafts: tests/fixtures/drafts/vr-mini
+      repo: MaximumTrainer/virtualrow
+      labels_fixture: tests/fixtures/labels-vr.json
+    expect:
+      create_order_by_title:
+        - "HUD input latency instrumentation"
+        - "Replay CLI for race recordings"
+      edits_follow_creates: true
+
+  - id: idempotence
+    kind: idempotence
+    input:
+      drafts: tests/fixtures/drafts/vr-mini
+      repo: MaximumTrainer/virtualrow
+      labels_fixture: tests/fixtures/labels-vr.json
+    expect:
+      run1_creates_at_least: 2
+      run2_creates: 0
+      run2_may_edit: true
+
+  - id: label-mismatch-fails-fast
+    kind: negative
+    input:
+      drafts: tests/fixtures/drafts/vr-bad-label
+      repo: MaximumTrainer/virtualrow
+      labels_fixture: tests/fixtures/labels-vr.json
+    expect:
+      exit_code: 2
+      stderr_contains: "module:connectors"
+      no_create_calls: true
+
+  - id: partial-failure-recovery
+    kind: recovery
+    input:
+      drafts: tests/fixtures/drafts/vr-trio
+      repo: MaximumTrainer/virtualrow
+      labels_fixture: tests/fixtures/labels-vr.json
+      fail_after: 2
+    expect:
+      run1_exit_code: 3
+      run1_creates_at_least: 1
+      run2_exit_code: 0
+      total_creates_across_runs: 3
+      no_duplicate_titles: true
+
+  - id: cross-ref-rewriting
+    kind: transformation
+    input:
+      drafts: tests/fixtures/drafts/vr-trio
+      repo: MaximumTrainer/virtualrow
+      labels_fixture: tests/fixtures/labels-vr.json
+    expect:
+      edit_calls_at_least: 1
+      edit_body_contains_for_title:
+        "Third of three": "Blocked by: #"

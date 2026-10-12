@@ -1,0 +1,47 @@
+{
+  "skill_name": "issue-drafting",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I ran a review of our auth model on the sdlc-knowledge-graph repo and it surfaced seven gaps across security, ontology and connectors. Can you turn these into issues? The review is attached as review.md and the repo profile is sdlc-knowledge-graph. One of the gaps is clearly XL — the full identity/auth/policy work for KG reads and writes.",
+      "expected_output": "Produces one draft markdown file per gap in the Context/Scope/FRs/Gherkin/TDD convention, labelled against the sdlc-knowledge-graph profile. The XL gap is split into a parent plus independently shippable walking-skeleton children before any filing, not after.",
+      "files": [],
+      "expectations": [
+        "One draft file is produced per gap, with YAML frontmatter carrying slug, title, repo, labels, blocks/blocked_by, parent",
+        "Every draft body contains all five sections: Context, Scope, Functional requirements, Acceptance criteria (Gherkin), TDD plan",
+        "The XL gap is emitted as a parent file plus multiple child files, each child labelled with a smaller size and carrying parent set to the parent slug",
+        "Labels on every draft resolve against the sdlc-knowledge-graph profile (area:/size:/type:/tdd:) — no bare labels, no module: labels",
+        "The response does not file the issues to GitHub as part of this step — filing is a separate skill",
+        "The response does not describe the drafts as ready to file without a human reviewing them"
+      ],
+      "discriminating": [1, 2, 3, 5]
+    },
+    {
+      "id": 2,
+      "prompt": "I filed the first eight issues from the VirtualRow backlog as #321-#328 last week. Can you draft the remaining eighteen (VR-09 through VR-26) from the review doc in virtualrow-backlog/review.md, using the same convention? Make sure the slugs don't collide with the first eight.",
+      "expected_output": "Drafts VR-09..VR-26 against the virtualrow profile, with slugs stable to the review (not positional, so a reordering wouldn't renumber them), labels drawn from the flat VirtualRow scheme (hud/tooling/camera/priority:*/size:*), and nothing in the area:* or module:* namespaces that would fail preflight.",
+      "files": [],
+      "expectations": [
+        "Slugs for the new drafts are VR-09 through VR-26 and do not reuse any slug from VR-01..VR-08",
+        "The response uses or sets up slug persistence (a slugs sidecar or equivalent) so that reordering the review doesn't renumber the drafts",
+        "Every draft's labels are drawn only from the VirtualRow flat scheme — no area:/module:/tdd: labels appear",
+        "A size:XL draft would be rejected or pre-split before emission rather than being filed as a single oversized issue",
+        "The response does not call issue-filing or the gh CLI as part of this step"
+      ],
+      "discriminating": [0, 1, 2, 3]
+    },
+    {
+      "id": 3,
+      "prompt": "We've been using area:connectors as a label on the Chorus repo in a few recent drafts. Can you check that against the repo profile and fix any drafts that are inconsistent?",
+      "expected_output": "Checks the drafts against references/repo-profiles.yaml for Chorus, finds that area:connectors is not in the profile (Chorus uses module:int / module:brain / module:code / module:mcp / module:agent), and either fixes the drafts to use module:int or flags that the profile needs updating — not both. Does not auto-add area:connectors to the profile.",
+      "files": [],
+      "expectations": [
+        "The response identifies area:connectors as not being in the Chorus profile and names the module:* labels that are",
+        "The response does not silently rename labels on the live repo via gh — the fix is to the drafts or to the profile",
+        "The response treats the profile as the single source of truth and does not auto-add labels to it to make the drafts pass",
+        "The response offers a clear choice between editing the drafts to use an existing label and updating the profile with explicit rationale"
+      ],
+      "discriminating": [0, 2, 3]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "skill_name": "issue-filing",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I've got a folder of 18 drafted issues (VR-09 through VR-26) in drafts/ for the MaximumTrainer/virtualrow repo. Some have blocked_by relationships. Can you file them all? Here's the draft folder.",
+      "expected_output": "Preflights labels against the live repo first, files the drafts in topological order (blocked_by first), writes the resulting GitHub issue number back into each draft's frontmatter, then runs a second pass to add Blocks/Blocked by cross-ref lines to each dependent issue body.",
+      "files": [],
+      "expectations": [
+        "The response runs gh label list (or equivalent) against the repo before any gh issue create, and halts if a draft carries a label the repo does not have",
+        "The response files drafts in an order that respects blocked_by — a draft blocked by another is filed after its dependency",
+        "After each successful gh issue create, the issue number is written back into the draft's frontmatter so a rerun is idempotent",
+        "After all creates, a second pass runs gh issue edit on each dependent issue to add resolved Blocks/Blocked by #N lines to the body",
+        "A failed gh call does not cause already-created issues to be re-created on a rerun",
+        "The response does not invent issue numbers or hallucinate successful creations without the gh call having returned a URL"
+      ],
+      "discriminating": [0, 1, 2, 3, 4]
+    },
+    {
+      "id": 2,
+      "prompt": "gh timed out partway through filing my drafts last night. The log shows the first 7 of 11 drafts were created with issue numbers 450-456, then it hit a 503. Can you finish the job without duplicating anything?",
+      "expected_output": "Reads the drafts folder, notices the first 7 already carry issue: numbers in frontmatter and skips those, files only the remaining 4, and runs the cross-ref pass over all 11.",
+      "files": [],
+      "expectations": [
+        "The response identifies which drafts already carry issue: numbers by reading each draft's frontmatter, not by listing GitHub issues",
+        "The response files only the drafts that lack issue: numbers in their frontmatter",
+        "The response does not re-create any of issues 450-456 or re-attempt them against gh",
+        "After filing completes, a cross-ref pass runs over the full set so that both pre-existing and new issues get their Blocks/Blocked by lines",
+        "The response does not silently continue past the 503 without surfacing that the failure happened and why idempotence was safe"
+      ],
+      "discriminating": [0, 1, 2, 3]
+    },
+    {
+      "id": 3,
+      "prompt": "Some of my drafts have module:connectors as a label but Chorus doesn't define that label on GitHub yet. Can you file them anyway and just create the label on the fly if it's missing?",
+      "expected_output": "Declines to auto-create the label from a draft because labels encode decisions and a typo in a draft should not silently add a label to the repo. Offers to run gh label create explicitly as a separate step before filing, or to update the drafts to use an existing label, and names which labels Chorus does have in that namespace.",
+      "files": [],
+      "expectations": [
+        "The response does not silently create the missing label on the repo from the draft",
+        "The response names a concrete alternative: run gh label create as an explicit step, or change the label in the drafts to one that exists",
+        "The response explains why auto-creating labels from drafts is a bad default — a typo in a draft would propagate to the repo",
+        "The response does not file any issue carrying the unknown label — preflight is intended to block this"
+      ],
+      "discriminating": [0, 2]
+    }
+  ]
+}

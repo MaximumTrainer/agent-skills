@@ -113,6 +113,48 @@
       ]
     },
     {
+      "name": "issue-drafting",
+      "directory": "issue-drafting",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Turn a review of a repository — agent-systems audit, white-paper follow-ups, Fable backlog, plan.md elaboration — into a folder of draft GitHub issues in the Context/Scope/FRs/Gherkin/TDD convention, one file per gap, labelled against the target repo's known scheme and with size:XL candidates pre-split into independently shippable walking-skeleton slices before they ship. Use when a review has already surfaced many gaps and the next step is turning each into an issue, when picking up a long tail of untyped findings, when translating an ADR or plan.md row into trackable issues, or when \"write up these gaps\" would otherwise mean an evening of pasting. One-at-a-time elaboration of a single thin issue is `spec-by-example-issue`'s job, not this one; this is batch mode. Covers the five-section contract, per-repo label profiles vendored as the single source of truth, slug persistence across review reordering, and the walking-skeleton heuristic that keeps XL work from being filed as one deathstar issue.",
+      "files": [
+        "SKILL.md",
+        "references/convention.md",
+        "references/repo-profiles.yaml",
+        "references/xl-slicing.md",
+        "scripts/issue_drafting/__init__.py",
+        "scripts/issue_drafting/cli.py",
+        "scripts/issue_drafting/parser.py",
+        "scripts/issue_drafting/profiles.py",
+        "scripts/issue_drafting/render.py",
+        "scripts/issue_drafting/slugs.py",
+        "assets/fixtures/reviews/auth-xl.md",
+        "assets/fixtures/reviews/mini-kg-review-reordered.md",
+        "assets/fixtures/reviews/mini-kg-review.md",
+        "assets/fixtures/reviews/vr-mini.md",
+        "assets/templates/issue.md.j2"
+      ]
+    },
+    {
+      "name": "issue-filing",
+      "directory": "issue-filing",
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Take a folder of drafted GitHub issues — written by `issue-drafting`, or hand-authored to the same five-section contract — and file them to a repo via the `gh` CLI with the right labels, in dependency order, cross-referenced, and idempotent across reruns. Use when a drafted backlog needs to land in a repo (the \"evening of clicking through the GitHub UI\" problem), when a long tail of unfiled drafts needs catching up (VR-09..VR-26 shape), when re-filing a batch after a label-scheme change on the target repo, or when any batch of issues needs filing without hand-work per issue. Covers preflight label validation that fails before any issue is created, topological ordering by `blocked_by`, write-back of issue numbers into draft frontmatter so a mid-run gh failure is safely resumable, and a second-pass cross-ref rewrite that adds `Blocks: #N` / `Blocked by: #N` lines once every slug has a number.",
+      "files": [
+        "SKILL.md",
+        "references/gh-auth.md",
+        "references/label-sync.md",
+        "scripts/issue_filing/__init__.py",
+        "scripts/issue_filing/cli.py",
+        "scripts/issue_filing/drafts.py",
+        "scripts/issue_filing/filer.py",
+        "scripts/issue_filing/gh.py",
+        "scripts/issue_filing/order.py"
+      ]
+    },
+    {
       "name": "kotlin-idioms",
       "directory": "kotlin-idioms",
       "version": "2.0.0",
