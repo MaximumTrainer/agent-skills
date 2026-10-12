@@ -31,17 +31,22 @@ function GoodComponent() {
 ## Multiple Values with Shallow
 
 ```jsx
-import { shallow } from 'zustand/shallow';
+import { useShallow } from 'zustand/react/shallow';
 
 // GOOD - Re-renders only when x, y, or z changes
 function PositionComponent() {
   const { x, y, z } = useGameStore(
-    state => ({ x: state.x, y: state.y, z: state.z }),
-    shallow // Use shallow comparison for objects
+    useShallow(state => ({ x: state.x, y: state.y, z: state.z }))
   );
   return <mesh position={[x, y, z]} />;
 }
 ```
+
+`useShallow` needs zustand 4.4 or later. The older form, passing `shallow` as
+the hook's second argument, is deprecated in 4.x and does nothing in v5 unless
+the store was made with `createWithEqualityFn` from `zustand/traditional`. In
+v5 a selector that returns a new object without `useShallow` re-renders on every
+store change, and can loop.
 
 ## Transient Subscriptions (No Re-renders)
 
@@ -52,19 +57,21 @@ function TransientComponent() {
   const meshRef = useRef();
 
   useEffect(() => {
-    // Subscribe without causing re-renders
-    const unsubscribe = useGameStore.subscribe(
-      state => state.playerPosition,
-      position => {
-        meshRef.current.position.copy(position);
-      }
-    );
+    // Subscribe without causing re-renders. The listener gets the whole state.
+    const unsubscribe = useGameStore.subscribe(state => {
+      meshRef.current.position.copy(state.playerPosition);
+    });
     return unsubscribe;
   }, []);
 
   return <mesh ref={meshRef} />;
 }
 ```
+
+The two-argument form, `subscribe(selector, listener)`, only exists when the
+store was made with the `subscribeWithSelector` middleware:
+`create(subscribeWithSelector((set) => ({ ... })))`. On a plain store the
+selector is taken as the listener and the second argument is ignored.
 
 ## getState() in useFrame
 
@@ -114,7 +121,7 @@ const useGameStore = create((set, get) => ({
 |--------|------------|----------|
 | `useStore()` | Every change | Never use |
 | `useStore(s => s.value)` | When value changes | Most cases |
-| `useStore(selector, shallow)` | When any selected value changes | Multiple values |
+| `useStore(useShallow(selector))` | When any selected value changes | Multiple values |
 | `useStore.subscribe()` | Never | Continuous updates |
 | `useStore.getState()` | Never | Inside useFrame |
 

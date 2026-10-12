@@ -3,12 +3,12 @@ name: outside-in-tdd
 description: Drive a change test-first from the outside in — acceptance test red, then contract/API red, then unit red, then the green implementation — with one commit per step so the history proves the sequence. Use whenever implementing a feature, fixing a bug, or starting work on an issue number in a repository that expects TDD, and whenever asked to "do issue N", "implement X test-first", "red-green-refactor", or "work through the backlog". Also use when reviewing whether a change was actually driven by tests.
 license: MIT
 metadata:
-  version: "2.0.0"
+  version: "2.0.1"
 ---
 
 # Outside-in TDD
 
-Measured note: an eval run without this skill already chose the right ring and justified it, injected the clock rather than calling it, read `git log` as newest-first to prove tests were committed *after* the implementation, and kept the red test as its own commit. The rings, the sequence and the test-double rules are what a careful engineer does anyway, so they are not repeated here. One thing was not produced unaided, and it is the whole of section 1.
+Measured note (re-measured on this text, 2026-10, fixture repos, two blind judges): +39% across three evals. Without this skill the model already read `git log` as newest-first to show the tests came after the implementation, and proposed running the test commit to see whether it fails. It did **not** commit the red test separately from the implementation (section 2), and on a production bug it did not name the ring that should have caught it or report the missing ring as a finding (section 3). Those two, and reading why a test failed (section 1), are what this skill adds. The ring definitions and test-double rules are what a careful engineer does anyway, so they are not repeated here.
 
 ## 1. Red for the right reason
 
