@@ -1,0 +1,1597 @@
+{
+  "metadata": {
+    "workspace": "evalws",
+    "model": "unrecorded",
+    "evals_run": [
+      "engineering-white-paper-1",
+      "engineering-white-paper-2",
+      "engineering-white-paper-3",
+      "gap-issue-1",
+      "gap-issue-2",
+      "gap-issue-3",
+      "hexagonal-architecture-1",
+      "hexagonal-architecture-2",
+      "hexagonal-architecture-3",
+      "kotlin-idioms-1",
+      "kotlin-idioms-2",
+      "kotlin-idioms-3",
+      "live-api-probe-1",
+      "live-api-probe-2",
+      "live-api-probe-3",
+      "minimal-docker-1",
+      "minimal-docker-2",
+      "minimal-docker-3",
+      "minimal-docker-4",
+      "outside-in-tdd-1",
+      "outside-in-tdd-2",
+      "outside-in-tdd-3",
+      "qt6-cross-platform-1",
+      "qt6-cross-platform-2",
+      "qt6-cross-platform-3",
+      "r3f-best-practices-1",
+      "r3f-best-practices-2",
+      "r3f-best-practices-3",
+      "single-source-constants-1",
+      "single-source-constants-2",
+      "single-source-constants-3",
+      "three-best-practices-1",
+      "three-best-practices-2",
+      "three-best-practices-3",
+      "verify-and-ship-1",
+      "verify-and-ship-2",
+      "verify-and-ship-3"
+    ]
+  },
+  "by_skill": {
+    "engineering-white-paper": {
+      "delta": 0.3333,
+      "evals": 3
+    },
+    "gap-issue": {
+      "delta": 0.75,
+      "evals": 3
+    },
+    "hexagonal-architecture": {
+      "delta": 0.3333,
+      "evals": 3
+    },
+    "kotlin-idioms": {
+      "delta": 0.5,
+      "evals": 3
+    },
+    "live-api-probe": {
+      "delta": 0.3333,
+      "evals": 3
+    },
+    "minimal-docker": {
+      "delta": 0.9167,
+      "evals": 4
+    },
+    "outside-in-tdd": {
+      "delta": 0.3889,
+      "evals": 3
+    },
+    "qt6-cross-platform": {
+      "delta": 0.0556,
+      "evals": 3
+    },
+    "r3f-best-practices": {
+      "delta": 0.0,
+      "evals": 3
+    },
+    "single-source-constants": {
+      "delta": 0.2778,
+      "evals": 3
+    },
+    "three-best-practices": {
+      "delta": 0.0,
+      "evals": 3
+    },
+    "verify-and-ship": {
+      "delta": 0.1667,
+      "evals": 3
+    }
+  },
+  "runs": [
+    {
+      "eval_name": "engineering-white-paper-1",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 2.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "Benefits name a mechanism rather than an adjective such as 'improves quality'",
+          "passed": 1.0
+        },
+        {
+          "text": "A drawbacks section is present, with a mitigation paired to each drawback",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "engineering-white-paper-1",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.0,
+        "passed": 0.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "Benefits name a mechanism rather than an adjective such as 'improves quality'",
+          "passed": 0.0
+        },
+        {
+          "text": "A drawbacks section is present, with a mitigation paired to each drawback",
+          "passed": 0.0
+        }
+      ]
+    },
+    {
+      "eval_name": "engineering-white-paper-2",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response does not invent or fabricate the statistic",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "engineering-white-paper-2",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response does not invent or fabricate the statistic",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "engineering-white-paper-3",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response distinguishes the audience: a human deciding whether to adopt versus an agent doing the task now",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "engineering-white-paper-3",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response distinguishes the audience: a human deciding whether to adopt versus an agent doing the task now",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "gap-issue-1",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4.0,
+        "total": 4
+      },
+      "expectations": [
+        {
+          "text": "A gap issue is filed for the unverified criterion rather than the box being ticked",
+          "passed": 1.0
+        },
+        {
+          "text": "The gap issue assesses the blast radius if the assumption is wrong",
+          "passed": 1.0
+        },
+        {
+          "text": "The response reports the gap plainly in its summary alongside the success",
+          "passed": 1.0
+        },
+        {
+          "text": "The response does not describe the work as fully verified or all tests passing",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "gap-issue-1",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3.0,
+        "total": 4
+      },
+      "expectations": [
+        {
+          "text": "A gap issue is filed for the unverified criterion rather than the box being ticked",
+          "passed": 1.0
+        },
+        {
+          "text": "The gap issue assesses the blast radius if the assumption is wrong",
+          "passed": 0.0
+        },
+        {
+          "text": "The response reports the gap plainly in its summary alongside the success",
+          "passed": 1.0
+        },
+        {
+          "text": "The response does not describe the work as fully verified or all tests passing",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "gap-issue-2",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The closing comment quotes the evidence, such as the run URL or which test covers which criterion",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "gap-issue-2",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.0,
+        "passed": 0.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The closing comment quotes the evidence, such as the run URL or which test covers which criterion",
+          "passed": 0.0
+        }
+      ]
+    },
+    {
+      "eval_name": "gap-issue-3",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response distinguishes a gap (something a reader would assume was verified and was not) from a general improvement wish",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "gap-issue-3",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.0,
+        "passed": 0.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response distinguishes a gap (something a reader would assume was verified and was not) from a general improvement wish",
+          "passed": 0.0
+        }
+      ]
+    },
+    {
+      "eval_name": "hexagonal-architecture-1",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 2.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "The outbound port interface is defined before the adapter that implements it",
+          "passed": 1.0
+        },
+        {
+          "text": "An in-memory implementation of the port is created in the test tree before the real adapter",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "hexagonal-architecture-1",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 2.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "The outbound port interface is defined before the adapter that implements it",
+          "passed": 1.0
+        },
+        {
+          "text": "An in-memory implementation of the port is created in the test tree before the real adapter",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "hexagonal-architecture-2",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 2.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "The response flags that the controller names the concrete ProjectService rather than an inbound port interface",
+          "passed": 1.0
+        },
+        {
+          "text": "The response recommends the controller depend on an interface",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "hexagonal-architecture-2",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.0,
+        "passed": 0.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "The response flags that the controller names the concrete ProjectService rather than an inbound port interface",
+          "passed": 0.0
+        },
+        {
+          "text": "The response recommends the controller depend on an interface",
+          "passed": 0.0
+        }
+      ]
+    },
+    {
+      "eval_name": "hexagonal-architecture-3",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 2.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "The response does not simply suggest making the containers faster or mocking the database driver",
+          "passed": 1.0
+        },
+        {
+          "text": "The response mentions that the clock or other ambient dependencies should be injected",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "hexagonal-architecture-3",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 2.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "The response does not simply suggest making the containers faster or mocking the database driver",
+          "passed": 1.0
+        },
+        {
+          "text": "The response mentions that the clock or other ambient dependencies should be injected",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "kotlin-idioms-1",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response notes that the port should return a nullable type rather than requiring the assertion",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "kotlin-idioms-1",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.0,
+        "passed": 0.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response notes that the port should return a nullable type rather than requiring the assertion",
+          "passed": 0.0
+        }
+      ]
+    },
+    {
+      "eval_name": "kotlin-idioms-2",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 2.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "The response gives the testability reason: the domain stays runnable with no database and no Spring context",
+          "passed": 1.0
+        },
+        {
+          "text": "The response notes the schema would become the domain's public API",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "kotlin-idioms-2",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 1.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "The response gives the testability reason: the domain stays runnable with no database and no Spring context",
+          "passed": 0.0
+        },
+        {
+          "text": "The response notes the schema would become the domain's public API",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "kotlin-idioms-3",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4.0,
+        "total": 4
+      },
+      "expectations": [
+        {
+          "text": "The response identifies this as a detekt/Kotlin version coupling rather than a code defect",
+          "passed": 1.0
+        },
+        {
+          "text": "The response explains that detekt embeds a specific Kotlin compiler version",
+          "passed": 1.0
+        },
+        {
+          "text": "The response gives the resolution strategy pinning Kotlin artifacts on detekt's own classpath",
+          "passed": 1.0
+        },
+        {
+          "text": "The response notes the pin does not affect how the project compiles",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "kotlin-idioms-3",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4.0,
+        "total": 4
+      },
+      "expectations": [
+        {
+          "text": "The response identifies this as a detekt/Kotlin version coupling rather than a code defect",
+          "passed": 1.0
+        },
+        {
+          "text": "The response explains that detekt embeds a specific Kotlin compiler version",
+          "passed": 1.0
+        },
+        {
+          "text": "The response gives the resolution strategy pinning Kotlin artifacts on detekt's own classpath",
+          "passed": 1.0
+        },
+        {
+          "text": "The response notes the pin does not affect how the project compiles",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "live-api-probe-1",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4.0,
+        "total": 4
+      },
+      "expectations": [
+        {
+          "text": "The credential is taken from the environment or the message and never written to a file, fixture or log",
+          "passed": 1.0
+        },
+        {
+          "text": "The scratch harness is deleted after the run",
+          "passed": 1.0
+        },
+        {
+          "text": "The response reports what was observed separately from what was inferred",
+          "passed": 1.0
+        },
+        {
+          "text": "The response notes the finding is from one account and may not generalise",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "live-api-probe-1",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 2.0,
+        "total": 4
+      },
+      "expectations": [
+        {
+          "text": "The credential is taken from the environment or the message and never written to a file, fixture or log",
+          "passed": 1.0
+        },
+        {
+          "text": "The scratch harness is deleted after the run",
+          "passed": 0.0
+        },
+        {
+          "text": "The response reports what was observed separately from what was inferred",
+          "passed": 1.0
+        },
+        {
+          "text": "The response notes the finding is from one account and may not generalise",
+          "passed": 0.0
+        }
+      ]
+    },
+    {
+      "eval_name": "live-api-probe-2",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response does not write the credential into a file",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "live-api-probe-2",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response does not write the credential into a file",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "live-api-probe-3",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 2.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "No real account identifiers or personal data are written down",
+          "passed": 1.0
+        },
+        {
+          "text": "A row is added to the integration's quirks table stating the consequence if assumed away",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "live-api-probe-3",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 1.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "No real account identifiers or personal data are written down",
+          "passed": 1.0
+        },
+        {
+          "text": "A row is added to the integration's quirks table stating the consequence if assumed away",
+          "passed": 0.0
+        }
+      ]
+    },
+    {
+      "eval_name": "minimal-docker-1",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 2.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "Every FROM is pinned by @sha256 digest, or the response says the digest was not resolved and gives the command to get it",
+          "passed": 1.0
+        },
+        {
+          "text": "The response designs for a read-only root filesystem (--read-only or readOnlyRootFilesystem) and says which paths stay writable",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "minimal-docker-1",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.0,
+        "passed": 0.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "Every FROM is pinned by @sha256 digest, or the response says the digest was not resolved and gives the command to get it",
+          "passed": 0.0
+        },
+        {
+          "text": "The response designs for a read-only root filesystem (--read-only or readOnlyRootFilesystem) and says which paths stay writable",
+          "passed": 0.0
+        }
+      ]
+    },
+    {
+      "eval_name": "minimal-docker-2",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 2.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "Every FROM is pinned by @sha256 digest, or the response says the digest was not resolved and gives the command to get it",
+          "passed": 1.0
+        },
+        {
+          "text": "The response designs for a read-only root filesystem (--read-only or readOnlyRootFilesystem) and says which paths stay writable",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "minimal-docker-2",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.0,
+        "passed": 0.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "Every FROM is pinned by @sha256 digest, or the response says the digest was not resolved and gives the command to get it",
+          "passed": 0.0
+        },
+        {
+          "text": "The response designs for a read-only root filesystem (--read-only or readOnlyRootFilesystem) and says which paths stay writable",
+          "passed": 0.0
+        }
+      ]
+    },
+    {
+      "eval_name": "minimal-docker-3",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 2.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "Every FROM is pinned by @sha256 digest, or the response says the digest was not resolved and gives the command to get it",
+          "passed": 1.0
+        },
+        {
+          "text": "The response designs for a read-only root filesystem (--read-only or readOnlyRootFilesystem) and says which paths stay writable",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "minimal-docker-3",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.0,
+        "passed": 0.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "Every FROM is pinned by @sha256 digest, or the response says the digest was not resolved and gives the command to get it",
+          "passed": 0.0
+        },
+        {
+          "text": "The response designs for a read-only root filesystem (--read-only or readOnlyRootFilesystem) and says which paths stay writable",
+          "passed": 0.0
+        }
+      ]
+    },
+    {
+      "eval_name": "minimal-docker-4",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3.0,
+        "total": 3
+      },
+      "expectations": [
+        {
+          "text": "The response names RUN --mount=type=secret as the way to supply any secret needed at build time",
+          "passed": 1.0
+        },
+        {
+          "text": "The response says how to debug the shell-less final image (a :debug tag, docker debug, or kubectl debug)",
+          "passed": 1.0
+        },
+        {
+          "text": "Every FROM is pinned by @sha256 digest, or the response says the digest was not resolved and gives the command to get it",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "minimal-docker-4",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.3333,
+        "passed": 1.0,
+        "total": 3
+      },
+      "expectations": [
+        {
+          "text": "The response names RUN --mount=type=secret as the way to supply any secret needed at build time",
+          "passed": 1.0
+        },
+        {
+          "text": "The response says how to debug the shell-less final image (a :debug tag, docker debug, or kubectl debug)",
+          "passed": 0.0
+        },
+        {
+          "text": "Every FROM is pinned by @sha256 digest, or the response says the digest was not resolved and gives the command to get it",
+          "passed": 0.0
+        }
+      ]
+    },
+    {
+      "eval_name": "outside-in-tdd-1",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 2.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "The response either states the failure it observed, or says plainly that the test was not run - it does not report a red it did not see",
+          "passed": 1.0
+        },
+        {
+          "text": "The red test is committed as its own commit, separate from the implementation",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "outside-in-tdd-1",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 1.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "The response either states the failure it observed, or says plainly that the test was not run - it does not report a red it did not see",
+          "passed": 1.0
+        },
+        {
+          "text": "The red test is committed as its own commit, separate from the implementation",
+          "passed": 0.0
+        }
+      ]
+    },
+    {
+      "eval_name": "outside-in-tdd-2",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 2.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "The response proposes checking out the test commit and running it to see whether it fails",
+          "passed": 1.0
+        },
+        {
+          "text": "The response notes that commit ordering alone can be manufactured by staging or rebasing",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "outside-in-tdd-2",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 2.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "The response proposes checking out the test commit and running it to see whether it fails",
+          "passed": 1.0
+        },
+        {
+          "text": "The response notes that commit ordering alone can be manufactured by staging or rebasing",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "outside-in-tdd-3",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3.0,
+        "total": 3
+      },
+      "expectations": [
+        {
+          "text": "The response identifies which test ring should have caught this and did not",
+          "passed": 1.0
+        },
+        {
+          "text": "The response treats the absent test ring as a finding worth reporting, not just an implementation detail",
+          "passed": 1.0
+        },
+        {
+          "text": "The response either states the failure it observed from the reproduction test, or says plainly that it was not run - it does not report a red it did not see",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "outside-in-tdd-3",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.3333,
+        "passed": 1.0,
+        "total": 3
+      },
+      "expectations": [
+        {
+          "text": "The response identifies which test ring should have caught this and did not",
+          "passed": 0.0
+        },
+        {
+          "text": "The response treats the absent test ring as a finding worth reporting, not just an implementation detail",
+          "passed": 0.0
+        },
+        {
+          "text": "The response either states the failure it observed from the reproduction test, or says plainly that it was not run - it does not report a red it did not see",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "qt6-cross-platform-1",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3.0,
+        "total": 3
+      },
+      "expectations": [
+        {
+          "text": "The response identifies that the QString overload of currentIndexChanged was removed in Qt6",
+          "passed": 1.0
+        },
+        {
+          "text": "The response explains that connectSlotsByName auto-slots then silently never fire",
+          "passed": 1.0
+        },
+        {
+          "text": "The response directs the user to grep the startup log for 'No matching signal'",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "qt6-cross-platform-1",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.8333,
+        "passed": 2.5,
+        "total": 3
+      },
+      "expectations": [
+        {
+          "text": "The response identifies that the QString overload of currentIndexChanged was removed in Qt6",
+          "passed": 1.0
+        },
+        {
+          "text": "The response explains that connectSlotsByName auto-slots then silently never fire",
+          "passed": 1.0
+        },
+        {
+          "text": "The response directs the user to grep the startup log for 'No matching signal'",
+          "passed": 0.5
+        }
+      ]
+    },
+    {
+      "eval_name": "qt6-cross-platform-2",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 2.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "The response names NSS modules as the likely cause of a crash on first HTTPS",
+          "passed": 1.0
+        },
+        {
+          "text": "The response mentions bundling the matched OpenSSL pair rather than libcrypto alone",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "qt6-cross-platform-2",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 2.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "The response names NSS modules as the likely cause of a crash on first HTTPS",
+          "passed": 1.0
+        },
+        {
+          "text": "The response mentions bundling the matched OpenSSL pair rather than libcrypto alone",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "qt6-cross-platform-3",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response explains the WASM target is effectively single-threaded so blocking freezes the tab",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "qt6-cross-platform-3",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response explains the WASM target is effectively single-threaded so blocking freezes the tab",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "r3f-best-practices-1",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response identifies calling setState inside useFrame as the problem",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "r3f-best-practices-1",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response identifies calling setState inside useFrame as the problem",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "r3f-best-practices-2",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response recommends selectors that subscribe to the specific slice needed",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "r3f-best-practices-2",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response recommends selectors that subscribe to the specific slice needed",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "r3f-best-practices-3",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response recommends toggling the visible prop instead of unmounting",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "r3f-best-practices-3",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response recommends toggling the visible prop instead of unmounting",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "single-source-constants-1",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.6667,
+        "passed": 2.0,
+        "total": 3
+      },
+      "expectations": [
+        {
+          "text": "The proposed band definition includes the human-readable label and range text, not just the numbers",
+          "passed": 1.0
+        },
+        {
+          "text": "The tooltip or UI copy is generated from the definition rather than typed separately",
+          "passed": 1.0
+        },
+        {
+          "text": "The response proposes a test asserting the bands are contiguous with no gap or overlap",
+          "passed": 0.0
+        }
+      ]
+    },
+    {
+      "eval_name": "single-source-constants-1",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.3333,
+        "passed": 1.0,
+        "total": 3
+      },
+      "expectations": [
+        {
+          "text": "The proposed band definition includes the human-readable label and range text, not just the numbers",
+          "passed": 0.0
+        },
+        {
+          "text": "The tooltip or UI copy is generated from the definition rather than typed separately",
+          "passed": 1.0
+        },
+        {
+          "text": "The response proposes a test asserting the bands are contiguous with no gap or overlap",
+          "passed": 0.0
+        }
+      ]
+    },
+    {
+      "eval_name": "single-source-constants-2",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 2.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "The response states the presentation text belongs in the same definition as the numbers",
+          "passed": 1.0
+        },
+        {
+          "text": "The response says the UI label is rendered from the definition rather than typed separately",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "single-source-constants-2",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 1.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "The response states the presentation text belongs in the same definition as the numbers",
+          "passed": 0.0
+        },
+        {
+          "text": "The response says the UI label is rendered from the definition rather than typed separately",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "single-source-constants-3",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response identifies the intersection of numbers appearing in both code and documentation as the drift candidates",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "single-source-constants-3",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response identifies the intersection of numbers appearing in both code and documentation as the drift candidates",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "three-best-practices-1",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response explains that removing an object from the scene does not free GPU memory",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "three-best-practices-1",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response explains that removing an object from the scene does not free GPU memory",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "three-best-practices-2",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "InstancedMesh is recommended for the repeated identical geometry",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "three-best-practices-2",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "InstancedMesh is recommended for the repeated identical geometry",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "three-best-practices-3",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The pixel ratio is capped rather than using window.devicePixelRatio directly",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "three-best-practices-3",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The pixel ratio is capped rather than using window.devicePixelRatio directly",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "verify-and-ship-1",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response checks whether the aggregate verify script omits anything CI runs, such as a format check",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "verify-and-ship-1",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The response checks whether the aggregate verify script omits anything CI runs, such as a format check",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "verify-and-ship-2",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 2.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "The response identifies that bare gh run watch exits 0 whatever the run concluded",
+          "passed": 1.0
+        },
+        {
+          "text": "The response explains that reporting failure requires the --exit-status flag",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "verify-and-ship-2",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 2.0,
+        "total": 2
+      },
+      "expectations": [
+        {
+          "text": "The response identifies that bare gh run watch exits 0 whatever the run concluded",
+          "passed": 1.0
+        },
+        {
+          "text": "The response explains that reporting failure requires the --exit-status flag",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "verify-and-ship-3",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 1.0,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The suite is run under more than one timezone, including at least one non-UTC offset",
+          "passed": 1.0
+        }
+      ]
+    },
+    {
+      "eval_name": "verify-and-ship-3",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 0.5,
+        "total": 1
+      },
+      "expectations": [
+        {
+          "text": "The suite is run under more than one timezone, including at least one non-UTC offset",
+          "passed": 0.5
+        }
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 0.991,
+        "stddev": 0.054,
+        "min": 0.6667,
+        "max": 1.0
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.6374,
+        "stddev": 0.4047,
+        "min": 0.0,
+        "max": 1.0
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.3536"
+    }
+  },
+  "notes": [
+    "engineering-white-paper-2: The response does not invent or fabricate the statistic",
+    "engineering-white-paper-3: The response distinguishes the audience: a human deciding whether to adopt versus an agent doing the task now",
+    "gap-issue-1: A gap issue is filed for the unverified criterion rather than the box being ticked",
+    "gap-issue-1: The response reports the gap plainly in its summary alongside the success",
+    "gap-issue-1: The response does not describe the work as fully verified or all tests passing",
+    "hexagonal-architecture-1: The outbound port interface is defined before the adapter that implements it",
+    "hexagonal-architecture-1: An in-memory implementation of the port is created in the test tree before the real adapter",
+    "hexagonal-architecture-3: The response does not simply suggest making the containers faster or mocking the database driver",
+    "hexagonal-architecture-3: The response mentions that the clock or other ambient dependencies should be injected",
+    "kotlin-idioms-2: The response notes the schema would become the domain's public API",
+    "kotlin-idioms-3: The response identifies this as a detekt/Kotlin version coupling rather than a code defect",
+    "kotlin-idioms-3: The response explains that detekt embeds a specific Kotlin compiler version",
+    "kotlin-idioms-3: The response gives the resolution strategy pinning Kotlin artifacts on detekt's own classpath",
+    "kotlin-idioms-3: The response notes the pin does not affect how the project compiles",
+    "live-api-probe-1: The credential is taken from the environment or the message and never written to a file, fixture or log",
+    "live-api-probe-1: The response reports what was observed separately from what was inferred",
+    "live-api-probe-2: The response does not write the credential into a file",
+    "live-api-probe-3: No real account identifiers or personal data are written down",
+    "minimal-docker-4: The response names RUN --mount=type=secret as the way to supply any secret needed at build time",
+    "outside-in-tdd-1: The response either states the failure it observed, or says plainly that the test was not run - it does not report a red it did not see",
+    "outside-in-tdd-2: The response proposes checking out the test commit and running it to see whether it fails",
+    "outside-in-tdd-2: The response notes that commit ordering alone can be manufactured by staging or rebasing",
+    "outside-in-tdd-3: The response either states the failure it observed from the reproduction test, or says plainly that it was not run - it does not report a red it did not see",
+    "qt6-cross-platform-1: The response identifies that the QString overload of currentIndexChanged was removed in Qt6",
+    "qt6-cross-platform-1: The response explains that connectSlotsByName auto-slots then silently never fire",
+    "qt6-cross-platform-2: The response names NSS modules as the likely cause of a crash on first HTTPS",
+    "qt6-cross-platform-2: The response mentions bundling the matched OpenSSL pair rather than libcrypto alone",
+    "qt6-cross-platform-3: The response explains the WASM target is effectively single-threaded so blocking freezes the tab",
+    "r3f-best-practices-1: The response identifies calling setState inside useFrame as the problem",
+    "r3f-best-practices-2: The response recommends selectors that subscribe to the specific slice needed",
+    "r3f-best-practices-3: The response recommends toggling the visible prop instead of unmounting",
+    "single-source-constants-1: The tooltip or UI copy is generated from the definition rather than typed separately",
+    "single-source-constants-2: The response says the UI label is rendered from the definition rather than typed separately",
+    "single-source-constants-3: The response identifies the intersection of numbers appearing in both code and documentation as the drift candidates",
+    "three-best-practices-1: The response explains that removing an object from the scene does not free GPU memory",
+    "three-best-practices-2: InstancedMesh is recommended for the repeated identical geometry",
+    "three-best-practices-3: The pixel ratio is capped rather than using window.devicePixelRatio directly",
+    "verify-and-ship-1: The response checks whether the aggregate verify script omits anything CI runs, such as a format check",
+    "verify-and-ship-2: The response identifies that bare gh run watch exits 0 whatever the run concluded",
+    "verify-and-ship-2: The response explains that reporting failure requires the --exit-status flag"
+  ],
+  "contested": [
+    "qt6-cross-platform-1 [without_skill]: The response directs the user to grep the startup log for 'No matching signal'",
+    "verify-and-ship-3 [without_skill]: The suite is run under more than one timezone, including at least one non-UTC offset"
+  ],
+  "single_judge": []
+}

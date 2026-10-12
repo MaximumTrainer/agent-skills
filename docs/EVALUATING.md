@@ -61,6 +61,8 @@ identically. The fixtures carry the properties being measured on purpose:
 | `qt-desktop` | auto-slot bound to a removed Qt5 signal signature, AppImage packaging with no off-machine verification |
 | `connectiq-app` | unguarded web-request payload, UINT32 read into a signed value |
 
+Re-running those eight with fixtures (two blind judges, `benchmarks/2026-10-12.json`) moved five of them: `gap-issue` +75%, `engineering-white-paper`, `hexagonal-architecture` and `live-api-probe` +33%, `verify-and-ship` +17%. `qt6-cross-platform` came in at +6%. Three stayed at zero. `minimal-docker` turned out to change defaults its evals never asked about (digest pins, read-only root, secret mounts, a debug route), so its evals were retargeted at those and it now measures +92%. `three-best-practices` and `r3f-best-practices` restate what the model already does, so they were cut to routers over their reference files.
+
 **An eval with no `fixture` runs bare, deliberately.** A prompt carrying its
 subject inline, or one that is pure authoring, gains nothing from scenery, and
 scenery invites the runner to wander.

@@ -4,265 +4,38 @@ description: React Three Fiber (R3F) and Poimandres ecosystem best practices. Us
 license: MIT
 metadata:
   author: three-agent-skills
-  version: "1.2.0"
+  version: "2.0.0"
 ---
 
 # React Three Fiber Best Practices
 
-Comprehensive guide for React Three Fiber and the Poimandres ecosystem. Contains 70+ rules across 12 categories, prioritized by impact.
+Measured note (fixture re-run, 2026-10): this skill measured +0% on all three of its evals. Without it the model already spots `setState` inside `useFrame` and moves the change to a ref, replaces whole-store zustand subscriptions with selectors and `getState()` in the frame loop, and toggles `visible` instead of remounting, with preloading for async assets. The old "Critical Patterns" section repeated exactly that, so it is gone.
 
-## Sources & Credits
+What is left is a reference you open for a specific question, plus one version trap the model's own example got wrong.
 
-> Additional tips from [100 Three.js Tips](https://www.utsubo.com/blog/threejs-best-practices-100-tips) by [Utsubo](https://www.utsubo.com)
+## Version trap: zustand v5
 
-## When to Apply
+A selector that returns a new object, such as `useStore(s => ({ x: s.x, y: s.y }))`, re-renders on every store change in v5 and can loop. Wrap it in `useShallow` from `zustand/react/shallow` (zustand 4.4+). Passing `shallow` as the hook's second argument is deprecated in 4.x and does nothing in v5 unless the store came from `createWithEqualityFn` in `zustand/traditional`. `store.subscribe(selector, listener)` needs the `subscribeWithSelector` middleware; a plain store takes one listener. Details in `references/rules/perf-zustand-selectors.md`.
 
-Reference these guidelines when:
-- Writing new R3F components
-- Optimizing R3F performance (re-renders are the #1 issue)
-- Using Drei helpers correctly
-- Managing state with Zustand
-- Implementing post-processing or physics
+## Rule files
 
-## Ecosystem Coverage
+Open the one that matches the question. These are the only rules vendored here; `references/rules/_sections.md` lists categories for more rules than exist, so do not cite a rule ID that has no file.
 
-- **@react-three/fiber** - React renderer for Three.js
-- **@react-three/drei** - Useful helpers and abstractions
-- **@react-three/postprocessing** - Post-processing effects
-- **@react-three/rapier** - Physics engine
-- **zustand** - State management
-- **leva** - Debug GUI
+| Question | File |
+|---|---|
+| State changes inside the frame loop | `references/rules/perf-never-set-state-in-useframe.md` |
+| Zustand selectors, `useShallow`, transient subscriptions | `references/rules/perf-zustand-selectors.md` |
+| Show/hide without a stutter | `references/rules/perf-visibility-toggle.md` |
+| Measuring draw calls and frame time | `references/rules/perf-r3f-perf.md` |
+| Frame-rate independent motion | `references/rules/frame-delta-time.md` |
+| Loading models with drei | `references/rules/drei-use-gltf.md` |
+| Suspense boundaries and fallbacks | `references/rules/loading-suspense.md` |
 
-## Rule Categories by Priority
-
-| Priority | Category | Impact | Prefix |
-|----------|----------|--------|--------|
-| 1 | Performance & Re-renders | CRITICAL | `perf-` |
-| 2 | useFrame & Animation | CRITICAL | `frame-` |
-| 3 | Component Patterns | HIGH | `component-` |
-| 4 | Canvas & Setup | HIGH | `canvas-` |
-| 5 | Drei Helpers | MEDIUM-HIGH | `drei-` |
-| 6 | Loading & Suspense | MEDIUM-HIGH | `loading-` |
-| 7 | State Management | MEDIUM | `state-` |
-| 8 | Events & Interaction | MEDIUM | `events-` |
-| 9 | Post-processing | MEDIUM | `postpro-` |
-| 10 | Physics (Rapier) | LOW-MEDIUM | `physics-` |
-| 11 | Leva (Debug GUI) | LOW | `leva-` |
-
-## Quick Reference
-
-### 1. Performance & Re-renders (CRITICAL)
-
-- `perf-never-set-state-in-useframe` - NEVER call setState in useFrame
-- `perf-isolate-state` - Isolate components that need React state
-- `perf-zustand-selectors` - Use Zustand selectors, not entire store
-- `perf-transient-subscriptions` - Use transient subscriptions for continuous values
-- `perf-memo-components` - Memoize expensive components
-- `perf-keys-for-lists` - Use stable keys for dynamic lists
-- `perf-avoid-inline-objects` - Avoid creating objects/arrays in JSX
-- `perf-dispose-auto` - Understand R3F auto-dispose behavior
-- `perf-visibility-toggle` - Toggle visibility instead of remounting
-- `perf-r3f-perf` - Use r3f-perf for performance monitoring
-
-### 2. useFrame & Animation (CRITICAL)
-
-- `frame-priority` - Use priority for execution order
-- `frame-delta-time` - Always use delta for animations
-- `frame-conditional-subscription` - Disable useFrame when not needed
-- `frame-destructure-state` - Destructure only what you need
-- `frame-render-on-demand` - Use invalidate() for on-demand rendering
-- `frame-avoid-heavy-computation` - Move heavy work outside useFrame
-
-### 3. Component Patterns (HIGH)
-
-- `component-jsx-elements` - Use JSX for Three.js objects
-- `component-attach-prop` - Use attach for non-standard properties
-- `component-primitive` - Use primitive for existing objects
-- `component-extend` - Use extend() for custom classes
-- `component-forwardref` - Use forwardRef for reusable components
-- `component-dispose-null` - Set dispose={null} on shared resources
-
-### 4. Canvas & Setup (HIGH)
-
-- `canvas-size-container` - Canvas fills parent container
-- `canvas-camera-default` - Configure camera via prop
-- `canvas-gl-config` - Configure WebGL context
-- `canvas-shadows` - Enable shadows at Canvas level
-- `canvas-frameloop` - Choose appropriate frameloop mode
-- `canvas-events` - Configure event handling
-- `canvas-linear-flat` - Use linear/flat for correct colors
-
-### 5. Drei Helpers (MEDIUM-HIGH)
-
-- `drei-use-gltf` - useGLTF with preloading
-- `drei-use-texture` - useTexture for texture loading
-- `drei-environment` - Environment for realistic lighting
-- `drei-orbit-controls` - OrbitControls from Drei
-- `drei-html` - Html for DOM overlays
-- `drei-text` - Text for 3D text
-- `drei-instances` - Instances for optimized instancing
-- `drei-use-helper` - useHelper for debug visualization
-- `drei-bounds` - Bounds to fit camera
-- `drei-center` - Center to center objects
-- `drei-float` - Float for floating animation
-
-### 6. Loading & Suspense (MEDIUM-HIGH)
-
-- `loading-suspense` - Wrap async components in Suspense
-- `loading-preload` - Preload assets with useGLTF.preload
-- `loading-use-progress` - useProgress for loading UI
-- `loading-lazy-components` - Lazy load heavy components
-- `loading-error-boundary` - Handle loading errors
-
-### 7. State Management (MEDIUM)
-
-- `state-zustand-store` - Create focused Zustand stores
-- `state-avoid-objects-in-store` - Be careful with Three.js objects
-- `state-subscribeWithSelector` - Fine-grained subscriptions
-- `state-persist` - Persist state when needed
-- `state-separate-concerns` - Separate stores by concern
-
-### 8. Events & Interaction (MEDIUM)
-
-- `events-pointer-events` - Use pointer events on meshes
-- `events-stop-propagation` - Prevent event bubbling
-- `events-cursor-pointer` - Change cursor on hover
-- `events-raycast-filter` - Filter raycasting
-- `events-event-data` - Understand event data structure
-
-### 9. Post-processing (MEDIUM)
-
-- `postpro-effect-composer` - Use EffectComposer
-- `postpro-common-effects` - Common effects reference
-- `postpro-selective-bloom` - SelectiveBloom for optimized glow
-- `postpro-custom-shader` - Create custom effects
-- `postpro-performance` - Optimize post-processing
-
-### 10. Physics Rapier (LOW-MEDIUM)
-
-- `physics-setup` - Basic Rapier setup
-- `physics-body-types` - dynamic, fixed, kinematic
-- `physics-colliders` - Choose appropriate colliders
-- `physics-events` - Handle collision events
-- `physics-api-ref` - Use ref for physics API
-- `physics-performance` - Optimize physics
-
-### 11. Leva (LOW)
-
-- `leva-basic` - Basic Leva usage
-- `leva-folders` - Organize with folders
-- `leva-conditional` - Hide in production
-
-## How to Use
-
-Read individual rule files for detailed explanations and code examples:
-
-```
-references/rules/perf-never-set-state-in-useframe.md
-references/rules/drei-use-gltf.md
-references/rules/perf-zustand-selectors.md
-```
-
-## Full Compiled Document
-
-Each rule above is expanded in `references/rules/<rule-id>.md`.
-
-## Critical Patterns
-
-### NEVER setState in useFrame
-
-```jsx
-// BAD - 60 re-renders per second!
-function BadComponent() {
-  const [position, setPosition] = useState(0);
-  useFrame(() => {
-    setPosition(p => p + 0.01); // NEVER DO THIS
-  });
-  return <mesh position-x={position} />;
-}
-
-// GOOD - Mutate refs directly
-function GoodComponent() {
-  const meshRef = useRef();
-  useFrame(() => {
-    meshRef.current.position.x += 0.01;
-  });
-  return <mesh ref={meshRef} />;
-}
-```
-
-### Zustand Selectors
-
-```jsx
-// BAD - Re-renders on ANY store change
-const store = useGameStore();
-
-// GOOD - Only re-renders when playerX changes
-const playerX = useGameStore(state => state.playerX);
-
-// BETTER - No re-renders, direct mutation
-useFrame(() => {
-  const { value } = useStore.getState();
-  ref.current.position.x = value;
-});
-```
-
-### Drei useGLTF
-
-```jsx
-import { useGLTF } from '@react-three/drei';
-
-function Model() {
-  const { scene } = useGLTF('/model.glb');
-  return <primitive object={scene} />;
-}
-
-// Preload for instant loading
-useGLTF.preload('/model.glb');
-```
-
-### Suspense Loading
-
-```jsx
-function App() {
-  return (
-    <Canvas>
-      <Suspense fallback={<Loader />}>
-        <Model />
-      </Suspense>
-    </Canvas>
-  );
-}
-```
-
-### r3f-perf Monitoring
-
-```jsx
-import { Perf } from 'r3f-perf';
-
-function App() {
-  return (
-    <Canvas>
-      <Perf position="top-left" />
-      <Scene />
-    </Canvas>
-  );
-}
-```
-
-### Toggle Visibility (Not Remounting)
-
-```jsx
-// BAD: Remounting destroys and recreates
-{showModel && <Model />}
-
-// GOOD: Toggle visibility, keeps instance alive
-<Model visible={showModel} />
-```
+For the Three.js objects underneath (disposal, instancing, pixel ratio, shaders, WebGPU), use `three-best-practices`.
 
 ## Related skills
 
 - `three-best-practices` — the underlying Three.js rules these build on
 - `screenshot-verify` — capturing a WebGL canvas, which needs its own frame wait
 
-> Consolidated into this collection from the `virtualrow` project, unchanged. See the upstream attribution in `three-best-practices`.
+> Consolidated into this collection from the `virtualrow` project. Upstream tips from [100 Three.js Tips](https://www.utsubo.com/blog/threejs-best-practices-100-tips) by [Utsubo](https://www.utsubo.com); see the upstream attribution in `three-best-practices`.
