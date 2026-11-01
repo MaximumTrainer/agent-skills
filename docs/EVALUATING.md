@@ -61,6 +61,10 @@ identically. The fixtures carry the properties being measured on purpose:
 | `qt-desktop` | auto-slot bound to a removed Qt5 signal signature, AppImage packaging with no off-machine verification |
 | `connectiq-app` | unguarded web-request payload, UINT32 read into a signed value |
 
+Re-running those eight with fixtures (two blind judges, `benchmarks/2026-10-12.json`) moved five of them: `gap-issue` +75%, `engineering-white-paper`, `hexagonal-architecture` and `live-api-probe` +33%, `verify-and-ship` +17%. `qt6-cross-platform` came in at +6%. Three stayed at zero. `minimal-docker` turned out to change defaults its evals never asked about (digest pins, read-only root, secret mounts, a debug route), so its evals were retargeted at those and it now measures +92%. `three-best-practices` and `r3f-best-practices` restate what the model already does, so they were cut to routers over their reference files.
+
+The same run says where the middle band goes next. The with-skill arm passed 36.5 of 37 discriminating checks; the one miss was a contiguity test for `single-source-constants` bands, which that skill does not ask for. So a +33% skill is not leaving lift on the table against its current evals. Its evals have stopped asking anything harder. Raising it means writing the next discriminating expectation from a with-skill transcript, then re-measuring, not editing the skill first.
+
 **An eval with no `fixture` runs bare, deliberately.** A prompt carrying its
 subject inline, or one that is pure authoring, gains nothing from scenery, and
 scenery invites the runner to wander.

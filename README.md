@@ -114,7 +114,7 @@ The skills cross-reference each other by name in their *Related skills* sections
 | `MaximumTrainer_Redux` | Qt6 migration and packaging; headless screenshot verification; three-document sync |
 | `OpenFactstore`, `Waymark`, `OpenDataMask`, `paved-road` | Ports and adapters; the dependency rule; red-green-refactor |
 | `OpenDataMask`, `OpenFactstore`, `SdlcKnowledgeGraph` | Kotlin conventions; the detekt/Kotlin version coupling |
-| `virtualrow` | `three-best-practices` and `r3f-best-practices`, consolidated unchanged |
+| `virtualrow` | `three-best-practices` and `r3f-best-practices`, consolidated, then cut to routers after both measured +0% |
 | `llm-cad`, `Intervals-Gemini-Fitness-Intel` | MCP tool design; sandboxing model-authored code |
 | `white-papers` | The practice white-paper structure |
 | `OpenDataMask`, `synthetic-fabricate` | Synthetic data, masking discipline, canary secrets |

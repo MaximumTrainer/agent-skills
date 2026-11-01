@@ -3,14 +3,14 @@ name: single-source-constants
 description: Collapse a threshold that is written down twice - once in code, once in prose - into one definition everything else derives from, including the human-readable text. Use when a displayed value contradicts what the app does, when a user asks "why does it say X when it does Y", when a README restates a number the code owns, or when adding a band or tier. Covers the audit that finds existing drift and the one case where duplication is correct.
 license: MIT
 metadata:
-  version: "2.0.0"
+  version: "2.0.1"
 ---
 
 # Constant drift
 
 A threshold written down twice will eventually disagree with itself. The duplicate is almost always in *prose* — a tooltip, a README row, an error message — so it is never type-checked, never tested, and drifts without a failing test. When it surfaces it looks like a calculation bug, so the investigation starts in the wrong place.
 
-Measured note: an eval run without this skill diagnosed the drift, proposed a single band table, generated the tooltip from it and wrote boundary tests. Most of what follows is what a careful engineer does anyway. Three things were *not* produced unaided, and they are what this skill is now.
+Measured note (re-measured on this text, 2026-10, fixture repos, two blind judges): +28% across three evals. Without this skill the model already diagnosed the drift, proposed a single band table, generated the tooltip from it, wrote boundary tests, and audited a repo for numbers that appear in both code and docs. It did **not** put the label and range text in the same definition as the numbers (section 2), which is the lift. One eval also expects a test that the bands have no gap or overlap; neither arm wrote one, and this text does not ask for it.
 
 ## 1. The evidence, so the diagnosis comes first
 

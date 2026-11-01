@@ -12,3 +12,6 @@ to do about each.
 
 **These are not scores.** A benchmark is a snapshot of how much difference each
 skill made to one model on one date. The only use for an old one is subtraction.
+
+`2026-10-12.json` is named by date and its `model` field reads `unrecorded`.
+Rename it to the model ID it was measured against before diffing the next one.
